@@ -37,10 +37,4 @@ public class MemberController {
     public String showLoginPage(){
         return "login";
     }
-
-    @GetMapping("/member/loginresult")
-    @ResponseBody
-    public String showLoginResultPage(){
-        return "loginresult";
-    }
 }
