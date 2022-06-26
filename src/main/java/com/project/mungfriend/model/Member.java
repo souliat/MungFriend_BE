@@ -2,9 +2,8 @@ package com.project.mungfriend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.mungfriend.enumeration.UserRole;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.project.mungfriend.repository.MemberRepository;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -65,4 +64,16 @@ public class Member {
 
     @OneToMany(mappedBy = "applicant")
     private List<Apply> applies = new ArrayList<>();
+
+    @Builder
+    public Member(String username, String password, UserRole userRole, String nickname,
+                  String email, String address, boolean isAgree) {
+        this.username = username;
+        this.password = password;
+        this.userRole = userRole;
+        this.nickname = nickname;
+        this.email = email;
+        this.address = address;
+        this.isAgree = isAgree;
+    }
 }
