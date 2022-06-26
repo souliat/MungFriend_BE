@@ -4,6 +4,7 @@ import com.project.mungfriend.security.jwt.JwtAccessDeniedHandler;
 import com.project.mungfriend.security.jwt.JwtAuthenticationEntryPoint;
 import com.project.mungfriend.security.jwt.JwtSecurityConfig;
 import com.project.mungfriend.security.jwt.TokenProvider;
+import com.project.mungfriend.security.oauth.provider.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,12 +26,12 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final TokenProvider tokenProvider;
-//    private final OAuth2SuccessHandler successHandler;
+    private final OAuth2SuccessHandler successHandler;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
-//    @Autowired
-//    private OAuthUserDeatilsServiceImpl oAuthUserDeatilsService;
+    @Autowired
+    private OAuthUserDetailsServiceImpl oAuthUserDetailsService;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -62,20 +63,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/member/**").permitAll()
                 .antMatchers("/oauth/**").permitAll()
+                .antMatchers("/oauth2/**").permitAll()
 //                .antMatchers(HttpMethod.GET,"/api/posts").permitAll()
 //                .antMatchers(HttpMethod.GET,"/api/ranks").permitAll()
 //                .antMatchers("/auth/**", "/oauth2/**").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider));
+                .apply(new JwtSecurityConfig(tokenProvider))
 
-//                .and()
-//                .oauth2Login()
-//                .loginPage("/user/login")
-//                .successHandler(successHandler)
-//                .userInfoEndpoint()
-//                .userService(oAuthUserDeatilsService);
+                .and()
+                .oauth2Login()
+                .loginPage("/login")
+                .successHandler(successHandler)
+                .userInfoEndpoint()
+                .userService(oAuthUserDetailsService);
 
 
     }

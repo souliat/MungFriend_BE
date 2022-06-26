@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <meta charset="UTF-8">
+  <title>로그인 페이지</title>
+</head>
+<body>
+<div id="login-form">
+  <div id="login-title">Login</div>
+  <button id="login-google-btn" onclick="location.href='/oauth2/authorization/google'">
+    구글 로그인
+  </button>
+  <button id="login-kakao-btn" onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=22edaae439989644b90224c7ecfbdf11&redirect_uri=http://localhost:8080/user/kakao/callback&response_type=code'">
+    카카오 로그인
+  </button>
+</div>
+</body>
+<script th:inline="javascript">
+  const href = location.href;
+  const queryString = href.substring(href.indexOf("?")+1)
+  if (queryString.includes('error')) {
+    const errorDiv = document.getElementById('login-failed');
+    errorDiv.style.display = 'block';
+  }
+
+  $(document).ready(function () {
+    const href = location.href;
+    const queryString = href.substring(href.indexOf("?")+1)
+    if (queryString.includes('error')) {
+      alert([[${param.error}]]);
+    }
+  })
+
+</script>
+</html>

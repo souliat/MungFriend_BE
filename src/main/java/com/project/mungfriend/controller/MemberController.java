@@ -5,8 +5,10 @@ import com.project.mungfriend.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,5 +29,18 @@ public class MemberController {
     @PostMapping("/user/reissue")
     public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
         return ResponseEntity.ok(memberService.reissue(tokenRequestDto));
+    }
+
+
+    //로그인 페이지 호출
+    @GetMapping("/member/login")
+    public String showLoginPage(){
+        return "login";
+    }
+
+    @GetMapping("/member/loginresult")
+    @ResponseBody
+    public String showLoginResultPage(){
+        return "loginresult";
     }
 }

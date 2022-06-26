@@ -33,7 +33,7 @@ public class Member {
     private String nickname;
 
     @Column(nullable = false)
-    private String address;
+    private String address="";
 
     @Column(nullable = false)
     private String phoneNum= "";
@@ -47,8 +47,8 @@ public class Member {
     @Column(nullable = false)
     private boolean isAgree;
 
-//    @Column
-//    private String provider;
+    @Column
+    private String provider;
 
     @OneToMany(mappedBy = "member")
     private List<Post> myPostList = new ArrayList<>();
@@ -75,5 +75,16 @@ public class Member {
         this.email = email;
         this.address = address;
         this.isAgree = isAgree;
+    }
+
+    public Member(String username, String email, String password, String nickname, UserRole userRole, String provider) {
+        this.username = username;
+        this.password = password;
+        this.userRole = userRole;
+        this.nickname = nickname;
+        this.address = "";
+        this.email = email;
+        this.provider = provider;
+
     }
 }
