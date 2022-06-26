@@ -41,6 +41,7 @@ public class Member {
     @Column(nullable = false)
     private String introduce = "";
 
+    @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private UserRole userRole = UserRole.USER;
 
