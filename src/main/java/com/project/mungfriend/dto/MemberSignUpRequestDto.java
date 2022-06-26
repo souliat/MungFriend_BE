@@ -18,7 +18,7 @@ public class MemberSignUpRequestDto {
     private String nickname;
     private String email;
     private String address;
-    private boolean isAgree;
+    private Boolean isAgree;
 
     public Member toMember(PasswordEncoder passwordEncoder) {
         return Member.builder()
