@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class GetPostResponseDto {
     private Long id;
+    private String nickname;
     private String title;
     private String address;
     private LocalDateTime requestStartDate;
@@ -26,6 +27,7 @@ public class GetPostResponseDto {
     public GetPostResponseDto(Post post) {
         this.id = post.getId();
         this.title = post.getTitle();
+        this.nickname = post.getMember().getNickname();
         this.address = post.getAddress();
         this.requestStartDate = post.getRequestStartDate();
         this.requestEndDate = post.getRequestEndDate();
