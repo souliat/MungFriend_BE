@@ -1,6 +1,7 @@
 package com.project.mungfriend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.mungfriend.dto.DogProfileRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,11 +15,12 @@ import java.util.List;
 @Setter
 @Entity
 public class Dog {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
@@ -34,13 +36,27 @@ public class Dog {
     private String size;
 
     @Column(nullable = false)
-    private boolean isRepresentative;
+    private boolean isRepresentative = false;
 
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name="MEMBER_ID")
     private Member member;
 
-    @OneToMany(mappedBy = "dog")
+    @OneToMany(mappedBy = "dog", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<DogImageFile> dogImageFiles = new ArrayList<>();
+
+    public Dog(DogProfileRequestDto requestDto) {
+        this.name = requestDto.getName();
+        this.age = requestDto.getAge();
+        this.gender = requestDto.getGender();
+        this.info = requestDto.getInfo();
+        this.size = requestDto.getSize();
+        this.isRepresentative = requestDto.getIsRepresentative();
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+        member.getDogList().add(this);
+    }
 }
