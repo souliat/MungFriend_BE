@@ -2,9 +2,8 @@ package com.project.mungfriend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.mungfriend.enumeration.UserRole;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.project.mungfriend.repository.MemberRepository;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -34,7 +33,13 @@ public class Member {
     private String nickname;
 
     @Column(nullable = false)
-    private String address;
+    private String address="";
+
+    @Column(nullable = false)
+    private String latitude="";
+
+    @Column(nullable = false)
+    private String longitude="";
 
     @Column(nullable = false)
     private String phoneNum= "";
@@ -42,14 +47,15 @@ public class Member {
     @Column(nullable = false)
     private String introduce = "";
 
+    @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private UserRole userRole = UserRole.USER;
 
     @Column(nullable = false)
-    private boolean isAgree;
+    private Boolean isAgree = false;
 
-//    @Column
-//    private String provider;
+    @Column
+    private String provider;
 
     @OneToMany(mappedBy = "member")
     private List<Post> myPostList = new ArrayList<>();
@@ -65,4 +71,29 @@ public class Member {
 
     @OneToMany(mappedBy = "applicant")
     private List<Apply> applies = new ArrayList<>();
+
+    @Builder
+    public Member(String username, String password, UserRole userRole, String nickname,
+                  String email, String address, String latitude, String longitude, boolean isAgree) {
+        this.username = username;
+        this.password = password;
+        this.userRole = userRole;
+        this.nickname = nickname;
+        this.email = email;
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.isAgree = isAgree;
+    }
+
+    public Member(String username, String email, String password, String nickname, UserRole userRole, String provider) {
+        this.username = username;
+        this.password = password;
+        this.userRole = userRole;
+        this.nickname = nickname;
+        this.address = "";
+        this.email = email;
+        this.provider = provider;
+
+    }
 }
