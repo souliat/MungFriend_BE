@@ -1,5 +1,6 @@
 package com.project.mungfriend.service;
 
+import com.project.mungfriend.dto.GetPostDetailResponseDto;
 import com.project.mungfriend.dto.GetPostResponseDto;
 import com.project.mungfriend.dto.RegisterPostRequestDto;
 import com.project.mungfriend.dto.RegisterPostResponseDto;
@@ -65,5 +66,21 @@ public class PostService {
             postResponseDtoList.add(getPostResponseDto);
         }
         return postResponseDtoList;
+    }
+
+    public GetPostDetailResponseDto getPostDetail(Long id, String username) {
+        Post post = postRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("해당 ID의 게시글이 존재하지 않습니다.")
+        );
+
+        Member member = memberRepository.findByUsername(username).orElseThrow(
+                () -> new IllegalArgumentException("게시글 작성은 로그인 후 가능합니다.")
+        );
+
+        GetPostDetailResponseDto responseDto = new GetPostDetailResponseDto(post);
+        responseDto.getApplyList().addAll(post.getApplies());
+        responseDto.getDogList().addAll(member.getDogList());
+
+        return responseDto;
     }
 }
