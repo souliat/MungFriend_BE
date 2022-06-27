@@ -1,9 +1,6 @@
 package com.project.mungfriend.service;
 
-import com.project.mungfriend.dto.GetPostDetailResponseDto;
-import com.project.mungfriend.dto.GetPostResponseDto;
-import com.project.mungfriend.dto.RegisterPostRequestDto;
-import com.project.mungfriend.dto.RegisterPostResponseDto;
+import com.project.mungfriend.dto.*;
 import com.project.mungfriend.model.Dog;
 import com.project.mungfriend.model.DogImageFile;
 import com.project.mungfriend.model.Member;
@@ -68,6 +65,7 @@ public class PostService {
         return postResponseDtoList;
     }
 
+    //게시글 상세 조회
     public GetPostDetailResponseDto getPostDetail(Long id, String username) {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 ID의 게시글이 존재하지 않습니다.")
@@ -81,6 +79,27 @@ public class PostService {
         responseDto.getApplyList().addAll(post.getApplies());
         responseDto.getDogList().addAll(member.getDogList());
 
+        return responseDto;
+    }
+
+    //게시글 수정
+    @Transactional
+    public PutPostResponseDto updatePost(Long id, PutPostRequestDto requestDto, String username) {
+        Post post = postRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("해당 ID의 게시글이 존재하지 않습니다.")
+        );
+        Member member = memberRepository.findByUsername(username).orElseThrow(
+                () -> new IllegalArgumentException("게시글 수정은 로그인 후 가능합니다.")
+        );
+        if(!member.getNickname().equals(post.getMember().getNickname())){
+            throw new IllegalArgumentException("본인의 게시글만 수정할 수 있습니다.");
+        }
+
+        post.updatePost(requestDto);
+        postRepository.save(post);
+
+        PutPostResponseDto responseDto = new PutPostResponseDto();
+        responseDto.ok();
         return responseDto;
     }
 }

@@ -1,9 +1,6 @@
 package com.project.mungfriend.controller;
 
-import com.project.mungfriend.dto.GetPostDetailResponseDto;
-import com.project.mungfriend.dto.GetPostResponseDto;
-import com.project.mungfriend.dto.RegisterPostRequestDto;
-import com.project.mungfriend.dto.RegisterPostResponseDto;
+import com.project.mungfriend.dto.*;
 import com.project.mungfriend.security.SecurityUtil;
 import com.project.mungfriend.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -34,5 +31,12 @@ public class PostController {
     public GetPostDetailResponseDto getPostDetail(@PathVariable Long id){
         String username = SecurityUtil.getCurrentMemberUsername();
         return postService.getPostDetail(id, username);
+    }
+
+    //게시글 수정
+    @PutMapping("/api/posts{id}")
+    public PutPostResponseDto updatePost(@PathVariable Long id, PutPostRequestDto requestDto){
+        String username = SecurityUtil.getCurrentMemberUsername();
+        return postService.updatePost(id, requestDto, username);
     }
 }

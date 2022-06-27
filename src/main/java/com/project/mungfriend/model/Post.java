@@ -1,6 +1,7 @@
 package com.project.mungfriend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.mungfriend.dto.PutPostRequestDto;
 import com.project.mungfriend.dto.RegisterPostRequestDto;
 import com.project.mungfriend.enumeration.Category;
 import com.project.mungfriend.util.Timestamped;
@@ -80,5 +81,20 @@ public class Post extends Timestamped {
         this.member = member;
         member.getMyPostList().add(this);
         this.address = member.getAddress();
+    }
+
+    public void updatePost(PutPostRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+
+        StringBuilder dogIds = new StringBuilder();
+        for (Long dogId : requestDto.getDogIdList()){
+            dogIds.append(dogId);
+            dogIds.append(",");
+        }
+        this.dogProfileIds = dogIds.substring(0, dogIds.length()-1);
+
+        this.requestStartDate = requestDto.getRequestStartDate();
+        this.requestEndDate = requestDto.getRequestEndDate();
     }
 }
