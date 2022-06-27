@@ -18,6 +18,10 @@ public class MemberSignUpRequestDto {
     private String nickname;
     private String email;
     private String address;
+
+    private String latitude;
+
+    private String longitude;
     private Boolean isAgree;
 
     public Member toMember(PasswordEncoder passwordEncoder) {
@@ -28,6 +32,8 @@ public class MemberSignUpRequestDto {
                 .nickname(nickname)
                 .email(email)
                 .address(address)
+                .latitude(latitude)
+                .longitude(longitude)
                 .isAgree(isAgree)
                 .build();
     }

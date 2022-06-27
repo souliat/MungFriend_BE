@@ -36,6 +36,12 @@ public class Member {
     private String address="";
 
     @Column(nullable = false)
+    private String latitude="";
+
+    @Column(nullable = false)
+    private String longitude="";
+
+    @Column(nullable = false)
     private String phoneNum= "";
 
     @Column(nullable = false)
@@ -68,13 +74,15 @@ public class Member {
 
     @Builder
     public Member(String username, String password, UserRole userRole, String nickname,
-                  String email, String address, boolean isAgree) {
+                  String email, String address, String latitude, String longitude, boolean isAgree) {
         this.username = username;
         this.password = password;
         this.userRole = userRole;
         this.nickname = nickname;
         this.email = email;
         this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.isAgree = isAgree;
     }
 
