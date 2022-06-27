@@ -39,10 +39,10 @@ public class Post extends Timestamped {
     private Long applyCount = 0L;
 
     @Column(nullable = false)
-    private boolean applyByMe = false;
+    private Boolean applyByMe = false;
 
     @Column(nullable = false)
-    private boolean isComplete = false;
+    private Boolean isComplete = false;
 
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
