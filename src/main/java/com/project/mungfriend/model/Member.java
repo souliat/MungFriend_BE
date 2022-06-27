@@ -46,7 +46,7 @@ public class Member {
     private UserRole userRole = UserRole.USER;
 
     @Column(nullable = false)
-    private Boolean isAgree;
+    private Boolean isAgree = false;
 
     @Column
     private String provider;
