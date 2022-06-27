@@ -44,11 +44,10 @@ public class MemberService {
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
 
-        tokenDto.setUsername(memberRequestDto.getUsername());
-
-        Member member = memberRepository.findByUsername(memberRequestDto.getUsername()).orElse(null);
-        assert member != null;
-        tokenDto.setNickname(member.getNickname());
+//        tokenDto.setUsername(memberRequestDto.getUsername());
+//        Member member = memberRepository.findByUsername(memberRequestDto.getUsername()).orElse(null);
+//        assert member != null;
+//        tokenDto.setNickname(member.getNickname());
 
         // 4. RefreshToken 저장
         RefreshToken refreshToken = RefreshToken.builder()

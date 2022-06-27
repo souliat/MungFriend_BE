@@ -39,8 +39,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
 
-        tokenDto.setUsername(userDetails.getUsername());
-        tokenDto.setNickname(userDetails.getNickname());
+//        tokenDto.setUsername(userDetails.getUsername());
+//        tokenDto.setNickname(userDetails.getNickname());
 
         RefreshToken refreshToken = RefreshToken.builder()
                 .key(authentication.getName())
