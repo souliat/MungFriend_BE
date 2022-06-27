@@ -39,4 +39,11 @@ public class PostController {
         String username = SecurityUtil.getCurrentMemberUsername();
         return postService.updatePost(id, requestDto, username);
     }
+
+    //게시글 삭제
+    @DeleteMapping("/api/posts{id}")
+    public DeletePostResponseDto deletePost(@PathVariable Long id){
+        String username = SecurityUtil.getCurrentMemberUsername();
+        return postService.deletePost(id, username);
+    }
 }

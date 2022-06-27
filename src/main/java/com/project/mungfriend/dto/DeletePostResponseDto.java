@@ -7,14 +7,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PutPostResponseDto {
-
+public class DeletePostResponseDto {
     private String status;
     private String message;
 
     public void ok(){
         this.status = "true";
-        this.message = "게시글 수정 성공 ! !";
+        this.message = "게시글 삭제 성공 ! !";
     }
-
 }

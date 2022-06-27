@@ -102,4 +102,25 @@ public class PostService {
         responseDto.ok();
         return responseDto;
     }
+
+    //게시글 삭제
+    @Transactional
+    public DeletePostResponseDto deletePost(Long id, String username) {
+        Post post = postRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("해당 ID의 게시글이 존재하지 않습니다.")
+        );
+        Member member = memberRepository.findByUsername(username).orElseThrow(
+                () -> new IllegalArgumentException("게시글 삭제는 로그인 후 가능합니다.")
+        );
+
+        if(!member.getNickname().equals(post.getMember().getNickname())){
+            throw new IllegalArgumentException("본인의 게시글만 삭제할 수 있습니다.");
+        }
+        
+        postRepository.deleteById(post.getId());
+
+        DeletePostResponseDto responseDto = new DeletePostResponseDto();
+        responseDto.ok();
+        return responseDto;
+    }
 }
