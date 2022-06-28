@@ -34,14 +34,14 @@ public class PostController {
     }
 
     //게시글 수정
-    @PutMapping("/api/posts{id}")
-    public PutPostResponseDto updatePost(@PathVariable Long id, PutPostRequestDto requestDto){
+    @PutMapping("/api/posts/{id}")
+    public PutPostResponseDto updatePost(@PathVariable Long id, @RequestBody PutPostRequestDto requestDto){
         String username = SecurityUtil.getCurrentMemberUsername();
         return postService.updatePost(id, requestDto, username);
     }
 
     //게시글 삭제
-    @DeleteMapping("/api/posts{id}")
+    @DeleteMapping("/api/posts/{id}")
     public DeletePostResponseDto deletePost(@PathVariable Long id){
         String username = SecurityUtil.getCurrentMemberUsername();
         return postService.deletePost(id, username);
