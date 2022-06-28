@@ -41,6 +41,9 @@ dependencies {
 
     //타임리프
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    //S3업로더
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 }
 
 tasks.named('test') {
