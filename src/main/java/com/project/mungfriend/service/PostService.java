@@ -74,6 +74,7 @@ public class PostService {
 
     //게시글 상세 조회
     public GetPostDetailResponseDto getPostDetail(Long id, String username) {
+
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 ID의 게시글이 존재하지 않습니다.")
         );
@@ -82,7 +83,16 @@ public class PostService {
                 () -> new IllegalArgumentException("게시글 작성은 로그인 후 가능합니다.")
         );
 
+
         GetPostDetailResponseDto responseDto = new GetPostDetailResponseDto(post);
+
+        // 신청자 수, 내가 신청했는지 아닌지 여부 판단 추가. 2022-06-28 인기천.
+        Long applyCount = applyRepository.countByPostId(post.getId());
+        Boolean applyByMe = applyRepository.existsByApplicantIdAndPostId(member.getId(), post.getId());
+
+        responseDto.setApplyCount(applyCount);
+        responseDto.setApplyByMe(applyByMe);
+
         responseDto.getApplyList().addAll(post.getApplyList());
 
         String dogProfileIds = post.getDogProfileIds();
