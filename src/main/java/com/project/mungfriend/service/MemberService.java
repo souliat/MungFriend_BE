@@ -26,11 +26,31 @@ public class MemberService {
     private final RefreshTokenRepository refreshTokenRepository;
     public MemberSignUpResponseDto signup(MemberSignUpRequestDto memberRequestDto) {
         if (memberRepository.existsByUsername(memberRequestDto.getUsername())) {
-            throw new RuntimeException("중복된 username입니다");
+            //throw new RuntimeException("중복된 username입니다");
+            String status = "false";
+            String message = "중복된 아이디가 존재합니다.";
+            return MemberSignUpResponseDto.of(status, message);
         }
 
+        if (memberRepository.existsByEmail(memberRequestDto.getEmail())) {
+            //throw new RuntimeException("중복된 username입니다");
+            String status = "false";
+            String message = "중복된 이메일이 존재합니다.";
+            return MemberSignUpResponseDto.of(status, message);
+        }
+
+        if (memberRepository.existsByNickname(memberRequestDto.getNickname())) {
+            //throw new RuntimeException("중복된 username입니다");
+            String status = "false";
+            String message = "중복된 닉네임이 존재합니다.";
+            return MemberSignUpResponseDto.of(status, message);
+        }
+
+        String status = "true";
+        String message = "회원가입 성공 ! !";
+
         Member member = memberRequestDto.toMember(passwordEncoder);
-        return MemberSignUpResponseDto.of(memberRepository.save(member));
+        return MemberSignUpResponseDto.of(memberRepository.save(member), status, message);
     }
 
     public TokenDto login(MemberLoginRequestDto memberRequestDto) {
