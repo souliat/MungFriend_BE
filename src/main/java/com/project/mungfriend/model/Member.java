@@ -63,11 +63,11 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Dog> dogList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "applicant")
-    private List<Review> applicantReviews = new ArrayList<>();
+    @OneToMany(mappedBy = "taker")
+    private List<Review> takerReviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "writer")
-    private List<Review> writerReviews = new ArrayList<>();
+    @OneToMany(mappedBy = "giver")
+    private List<Review> giverReviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "applicant")
     private List<Apply> applies = new ArrayList<>();
