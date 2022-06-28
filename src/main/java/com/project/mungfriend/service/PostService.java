@@ -76,7 +76,7 @@ public class PostService {
         );
 
         GetPostDetailResponseDto responseDto = new GetPostDetailResponseDto(post);
-        responseDto.getApplyList().addAll(post.getApplies());
+        responseDto.getApplyList().addAll(post.getApplyList());
 
         String dogProfileIds = post.getDogProfileIds();
         String[] dogProfileIdsArr = dogProfileIds.split(",");

@@ -23,7 +23,7 @@ public class ReviewController {
     //리뷰 등록 (다중 이미지 업로드)
     @PostMapping("/api/reviews")
     public PostReviewResponseDto registerReview(@RequestPart(value="image", required = false) List<MultipartFile> multipartFiles,
-            @RequestPart(value="infos") PostReviewRequestDto requestDto) throws IOException {
+                                                @RequestPart(value="infos") PostReviewRequestDto requestDto) throws IOException {
         String username = SecurityUtil.getCurrentMemberUsername();
         return reviewService.registerReview(username, multipartFiles, requestDto);
     }

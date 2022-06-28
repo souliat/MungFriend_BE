@@ -1,6 +1,7 @@
 package com.project.mungfriend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.mungfriend.dto.ApplyPostRequestDto;
 import com.project.mungfriend.util.Timestamped;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,4 +31,18 @@ public class Apply extends Timestamped {
     @JsonIgnore
     @JoinColumn(name="POST_ID")
     private Post post;
+
+    public Apply(ApplyPostRequestDto requestDto) {
+        this.comment = requestDto.getComment();
+    }
+
+    public void setMember(Member applicant) {
+        this.applicant = applicant;
+        applicant.getApplyList().add(this);
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+        post.getApplyList().add(this);
+    }
 }
