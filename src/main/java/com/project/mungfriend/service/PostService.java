@@ -77,7 +77,15 @@ public class PostService {
 
         GetPostDetailResponseDto responseDto = new GetPostDetailResponseDto(post);
         responseDto.getApplyList().addAll(post.getApplies());
-        responseDto.getDogList().addAll(member.getDogList());
+
+        String dogProfileIds = post.getDogProfileIds();
+        String[] dogProfileIdsArr = dogProfileIds.split(",");
+        for (String s : dogProfileIdsArr) {
+            Dog dog = dogRepository.findById(Long.parseLong(s)).orElseThrow(
+                    () -> new IllegalArgumentException("해당 ID의 멍멍이 프로필이 존재하지 않습니다.")
+            );
+            responseDto.getDogList().add(dog);
+        }
 
         return responseDto;
     }
