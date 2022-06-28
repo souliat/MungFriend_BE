@@ -27,4 +27,13 @@ public class ReviewImageFile {
 //        this.imagefile = imagefile;
 //        this.post = post;
 //    }
+
+    public ReviewImageFile(String imageUrl){
+        this.imageUrl = imageUrl;
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
+        review.getReviewImageFile().add(this);
+    }
 }
