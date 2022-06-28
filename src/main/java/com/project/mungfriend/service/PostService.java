@@ -5,9 +5,11 @@ import com.project.mungfriend.model.Dog;
 import com.project.mungfriend.model.DogImageFile;
 import com.project.mungfriend.model.Member;
 import com.project.mungfriend.model.Post;
+import com.project.mungfriend.repository.ApplyRepository;
 import com.project.mungfriend.repository.DogRepository;
 import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.repository.PostRepository;
+import com.project.mungfriend.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +24,7 @@ public class PostService {
     private final PostRepository postRepository;
 
     private final DogRepository dogRepository;
+    private final ApplyRepository applyRepository;
 
     //게시글 등록
     @Transactional
@@ -46,6 +49,10 @@ public class PostService {
 
         for (Post post : postList) {
             GetPostResponseDto getPostResponseDto = new GetPostResponseDto(post);
+
+            // 신청자 수 세팅. 2022-06-28 인기천 추가.
+            Long applyCount = applyRepository.countByPostId(post.getId());
+            getPostResponseDto.setApplyCount(applyCount);
 
             List<String> imagePath = getPostResponseDto.getImagePath();
 
