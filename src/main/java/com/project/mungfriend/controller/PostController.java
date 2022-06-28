@@ -35,7 +35,7 @@ public class PostController {
 
     //게시글 수정
     @PutMapping("/api/posts/{id}")
-    public PutPostResponseDto updatePost(@PathVariable Long id, PutPostRequestDto requestDto){
+    public PutPostResponseDto updatePost(@PathVariable Long id, @RequestBody PutPostRequestDto requestDto){
         String username = SecurityUtil.getCurrentMemberUsername();
         return postService.updatePost(id, requestDto, username);
     }
