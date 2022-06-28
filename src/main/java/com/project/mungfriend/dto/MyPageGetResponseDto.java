@@ -1,6 +1,7 @@
 package com.project.mungfriend.dto;
 
 import com.project.mungfriend.model.Dog;
+import com.project.mungfriend.model.Member;
 import com.project.mungfriend.model.Post;
 import com.project.mungfriend.model.Review;
 import lombok.Getter;
@@ -23,6 +24,22 @@ public class MyPageGetResponseDto {
     private String phoneNum;
     private List<Dog> dogList = new ArrayList<>();
     private List<Post> myPostList = new ArrayList<>();
-    private List<Review> applyPostList = new ArrayList<>();
+    private List<Post> applyPostList = new ArrayList<>();
     private List<Review> reviewList = new ArrayList<>();
+
+//    public MyPageGetResponseDto(){
+//
+//    }
+    public MyPageGetResponseDto(Member member){
+        this.nickName = member.getNickname();
+        this.email = member.getEmail();
+        this.address = member.getAddress();
+        this.introduce = member.getIntroduce();
+        this.phoneNum = member.getPhoneNum();
+        this.dogList = member.getDogList();
+        this.myPostList = member.getMyPostList();
+//      통합 후 getter이름 변경
+        this.reviewList = member.getWriterReviews();
+
+    }
 }
