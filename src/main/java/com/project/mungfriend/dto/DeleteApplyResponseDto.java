@@ -7,14 +7,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ApplyPostResponseDto {
-
+public class DeleteApplyResponseDto {
     private String status;
     private String message;
 
-    public ApplyPostResponseDto(String status, String message) {
+    public DeleteApplyResponseDto(String status, String message) {
         this.status = status;
         this.message = message;
     }
-
 }

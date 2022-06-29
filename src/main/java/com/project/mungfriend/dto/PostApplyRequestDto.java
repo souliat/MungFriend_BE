@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ApplyPostRequestDto {
+public class PostApplyRequestDto {
     private String comment;
 }

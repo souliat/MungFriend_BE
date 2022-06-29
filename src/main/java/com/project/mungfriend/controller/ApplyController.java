@@ -1,15 +1,12 @@
 package com.project.mungfriend.controller;
 
-import com.project.mungfriend.dto.ApplyPostRequestDto;
-import com.project.mungfriend.dto.ApplyPostResponseDto;
-import com.project.mungfriend.model.Member;
+import com.project.mungfriend.dto.DeleteApplyResponseDto;
+import com.project.mungfriend.dto.PostApplyRequestDto;
+import com.project.mungfriend.dto.PostApplyResponseDto;
 import com.project.mungfriend.security.SecurityUtil;
 import com.project.mungfriend.service.ApplyService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,9 +14,17 @@ public class ApplyController {
 
     private final ApplyService applyService;
 
-    @PostMapping("/api/applies/{id}")
-    public ApplyPostResponseDto registerApply(@PathVariable Long id, @RequestBody ApplyPostRequestDto requestDto) {
+    //신청 하기
+    @PostMapping("/api/applies/{id}") // 여기서 아이디는 postId.
+    public PostApplyResponseDto registerApply(@PathVariable Long id, @RequestBody PostApplyRequestDto requestDto) {
         String username = SecurityUtil.getCurrentMemberUsername();
         return applyService.registerApply(id, requestDto, username);
+    }
+
+    // 신청 취소
+    @DeleteMapping("/api/applies/{id}") // 여기서 아이디는 applyId.
+    public DeleteApplyResponseDto cancelApply(@PathVariable Long id) {
+        String username = SecurityUtil.getCurrentMemberUsername();
+        return applyService.cancelApply(id, username);
     }
 }
