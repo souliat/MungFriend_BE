@@ -1,13 +1,14 @@
 package com.project.mungfriend.controller;
 
 
-import com.project.mungfriend.dto.MyPageGetResponseDto;
-import com.project.mungfriend.security.SecurityUtil;
+import com.project.mungfriend.model.Member;
+import com.project.mungfriend.model.MyPageGetResponse;
+import com.project.mungfriend.model.MyPageIntroduceOnly;
+import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.service.MyPageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 
 //Responsebody+Controller 느낌
@@ -18,22 +19,27 @@ public class MyPageController {
     private final MyPageService myPageService;
 
     @GetMapping("/member/mypage/{id}")
-    public MyPageGetResponseDto getAllMyInfo(@PathVariable Long id) {
+    public MyPageGetResponse getAllMyInfo(@PathVariable Long id) {
 //        String username = SecurityUtil.getCurrentMemberUsername();
         return myPageService.getAllMyInfo(id);
     }
 
-//    @GetMapping("/member/mypage/{id}")
-//    public Member show(@PathVariable Long id) {
-//        Member member = memberRepository.findById(id);
-//        return Member.body(MemberRequestDto.from(member));
+
+
+    @PatchMapping("/member/mypage/introduce")
+    public ResponseEntity<MyPageIntroduceOnly> partialUpdateMyPage(
+            @RequestBody MyPageIntroduceOnly myPageIntroduceOnly) {
+
+        MemberRepository.save(id);
+        return ResponseEntity.ok();
+    }
+//
+//    @PatchMapping("{Id}")
+//    public String updateMember(@PathVariable Long Id, @RequestBody MyPageGetResponseDto myPageGetResponseDto){
+//        Member member = myPageService.findById(Long Id);
+//        MyPageService.updateMember(member, myPageGetResponseDto));
+//
+//        return "update success";
 //    }
 
 }
-
-
-//    @GetMapping("/api/detail/{id}")
-//    public List<House> getAllHouse(@PathVariable Long id){
-//        List<House> house= houseRepository.findAllById(id);
-//        return house;
-//    }

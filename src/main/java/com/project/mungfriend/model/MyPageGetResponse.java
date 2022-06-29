@@ -1,9 +1,5 @@
-package com.project.mungfriend.dto;
+package com.project.mungfriend.model;
 
-import com.project.mungfriend.model.Dog;
-import com.project.mungfriend.model.Member;
-import com.project.mungfriend.model.Post;
-import com.project.mungfriend.model.Review;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 
-public class MyPageGetResponseDto {
+public class MyPageGetResponse {
 
     private String nickName;
     private String email;
@@ -30,7 +26,7 @@ public class MyPageGetResponseDto {
 //    public MyPageGetResponseDto(){
 //
 //    }
-    public MyPageGetResponseDto(Member member){
+    public MyPageGetResponse(Member member){
         this.nickName = member.getNickname();
         this.email = member.getEmail();
         this.address = member.getAddress();
@@ -39,7 +35,7 @@ public class MyPageGetResponseDto {
         this.dogList = member.getDogList();
         this.myPostList = member.getMyPostList();
 //      통합 후 getter이름 변경
-        this.reviewList = member.getWriterReviews();
+        this.reviewList = member.getTakerReviews();
 
     }
 }

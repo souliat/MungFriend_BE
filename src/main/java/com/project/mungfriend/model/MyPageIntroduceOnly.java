@@ -1,25 +1,17 @@
-package com.project.mungfriend.dto;
-
-
+package com.project.mungfriend.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
 
-
-public class MyPageGetRequestDto {
+public class MyPageIntroduceOnly {
 
     private Long id;
 
-    private String phoneNum;
-
     private String introduce;
-
-
 }
 
