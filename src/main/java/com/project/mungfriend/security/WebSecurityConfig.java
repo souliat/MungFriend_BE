@@ -78,8 +78,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(successHandler)
                 .userInfoEndpoint()
                 .userService(oAuthUserDetailsService);
-
-
     }
 
     @Bean
@@ -87,7 +85,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
-        configuration.addAllowedOriginPattern("*"); // 배포 전 모두 허용
+        configuration.addAllowedOriginPattern("http://localhost:3000"); // 배포 전 모두 허용
+        // 프론트 서버 : http://code10.shop.s3-website.ap-northeast-2.amazonaws.com
+        // 프론트 로컬 : http://localhost:3000
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

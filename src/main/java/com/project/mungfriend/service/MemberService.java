@@ -26,28 +26,56 @@ public class MemberService {
     private final RefreshTokenRepository refreshTokenRepository;
     public MemberSignUpResponseDto signup(MemberSignUpRequestDto memberRequestDto) {
         if (memberRepository.existsByUsername(memberRequestDto.getUsername())) {
-            throw new RuntimeException("중복된 username입니다");
+            //throw new RuntimeException("중복된 username입니다");
+            String status = "false";
+            String message = "중복된 아이디가 존재합니다.";
+            return MemberSignUpResponseDto.of(status, message);
         }
 
+        if (memberRepository.existsByEmail(memberRequestDto.getEmail())) {
+            //throw new RuntimeException("중복된 username입니다");
+            String status = "false";
+            String message = "중복된 이메일이 존재합니다.";
+            return MemberSignUpResponseDto.of(status, message);
+        }
+
+        if (memberRepository.existsByNickname(memberRequestDto.getNickname())) {
+            //throw new RuntimeException("중복된 username입니다");
+            String status = "false";
+            String message = "중복된 닉네임이 존재합니다.";
+            return MemberSignUpResponseDto.of(status, message);
+        }
+
+        String status = "true";
+        String message = "회원가입 성공 ! !";
+
         Member member = memberRequestDto.toMember(passwordEncoder);
-        return MemberSignUpResponseDto.of(memberRepository.save(member));
+        return MemberSignUpResponseDto.of(memberRepository.save(member), status, message);
     }
 
     public TokenDto login(MemberLoginRequestDto memberRequestDto) {
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken = memberRequestDto.toAuthentication();
-
         // 2. 실제로 검증 (사용자 비밀번호 체크) 이 이루어지는 부분
         // authenticate 메서드가 실행이 될 때 UserDetailsServiceImpl 에서 만들었던 loadUserByUsername 메서드가 실행됨
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
+        try {
+            authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        }catch (Exception e){
+            e.printStackTrace();
+            String status = "false";
+            String message = "잘못된 아이디 혹은 패스워드입니다.";
+            return new TokenDto(status, message);
+        }
+
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
 
-//        tokenDto.setUsername(memberRequestDto.getUsername());
-//        Member member = memberRepository.findByUsername(memberRequestDto.getUsername()).orElse(null);
-//        assert member != null;
-//        tokenDto.setNickname(member.getNickname());
+        String status = "true";
+        String message = "로그인 성공! !";
+        tokenDto.setStatus(status);
+        tokenDto.setMessage(message);
 
         // 4. RefreshToken 저장
         RefreshToken refreshToken = RefreshToken.builder()

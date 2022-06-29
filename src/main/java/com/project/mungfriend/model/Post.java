@@ -59,7 +59,7 @@ public class Post extends Timestamped {
     private Member member;
 
     @OneToMany(mappedBy = "post")
-    private List<Apply> applies = new ArrayList<>();
+    private List<Apply> applyList = new ArrayList<>();
 
 
     public Post(RegisterPostRequestDto requestDto) {

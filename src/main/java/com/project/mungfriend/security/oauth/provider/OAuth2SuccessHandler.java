@@ -62,14 +62,14 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         response.addHeader("nickname", userDetails.getNickname());
 
 
-        // 5. 토큰 발급
-//        targetUrl = UriComponentsBuilder.fromUriString("http://localhost:8080/member/loginresult")
-//                .encode()
-//                .queryParam("Authorization", tokenDto.getAccessToken())
-//                .queryParam("username", userDetails.getUsername())
-//                .queryParam("nickname", userDetails.getNickname())
-////                .queryParam("profile", userDetails.getProfileImg())
-//                .build().toUriString();
-//        getRedirectStrategy().sendRedirect(request, response, targetUrl);
+        //5. 토큰 발급
+        targetUrl = UriComponentsBuilder.fromUriString("http://localhost:3000/oauth") // 프론트 서버 반영 (로컬 / 서버)
+                .encode()
+                .queryParam("Authorization", tokenDto.getAccessToken())
+                .queryParam("username", userDetails.getUsername())
+                .queryParam("nickname", userDetails.getNickname())
+//                .queryParam("profile", userDetails.getProfileImg())
+                .build().toUriString();
+        getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 }
