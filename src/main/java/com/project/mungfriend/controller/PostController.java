@@ -20,7 +20,7 @@ public class PostController {
         return postService.registerPost(username, requestDto);
     }
 
-    //게시글 전체 조회
+    //게시글 전체 조회(회원이든, 비회원이든 다 볼수있다)
     @GetMapping("/api/posts")
     public List<GetPostResponseDto> getAllPosts(){
         return postService.getAllPosts();

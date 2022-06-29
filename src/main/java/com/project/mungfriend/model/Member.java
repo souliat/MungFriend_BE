@@ -70,7 +70,7 @@ public class Member {
     private List<Review> giverReviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "applicant")
-    private List<Apply> applies = new ArrayList<>();
+    private List<Apply> applyList = new ArrayList<>();
 
     @Builder
     public Member(String username, String password, UserRole userRole, String nickname,

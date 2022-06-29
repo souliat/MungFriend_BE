@@ -15,7 +15,7 @@ public class SecurityUtil {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || authentication.getName() == null) {
-            throw  new RuntimeException("Security Context 에 인증 정보가 없습니다.");
+            throw new RuntimeException("Security Context 에 인증 정보가 없습니다.");
         }
         //authenticaion은 principal을 extends 받은 객체. getName() 메서드는 사용자의 이름을 넘겨주었다.
         //String type의 username (유저의 id)
