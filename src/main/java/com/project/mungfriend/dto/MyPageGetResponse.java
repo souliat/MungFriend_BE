@@ -1,5 +1,9 @@
-package com.project.mungfriend.model;
+package com.project.mungfriend.dto;
 
+import com.project.mungfriend.model.Dog;
+import com.project.mungfriend.model.Member;
+import com.project.mungfriend.model.Post;
+import com.project.mungfriend.model.Review;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

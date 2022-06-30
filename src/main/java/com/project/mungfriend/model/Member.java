@@ -2,7 +2,6 @@ package com.project.mungfriend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.mungfriend.enumeration.UserRole;
-import com.project.mungfriend.repository.MemberRepository;
 import lombok.*;
 
 import javax.persistence.*;
@@ -47,6 +46,7 @@ public class Member {
     @Column(nullable = false)
     private String introduce = "";
 
+
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private UserRole userRole = UserRole.USER;
@@ -84,6 +84,7 @@ public class Member {
         this.latitude = latitude;
         this.longitude = longitude;
         this.isAgree = isAgree;
+
     }
 
     public Member(String username, String email, String password, String nickname, UserRole userRole, String provider) {

@@ -1,13 +1,9 @@
 package com.project.mungfriend.controller;
 
 
-import com.project.mungfriend.model.Member;
-import com.project.mungfriend.model.MyPageGetResponse;
-import com.project.mungfriend.model.MyPageIntroduceOnly;
-import com.project.mungfriend.repository.MemberRepository;
+import com.project.mungfriend.dto.*;
 import com.project.mungfriend.service.MyPageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -18,6 +14,8 @@ public class MyPageController {
 
     private final MyPageService myPageService;
 
+
+
     @GetMapping("/member/mypage/{id}")
     public MyPageGetResponse getAllMyInfo(@PathVariable Long id) {
 //        String username = SecurityUtil.getCurrentMemberUsername();
@@ -25,21 +23,19 @@ public class MyPageController {
     }
 
 
-
+// Json형식으로 들어온 자기소개 정보를 Java로 바꿔서 연결시켜 준 후에
+// myPageService에 만들어 둔 메소드 updateIntroduce(updatePhoneNum)의 결과를 IntroduceRequestDto(updatePhoneNum)쪽으로 보낸다
     @PatchMapping("/member/mypage/introduce")
-    public ResponseEntity<MyPageIntroduceOnly> partialUpdateMyPage(
-            @RequestBody MyPageIntroduceOnly myPageIntroduceOnly) {
+    public IntroduceResponseDto updateIntroduce(@RequestBody IntroduceRequestDto requestDto) {
 
-        MemberRepository.save(id);
-        return ResponseEntity.ok();
+        return myPageService.updateIntroduce(requestDto);
     }
-//
-//    @PatchMapping("{Id}")
-//    public String updateMember(@PathVariable Long Id, @RequestBody MyPageGetResponseDto myPageGetResponseDto){
-//        Member member = myPageService.findById(Long Id);
-//        MyPageService.updateMember(member, myPageGetResponseDto));
-//
-//        return "update success";
-//    }
+
+    @PatchMapping("/member/mypage/phoneNum")
+    public PhoneNumResponseDto updatePhoneNum(@RequestBody PhoneNumRequestDto requestDto) {
+
+        return myPageService.updatePhoneNum(requestDto);
+    }
+
 
 }
