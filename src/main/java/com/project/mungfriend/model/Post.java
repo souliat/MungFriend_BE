@@ -37,9 +37,11 @@ public class Post extends Timestamped {
     private String dogProfileIds;
 
     @Column(nullable = false)
+    @JsonIgnore
     private Long applyCount = 0L;
 
     @Column(nullable = false)
+    @JsonIgnore
     private Boolean applyByMe = false;
 
     @Column(nullable = false)

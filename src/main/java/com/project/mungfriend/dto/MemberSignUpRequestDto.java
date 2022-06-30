@@ -22,7 +22,9 @@ public class MemberSignUpRequestDto {
     private String latitude;
 
     private String longitude;
+
     private Boolean isAgree;
+
 
     public Member toMember(PasswordEncoder passwordEncoder) {
         return Member.builder()
