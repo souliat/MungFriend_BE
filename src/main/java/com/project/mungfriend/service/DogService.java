@@ -1,5 +1,6 @@
 package com.project.mungfriend.service;
 
+import com.project.mungfriend.dto.DogCaptainResponseDto;
 import com.project.mungfriend.dto.DogProfileRequestDto;
 import com.project.mungfriend.dto.DogProfileResponseDto;
 import com.project.mungfriend.model.Dog;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 
@@ -75,5 +77,26 @@ public class DogService {
 
         dogRepository.deleteById(dog.getId());
         return new DogProfileResponseDto("true", "멍 프로필이 삭제 되었습니다.");
+    }
+
+    // 대표 멍멍이 선택
+    public DogCaptainResponseDto selectCaptainDog(Long id) {
+        String username = SecurityUtil.getCurrentMemberUsername();
+        Member member = memberRepository.findByUsername(username).orElseThrow(
+                () -> new IllegalArgumentException("해당하는 ID의 회원이 존재하지 않습니다."));
+
+        List<Dog> dogList = member.getDogList();
+
+        for (Dog dog : dogList) {
+            if(dog.getId().equals(id)) {
+                dog.setRepresentative(true);
+                dogRepository.save(dog);
+            }else {
+                dog.setRepresentative(false);
+                dogRepository.save(dog);
+            }
+        }
+
+        return new DogCaptainResponseDto("true", "대표 멍멍이가 바뀌었습니다.");
     }
 }

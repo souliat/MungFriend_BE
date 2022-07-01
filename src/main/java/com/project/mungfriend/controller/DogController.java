@@ -1,5 +1,6 @@
 package com.project.mungfriend.controller;
 
+import com.project.mungfriend.dto.DogCaptainResponseDto;
 import com.project.mungfriend.dto.DogProfileRequestDto;
 import com.project.mungfriend.dto.DogProfileResponseDto;
 import com.project.mungfriend.model.Dog;
@@ -35,5 +36,11 @@ public class DogController {
     @DeleteMapping("/api/dogs/{id}")
     public DogProfileResponseDto deleteProfile(@PathVariable Long id) {
         return dogService.deleteProfile(id);
+    }
+
+    // 대표 멍멍이 선택
+    @PutMapping("/api/dogs/{id}")
+    public DogCaptainResponseDto selectCaptainDog(@PathVariable Long id) {
+        return dogService.selectCaptainDog(id);
     }
 }
