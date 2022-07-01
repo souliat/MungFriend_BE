@@ -47,7 +47,7 @@ jobs:
         envs: GITHUB_SHA
         script: |
           docker pull souliat/mung-friend:${GITHUB_SHA::7}
-#          docker tag souliat/mung-friend:${GITHUB_SHA::7} mung-friend
+          docker tag souliat/mung-friend:${GITHUB_SHA::7} mung-friend
           docker stop server
-          docker run -d --rm --name server -p 80:8080 souliat/mung-friend:${GITHUB_SHA::7}
+          docker run -d --rm --name server -p 80:8080 mung-friend
 
