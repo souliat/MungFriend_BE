@@ -67,6 +67,20 @@ public class DogService {
         Member member = memberRepository.findByUsername(username).orElseThrow(
                 () -> new IllegalArgumentException("해당하는 ID의 회원이 존재하지 않습니다."));
 
+        // 대표 멍멍이가 삭제되었을 경우 첫번째 멍멍이를 대표멍멍이로 설정.
+        List<Dog> dogList = member.getDogList();
+        Boolean flag = false;
+        for (Dog dog : dogList) {
+            if (dog.isRepresentative() == true) {
+                flag = true;
+            }
+        }
+
+        if(!flag) {
+            dogList.get(0).setRepresentative(true);
+            dogRepository.save(dogList.get(0));
+        }
+
         return member.getDogList();
     }
 
