@@ -1,8 +1,8 @@
 package com.project.mungfriend.controller;
 
-import com.project.mungfriend.dto.DogCaptainResponseDto;
-import com.project.mungfriend.dto.DogProfileRequestDto;
-import com.project.mungfriend.dto.DogProfileResponseDto;
+import com.project.mungfriend.dto.dog.DogCaptainResponseDto;
+import com.project.mungfriend.dto.dog.DogProfileRequestDto;
+import com.project.mungfriend.dto.dog.DogProfileResponseDto;
 import com.project.mungfriend.model.Dog;
 import com.project.mungfriend.service.DogService;
 import lombok.RequiredArgsConstructor;

@@ -1,15 +1,8 @@
 package com.project.mungfriend.service;
 
-import com.project.mungfriend.dto.MailResponseDto;
+import com.project.mungfriend.dto.mail.MailResponseDto;
 import com.project.mungfriend.util.MailSender;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import javax.mail.*;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.util.Properties;
 
 @Service
 public class MailService {

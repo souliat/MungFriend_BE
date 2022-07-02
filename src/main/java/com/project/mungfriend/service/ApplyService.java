@@ -1,8 +1,8 @@
 package com.project.mungfriend.service;
 
-import com.project.mungfriend.dto.DeleteApplyResponseDto;
-import com.project.mungfriend.dto.PostApplyRequestDto;
-import com.project.mungfriend.dto.PostApplyResponseDto;
+import com.project.mungfriend.dto.apply.DeleteApplyResponseDto;
+import com.project.mungfriend.dto.apply.PostApplyRequestDto;
+import com.project.mungfriend.dto.apply.PostApplyResponseDto;
 import com.project.mungfriend.model.Apply;
 import com.project.mungfriend.model.Member;
 import com.project.mungfriend.model.Post;

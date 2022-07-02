@@ -1,7 +1,7 @@
 package com.project.mungfriend.controller;
 
 
-import com.project.mungfriend.dto.*;
+import com.project.mungfriend.dto.member.*;
 import com.project.mungfriend.service.MyPageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

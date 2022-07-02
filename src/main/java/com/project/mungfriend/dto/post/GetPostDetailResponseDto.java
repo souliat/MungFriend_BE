@@ -1,4 +1,4 @@
-package com.project.mungfriend.dto;
+package com.project.mungfriend.dto.post;
 
 import com.project.mungfriend.model.Apply;
 import com.project.mungfriend.model.Dog;

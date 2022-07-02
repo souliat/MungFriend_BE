@@ -1,7 +1,7 @@
 package com.project.mungfriend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.project.mungfriend.dto.PostReviewRequestDto;
+import com.project.mungfriend.dto.review.PostReviewRequestDto;
 import com.project.mungfriend.util.Timestamped;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

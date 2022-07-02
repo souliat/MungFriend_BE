@@ -1,6 +1,6 @@
 package com.project.mungfriend.controller;
 
-import com.project.mungfriend.dto.*;
+import com.project.mungfriend.dto.post.*;
 import com.project.mungfriend.security.SecurityUtil;
 import com.project.mungfriend.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +24,14 @@ public class PostController {
     @GetMapping("/api/posts")
     public List<GetPostResponseDto> getAllPosts(){
         return postService.getAllPosts();
+    }
+
+
+    //게시글 가까운 거리순 조회
+    @GetMapping("/api/posts/distance")
+    public List<GetPostResponseDto> getPostsByCalcDistance(){
+        String username = SecurityUtil.getCurrentMemberUsername();
+        return postService.getPostsByCalcDistance(username);
     }
 
     //게시글 상세 조회

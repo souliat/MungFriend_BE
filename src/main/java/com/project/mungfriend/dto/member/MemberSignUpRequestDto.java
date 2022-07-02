@@ -1,4 +1,4 @@
-package com.project.mungfriend.dto;
+package com.project.mungfriend.dto.member;
 
 import com.project.mungfriend.enumeration.UserRole;
 import com.project.mungfriend.model.Member;

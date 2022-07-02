@@ -1,4 +1,4 @@
-package com.project.mungfriend.dto;
+package com.project.mungfriend.dto.post;
 
 import com.project.mungfriend.model.Post;
 import lombok.Getter;
@@ -23,6 +23,8 @@ public class GetPostResponseDto {
     private Boolean applyByMe;
     private Boolean isComplete;
     private List<String> imagePath = new ArrayList<>();
+
+    private double distance;
 
     public GetPostResponseDto(Post post) {
         this.id = post.getId();

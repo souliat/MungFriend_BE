@@ -1,6 +1,6 @@
 package com.project.mungfriend.controller;
 
-import com.project.mungfriend.dto.MailResponseDto;
+import com.project.mungfriend.dto.mail.MailResponseDto;
 import com.project.mungfriend.service.MailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

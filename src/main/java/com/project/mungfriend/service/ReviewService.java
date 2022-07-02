@@ -1,8 +1,7 @@
 package com.project.mungfriend.service;
 
-import com.project.mungfriend.dto.PostReviewRequestDto;
-import com.project.mungfriend.dto.PostReviewResponseDto;
-import com.project.mungfriend.model.DogImageFile;
+import com.project.mungfriend.dto.review.PostReviewRequestDto;
+import com.project.mungfriend.dto.review.PostReviewResponseDto;
 import com.project.mungfriend.model.Member;
 import com.project.mungfriend.model.Review;
 import com.project.mungfriend.model.ReviewImageFile;
@@ -10,7 +9,6 @@ import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.repository.ReviewImageFileRepository;
 import com.project.mungfriend.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;

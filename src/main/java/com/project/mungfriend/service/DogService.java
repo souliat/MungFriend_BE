@@ -1,8 +1,8 @@
 package com.project.mungfriend.service;
 
-import com.project.mungfriend.dto.DogCaptainResponseDto;
-import com.project.mungfriend.dto.DogProfileRequestDto;
-import com.project.mungfriend.dto.DogProfileResponseDto;
+import com.project.mungfriend.dto.dog.DogCaptainResponseDto;
+import com.project.mungfriend.dto.dog.DogProfileRequestDto;
+import com.project.mungfriend.dto.dog.DogProfileResponseDto;
 import com.project.mungfriend.model.Dog;
 import com.project.mungfriend.model.DogImageFile;
 import com.project.mungfriend.model.Member;
@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 

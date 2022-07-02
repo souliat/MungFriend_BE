@@ -1,4 +1,4 @@
-package com.project.mungfriend.dto;
+package com.project.mungfriend.dto.mail;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,12 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostReviewResponseDto {
+public class MailResponseDto {
     private String status;
     private String message;
-
-    public void ok(){
-        this.status = "true";
-        this.message = "리뷰 작성 성공 ! !";
-    }
 }

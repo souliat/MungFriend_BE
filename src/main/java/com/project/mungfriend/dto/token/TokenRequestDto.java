@@ -1,4 +1,4 @@
-package com.project.mungfriend.dto;
+package com.project.mungfriend.dto.token;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
