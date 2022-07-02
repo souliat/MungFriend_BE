@@ -1,7 +1,7 @@
 package com.project.mungfriend.security.oauth.provider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.mungfriend.dto.TokenDto;
+import com.project.mungfriend.dto.token.TokenDto;
 import com.project.mungfriend.model.RefreshToken;
 import com.project.mungfriend.repository.RefreshTokenRepository;
 import com.project.mungfriend.security.UserDetailsImpl;
@@ -17,7 +17,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.charset.CharsetEncoder;
 
 @Slf4j
 @RequiredArgsConstructor

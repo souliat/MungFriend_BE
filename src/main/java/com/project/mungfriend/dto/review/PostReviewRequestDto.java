@@ -1,4 +1,4 @@
-package com.project.mungfriend.dto;
+package com.project.mungfriend.dto.review;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

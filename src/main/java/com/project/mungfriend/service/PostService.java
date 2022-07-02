@@ -1,6 +1,6 @@
 package com.project.mungfriend.service;
 
-import com.project.mungfriend.dto.*;
+import com.project.mungfriend.dto.post.*;
 import com.project.mungfriend.model.Dog;
 import com.project.mungfriend.model.DogImageFile;
 import com.project.mungfriend.model.Member;
@@ -9,7 +9,6 @@ import com.project.mungfriend.repository.ApplyRepository;
 import com.project.mungfriend.repository.DogRepository;
 import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.repository.PostRepository;
-import com.project.mungfriend.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

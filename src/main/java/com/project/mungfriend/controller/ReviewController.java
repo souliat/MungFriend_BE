@@ -1,8 +1,7 @@
 package com.project.mungfriend.controller;
 
-import com.project.mungfriend.dto.DogProfileRequestDto;
-import com.project.mungfriend.dto.PostReviewRequestDto;
-import com.project.mungfriend.dto.PostReviewResponseDto;
+import com.project.mungfriend.dto.review.PostReviewRequestDto;
+import com.project.mungfriend.dto.review.PostReviewResponseDto;
 import com.project.mungfriend.security.SecurityUtil;
 import com.project.mungfriend.service.ReviewService;
 import lombok.RequiredArgsConstructor;

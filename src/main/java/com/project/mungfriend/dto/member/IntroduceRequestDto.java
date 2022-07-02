@@ -1,5 +1,4 @@
-package com.project.mungfriend.dto;
-
+package com.project.mungfriend.dto.member;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,8 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-
-public class PhoneNumRequestDto {
-
-    private String phoneNum;
+public class IntroduceRequestDto {
+    private String introduce;
 }
+

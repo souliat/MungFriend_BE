@@ -1,9 +1,8 @@
 package com.project.mungfriend.service;
 
-import com.project.mungfriend.dto.*;
+import com.project.mungfriend.dto.member.*;
 import com.project.mungfriend.model.Apply;
 import com.project.mungfriend.model.Member;
-import com.project.mungfriend.model.Post;
 import com.project.mungfriend.repository.ApplyRepository;
 import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.repository.PostRepository;
@@ -12,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

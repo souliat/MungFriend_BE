@@ -1,7 +1,7 @@
 package com.project.mungfriend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.project.mungfriend.dto.DogProfileRequestDto;
+import com.project.mungfriend.dto.dog.DogProfileRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

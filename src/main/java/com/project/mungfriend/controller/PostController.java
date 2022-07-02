@@ -1,6 +1,6 @@
 package com.project.mungfriend.controller;
 
-import com.project.mungfriend.dto.*;
+import com.project.mungfriend.dto.post.*;
 import com.project.mungfriend.security.SecurityUtil;
 import com.project.mungfriend.service.PostService;
 import lombok.RequiredArgsConstructor;

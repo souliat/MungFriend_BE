@@ -1,4 +1,4 @@
-package com.project.mungfriend.dto;
+package com.project.mungfriend.dto.post;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,14 +7,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PhoneNumResponseDto {
-
+public class DeletePostResponseDto {
     private String status;
     private String message;
 
-    public void ok() {
+    public void ok(){
         this.status = "true";
-        this.message = "정보 등록 성공!";
+        this.message = "게시글 삭제 성공 ! !";
     }
-
 }

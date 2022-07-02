@@ -1,18 +1,19 @@
 package com.project.mungfriend.service;
 
-import com.project.mungfriend.dto.*;
+import com.project.mungfriend.dto.member.MemberLoginRequestDto;
+import com.project.mungfriend.dto.member.MemberSignUpRequestDto;
+import com.project.mungfriend.dto.member.MemberSignUpResponseDto;
+import com.project.mungfriend.dto.token.TokenDto;
+import com.project.mungfriend.dto.token.TokenRequestDto;
 import com.project.mungfriend.model.Member;
 import com.project.mungfriend.model.RefreshToken;
 import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.repository.RefreshTokenRepository;
-import com.project.mungfriend.security.SecurityUtil;
 import com.project.mungfriend.security.jwt.TokenProvider;
-import com.project.mungfriend.util.MailSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

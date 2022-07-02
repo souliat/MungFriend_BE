@@ -1,8 +1,8 @@
 package com.project.mungfriend.controller;
 
-import com.project.mungfriend.dto.DeleteApplyResponseDto;
-import com.project.mungfriend.dto.PostApplyRequestDto;
-import com.project.mungfriend.dto.PostApplyResponseDto;
+import com.project.mungfriend.dto.apply.DeleteApplyResponseDto;
+import com.project.mungfriend.dto.apply.PostApplyRequestDto;
+import com.project.mungfriend.dto.apply.PostApplyResponseDto;
 import com.project.mungfriend.security.SecurityUtil;
 import com.project.mungfriend.service.ApplyService;
 import lombok.RequiredArgsConstructor;

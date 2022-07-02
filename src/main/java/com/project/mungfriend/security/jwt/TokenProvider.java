@@ -1,6 +1,6 @@
 package com.project.mungfriend.security.jwt;
 
-import com.project.mungfriend.dto.TokenDto;
+import com.project.mungfriend.dto.token.TokenDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

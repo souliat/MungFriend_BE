@@ -1,4 +1,4 @@
-package com.project.mungfriend.dto;
+package com.project.mungfriend.dto.member;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,12 +7,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RegisterPostResponseDto {
+public class IntroduceResponseDto {
+
     private String status;
     private String message;
 
-    public void ok(){
+    public void ok() {
         this.status = "true";
-        this.message = "게시글 작성 성공 ! !";
+        this.message = "정보 등록 성공!";
     }
 }

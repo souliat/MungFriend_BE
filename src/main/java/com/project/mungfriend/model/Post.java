@@ -1,9 +1,8 @@
 package com.project.mungfriend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.project.mungfriend.dto.PutPostRequestDto;
-import com.project.mungfriend.dto.RegisterPostRequestDto;
-import com.project.mungfriend.enumeration.Category;
+import com.project.mungfriend.dto.post.PutPostRequestDto;
+import com.project.mungfriend.dto.post.RegisterPostRequestDto;
 import com.project.mungfriend.util.Timestamped;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
