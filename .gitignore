@@ -39,3 +39,5 @@ out/
 application.properties
 application-configuration.properties
 src/main/resources/application-oauth.properties
+mung-friend
+mung-friend.pub
