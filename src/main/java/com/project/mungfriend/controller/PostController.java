@@ -26,6 +26,14 @@ public class PostController {
         return postService.getAllPosts();
     }
 
+
+    //게시글 가까운 거리순 조회
+    @GetMapping("/api/posts/distance")
+    public List<GetPostResponseDto> getPostsByCalcDistance(){
+        String username = SecurityUtil.getCurrentMemberUsername();
+        return postService.getPostsByCalcDistance(username);
+    }
+
     //게시글 상세 조회
     @GetMapping("/api/posts/{id}")
     public GetPostDetailResponseDto getPostDetail(@PathVariable Long id){

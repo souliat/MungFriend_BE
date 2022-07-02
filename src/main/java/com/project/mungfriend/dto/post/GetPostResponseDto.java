@@ -24,6 +24,8 @@ public class GetPostResponseDto {
     private Boolean isComplete;
     private List<String> imagePath = new ArrayList<>();
 
+    private double distance;
+
     public GetPostResponseDto(Post post) {
         this.id = post.getId();
         this.title = post.getTitle();
