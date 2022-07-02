@@ -9,12 +9,13 @@ import com.project.mungfriend.repository.ApplyRepository;
 import com.project.mungfriend.repository.DogRepository;
 import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.repository.PostRepository;
+import com.project.mungfriend.util.DistanceCalculator;
+import com.project.mungfriend.util.DistanceComparator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -50,26 +51,40 @@ public class PostService {
             GetPostResponseDto getPostResponseDto = new GetPostResponseDto(post);
 
             // 신청자 수 세팅. 2022-06-28 인기천 추가.
-            Long applyCount = applyRepository.countByPostId(post.getId());
-            getPostResponseDto.setApplyCount(applyCount);
-
-            List<String> imagePath = getPostResponseDto.getImagePath();
-
-            String dogProfileIds = post.getDogProfileIds();
-            String[] dogProfileIdsArr = dogProfileIds.split(",");
-            for (String s : dogProfileIdsArr) {
-                Dog dog = dogRepository.findById(Long.parseLong(s)).orElseThrow(
-                        () -> new IllegalArgumentException("해당 ID의 멍멍이 프로필이 존재하지 않습니다.")
-                );
-                DogImageFile dogImageFile = dog.getDogImageFiles().get(0);
-                String imageUrl = dogImageFile.getImageUrl();
-                imagePath.add(imageUrl);
-            }
-
+            setApplyCntAndImgPath(post, getPostResponseDto);
             postResponseDtoList.add(getPostResponseDto);
         }
         return postResponseDtoList;
     }
+
+
+
+    // 게시글 가까운 거리순 조회
+    public List<GetPostResponseDto> getPostsByCalcDistance(String username) {
+        Member member = memberRepository.findByUsername(username).orElseThrow(
+                () -> new IllegalArgumentException("가까운 거리순 게시글 조회는 로그인 후 사용 가능합니다.")
+        );
+
+        List<GetPostResponseDto> postResponseDtoList = new ArrayList<>();
+        List<Post> postList = postRepository.findAll();
+
+        for (Post post : postList){
+            GetPostResponseDto getPostResponseDto = new GetPostResponseDto(post);
+
+            // 로그인한 유저의 위치와 게시글 작성자의 거리를 계산하여 같이 저장한다.
+            getPostResponseDto.setDistance(DistanceCalculator.calcDistance(Double.parseDouble(member.getLatitude()), Double.parseDouble(member.getLongitude()),
+                    Double.parseDouble(post.getMember().getLatitude()), Double.parseDouble(post.getMember().getLongitude()), "kilometer"));
+
+            // 신청자 수 세팅. 2022-06-28 인기천 추가.
+            setApplyCntAndImgPath(post, getPostResponseDto);
+            postResponseDtoList.add(getPostResponseDto);
+        }
+        // util에 정의한 DistanceComparator를 활용하여 정렬하기 (가까운 것이 맨 위)
+        postResponseDtoList.sort(new DistanceComparator());
+        return postResponseDtoList;
+    }
+
+
 
     //게시글 상세 조회
     public GetPostDetailResponseDto getPostDetail(Long id, String username) {
@@ -146,5 +161,24 @@ public class PostService {
         DeletePostResponseDto responseDto = new DeletePostResponseDto();
         responseDto.ok();
         return responseDto;
+    }
+
+    // 신청 수 계산과 이미지 url 저장하는 로직은 리팩터링
+    private void setApplyCntAndImgPath(Post post, GetPostResponseDto getPostResponseDto) {
+        Long applyCount = applyRepository.countByPostId(post.getId());
+        getPostResponseDto.setApplyCount(applyCount);
+
+        List<String> imagePath = getPostResponseDto.getImagePath();
+
+        String dogProfileIds = post.getDogProfileIds();
+        String[] dogProfileIdsArr = dogProfileIds.split(",");
+        for (String s : dogProfileIdsArr) {
+            Dog dog = dogRepository.findById(Long.parseLong(s)).orElseThrow(
+                    () -> new IllegalArgumentException("해당 ID의 멍멍이 프로필이 존재하지 않습니다.")
+            );
+            DogImageFile dogImageFile = dog.getDogImageFiles().get(0);
+            String imageUrl = dogImageFile.getImageUrl();
+            imagePath.add(imageUrl);
+        }
     }
 }
