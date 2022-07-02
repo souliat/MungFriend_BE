@@ -29,6 +29,12 @@ public class ApplyService {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new NullPointerException("해당 하는 id의 게시글이 없습니다."));
 
+        // 이미 신청했다면 또 신청되지 않게 하기
+        Boolean applyByMe = applyRepository.existsByApplicantIdAndPostId(member.getId(), post.getId());
+        if (applyByMe) {
+            throw new IllegalArgumentException("이미 신청하였으므로 또 신청할 수 없습니다.");
+        }
+
         Apply apply = new Apply(requestDto);
         apply.setMember(member);
         apply.setPost(post);
