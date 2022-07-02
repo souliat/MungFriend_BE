@@ -7,6 +7,7 @@ import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.repository.RefreshTokenRepository;
 import com.project.mungfriend.security.SecurityUtil;
 import com.project.mungfriend.security.jwt.TokenProvider;
+import com.project.mungfriend.util.MailSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -26,21 +27,18 @@ public class MemberService {
     private final RefreshTokenRepository refreshTokenRepository;
     public MemberSignUpResponseDto signup(MemberSignUpRequestDto memberRequestDto) {
         if (memberRepository.existsByUsername(memberRequestDto.getUsername())) {
-            //throw new RuntimeException("중복된 username입니다");
             String status = "false";
             String message = "중복된 아이디가 존재합니다.";
             return MemberSignUpResponseDto.of(status, message);
         }
 
         if (memberRepository.existsByEmail(memberRequestDto.getEmail())) {
-            //throw new RuntimeException("중복된 username입니다");
             String status = "false";
             String message = "중복된 이메일이 존재합니다.";
             return MemberSignUpResponseDto.of(status, message);
         }
 
         if (memberRepository.existsByNickname(memberRequestDto.getNickname())) {
-            //throw new RuntimeException("중복된 username입니다");
             String status = "false";
             String message = "중복된 닉네임이 존재합니다.";
             return MemberSignUpResponseDto.of(status, message);
@@ -50,6 +48,10 @@ public class MemberService {
         String message = "회원가입 성공 ! !";
 
         Member member = memberRequestDto.toMember(passwordEncoder);
+
+        //회원 가입 축하 메일 보내기 (일단 주석 처리 해둠)
+        //MailSender.sendMail(member.getEmail(), "회원가입을 축하드립니다!", "환영합니다. 우리의 멍친구!");
+
         return MemberSignUpResponseDto.of(memberRepository.save(member), status, message);
     }
 

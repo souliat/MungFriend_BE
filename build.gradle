@@ -44,6 +44,10 @@ dependencies {
 
     //S3업로더
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+    // java mail API
+    implementation group: 'javax.mail', name: 'mail', version: '1.4.7'
+
 }
 
 tasks.named('test') {
