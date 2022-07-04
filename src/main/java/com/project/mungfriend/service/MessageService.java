@@ -8,6 +8,6 @@ import org.springframework.stereotype.Service;
 public class MessageService {
 
     public void sendMessage() {
-        MessageSender.sendSMS();
+        MessageSender.sendSMS("0100101", "아무내용");
     }
 }
