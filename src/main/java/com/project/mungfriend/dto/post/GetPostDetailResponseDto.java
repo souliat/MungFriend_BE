@@ -25,6 +25,10 @@ public class GetPostDetailResponseDto {
     private Long applyCount;
     private Boolean applyByMe;
     private Boolean isComplete;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
+
     private List<Apply> applyList = new ArrayList<>();
     private List<Dog> dogList = new ArrayList<>();
 
@@ -39,5 +43,7 @@ public class GetPostDetailResponseDto {
         this.applyCount = post.getApplyCount();
         this.applyByMe = post.getApplyByMe();
         this.isComplete = post.getIsComplete();
+        this.createdAt = post.getCreatedAt();
+        this.modifiedAt = post.getModifiedAt();
     }
 }
