@@ -13,7 +13,7 @@ import java.util.Properties;
 @Component
 public class MailSender {
 
-    private static final String user = "rlafbf222@naver.com";
+    private static final String user = "mungfriend.official@gmail.com";
     private static String password;
 
     @Value("${spring.mail.password}")
@@ -24,12 +24,12 @@ public class MailSender {
     // 해당 메서드의 파라미터에는 받는 사람의 이메일 주소, 메일 제목, 메일 본문을 넣어준다.
     public static void sendMail(String recieverMailAddr, String subject, String Text){
         Properties prop = new Properties();
-        prop.put("mail.smtp.host", "smtp.naver.com");
-        prop.put("mail.smtp.port", 587);
+        prop.put("mail.smtp.host", "smtp.gmail.com");
+        prop.put("mail.smtp.port", 465);
         prop.put("mail.smtp.auth", "true");
-//        https (SSL) 구매 시 살리기
-//        prop.put("mail.smtp.ssl.enable", "true");
-//        prop.put("mail.smtp.ssl.trust", "smtp.naver.com");
+        //구글은 아래 코드 살려줘야하나?? 안되면 아래 두 줄 주석처리 후 테스트!
+        prop.put("mail.smtp.ssl.enable", "true");
+        prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 
         Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
