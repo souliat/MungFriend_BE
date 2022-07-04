@@ -36,6 +36,10 @@ public class MatchService {
                 () -> new NullPointerException("해당하는 게시글을 찾을 수 없습니다.")
         );
 
+        if (post.getMatchedApplicantId() != null) {
+            return new MatchResponseDto("false", "이미 매칭이 완료된 요청입니다.");
+        }
+
         post.setMatchedApplicantId(id); // post 엔티티에 매칭된 신청자의 고유값 저장.
         post.setIsComplete(true);  // 게시글의 상태는 모집 종료로 변경
         postRepository.save(post);
