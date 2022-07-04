@@ -56,19 +56,19 @@ public class MyPageService {
         return responseDto;
     }
 
-    public PhoneNumResponseDto updatePhoneNum(PhoneNumRequestDto requestDto) {
-
-        String username = SecurityUtil.getCurrentMemberUsername();
-        Member member = memberRepository.findByUsername(username).orElseThrow(
-                () -> new IllegalArgumentException("해당하는 ID의 회원이 존재하지 않습니다."));
-
-
-        member.setPhoneNum(requestDto.getPhoneNum());
-        memberRepository.save(member);
-
-        PhoneNumResponseDto responseDto = new PhoneNumResponseDto();
-        responseDto.ok();
-        return responseDto;
-    }
+//    public PhoneNumResponseDto updatePhoneNum(PhoneNumRequestDto requestDto) {
+//
+//        String username = SecurityUtil.getCurrentMemberUsername();
+//        Member member = memberRepository.findByUsername(username).orElseThrow(
+//                () -> new IllegalArgumentException("해당하는 ID의 회원이 존재하지 않습니다."));
+//
+//
+//        member.setPhoneNum(requestDto.getPhoneNum());
+//        memberRepository.save(member);
+//
+//        PhoneNumResponseDto responseDto = new PhoneNumResponseDto();
+//        responseDto.ok();
+//        return responseDto;
+//    }
 
 }

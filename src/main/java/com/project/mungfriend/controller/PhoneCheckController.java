@@ -2,6 +2,7 @@ package com.project.mungfriend.controller;
 
 import com.project.mungfriend.dto.member.PhoneCheckOkRequestDto;
 import com.project.mungfriend.dto.member.PhoneCheckRequestDto;
+import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.service.MemberService;
 import com.project.mungfriend.service.PhoneCheckService;
 import org.springframework.stereotype.Controller;
@@ -21,12 +22,9 @@ public class PhoneCheckController {
 
     public Boolean phoneAuth(@RequestBody PhoneCheckRequestDto requestDto, HttpServletRequest request) {
 
-//        try { // 이미 가입된 전화번호가 있으면
-//            if(PhoneCheckService.memberTelCount(tel) > 0)
-//                return true;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+            if(MemberRepository.existsByphoneNum(request))
+
+        }
 
         String code = PhoneCheckService.sendRandomMessage(requestDto.getPhoneNum());
         request.getSession().setAttribute("rand", code);

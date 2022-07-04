@@ -25,17 +25,13 @@ public class MyPageController {
 
 // Json형식으로 들어온 자기소개 정보를 Java로 바꿔서 연결시켜 준 후에
 // myPageService에 만들어 둔 메소드 updateIntroduce(updatePhoneNum)의 결과를 IntroduceRequestDto(updatePhoneNum)쪽으로 보낸다
-    @PatchMapping("/member/mypage/introduce")
+    @PatchMapping("/mypage/introduce")
     public IntroduceResponseDto updateIntroduce(@RequestBody IntroduceRequestDto requestDto) {
 
         return myPageService.updateIntroduce(requestDto);
     }
 
-    @PatchMapping("/member/mypage/phoneNum")
-    public PhoneNumResponseDto updatePhoneNum(@RequestBody PhoneNumRequestDto requestDto) {
 
-        return myPageService.updatePhoneNum(requestDto);
-    }
 
 
 }
