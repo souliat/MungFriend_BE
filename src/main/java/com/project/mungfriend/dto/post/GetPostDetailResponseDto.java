@@ -17,6 +17,8 @@ import java.util.List;
 public class GetPostDetailResponseDto {
     private Long id;
     private String nickname;
+
+    private String dogProfileImgUrl;
     private String title;
     private String content;
     private String address;
