@@ -26,6 +26,8 @@ public class GetPostDetailResponseDto {
     private Boolean applyByMe;
     private Boolean isComplete;
 
+    private Long matchedApplicantId;
+
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
