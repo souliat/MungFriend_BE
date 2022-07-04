@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -141,6 +142,9 @@ public class MemberService {
 
         GetUserInfoResponseDto responseDto = new GetUserInfoResponseDto(member);
         List<Review> reviewList = responseDto.getReviewList();
+
+        // 역순으로 최신 리뷰 3개 !
+        Collections.reverse(reviewList);
 
         for (Review review : takerReviews) {
             reviewList.add(review);
