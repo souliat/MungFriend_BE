@@ -144,7 +144,7 @@ public class MemberService {
         List<Review> reviewList = responseDto.getReviewList();
 
         // 역순으로 최신 리뷰 3개 !
-        Collections.reverse(reviewList);
+        Collections.reverse(takerReviews);
 
         for (Review review : takerReviews) {
             reviewList.add(review);
