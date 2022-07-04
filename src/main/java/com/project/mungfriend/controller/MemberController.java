@@ -35,14 +35,14 @@ public class MemberController {
     }
 
     // 로그인한 사용자의 정보 리턴 (id, nickname, username)
-    @GetMapping("/member/myinfo")
+    @GetMapping("/myinfo")
     public GetMyInfoResponseDto getMyInfo(){
         String username = SecurityUtil.getCurrentMemberUsername();
         return memberService.getMyInfo(username);
     }
 
     // 상세페이지에서 닉네임 클릭 시 해당 회원의 정보 리턴
-    @GetMapping("/member/userinfo/{id}")
+    @GetMapping("/userinfo/{id}")
     public GetUserInfoResponseDto getUserInfo(@PathVariable Long id){
         return memberService.getUserInfo(id);
     }
