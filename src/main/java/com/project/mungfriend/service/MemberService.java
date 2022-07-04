@@ -1,12 +1,11 @@
 package com.project.mungfriend.service;
 
-import com.project.mungfriend.dto.member.MemberLoginRequestDto;
-import com.project.mungfriend.dto.member.MemberSignUpRequestDto;
-import com.project.mungfriend.dto.member.MemberSignUpResponseDto;
+import com.project.mungfriend.dto.member.*;
 import com.project.mungfriend.dto.token.TokenDto;
 import com.project.mungfriend.dto.token.TokenRequestDto;
 import com.project.mungfriend.model.Member;
 import com.project.mungfriend.model.RefreshToken;
+import com.project.mungfriend.model.Review;
 import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.repository.RefreshTokenRepository;
 import com.project.mungfriend.security.jwt.TokenProvider;
@@ -16,6 +15,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -119,5 +122,38 @@ public class MemberService {
 
         // 토큰 발급
         return tokenDto;
+    }
+
+    // 로그인한 사용자의 정보 리턴
+    public GetMyInfoResponseDto getMyInfo(String username) {
+        Member member = memberRepository.findByUsername(username).orElseThrow(
+                () -> new IllegalArgumentException("일치하는 회원 정보가 없습니다.")
+        );
+        return new GetMyInfoResponseDto(member);
+    }
+
+    // 상세페이지에서 닉네임 클릭 시 해당 회원의 정보 리턴
+    public GetUserInfoResponseDto getUserInfo(Long id) {
+        Member member = memberRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("일치하는 회원 정보가 없습니다.")
+        );
+
+        List<Review> takerReviews = member.getTakerReviews();
+
+        GetUserInfoResponseDto responseDto = new GetUserInfoResponseDto(member);
+        List<Review> reviewList = responseDto.getReviewList();
+
+        // 역순으로 최신 리뷰 3개 !
+        Collections.reverse(takerReviews);
+
+        for (Review review : takerReviews) {
+            reviewList.add(review);
+            if(reviewList.size() == 3){
+                break;
+            }
+        }
+
+        return responseDto;
+
     }
 }

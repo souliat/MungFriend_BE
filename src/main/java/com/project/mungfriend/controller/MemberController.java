@@ -1,15 +1,15 @@
 package com.project.mungfriend.controller;
 
-import com.project.mungfriend.dto.member.MemberLoginRequestDto;
-import com.project.mungfriend.dto.member.MemberSignUpRequestDto;
-import com.project.mungfriend.dto.member.MemberSignUpResponseDto;
+import com.project.mungfriend.dto.member.*;
 import com.project.mungfriend.dto.token.TokenDto;
 import com.project.mungfriend.dto.token.TokenRequestDto;
+import com.project.mungfriend.security.SecurityUtil;
 import com.project.mungfriend.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -29,9 +29,22 @@ public class MemberController {
         return ResponseEntity.ok(memberService.login(memberRequestDto));
     }
 
-    @PostMapping("/user/reissue")
+    @PostMapping("/member/reissue")
     public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
         return ResponseEntity.ok(memberService.reissue(tokenRequestDto));
+    }
+
+    // 로그인한 사용자의 정보 리턴 (id, nickname, username)
+    @GetMapping("/myinfo")
+    public GetMyInfoResponseDto getMyInfo(){
+        String username = SecurityUtil.getCurrentMemberUsername();
+        return memberService.getMyInfo(username);
+    }
+
+    // 상세페이지에서 닉네임 클릭 시 해당 회원의 정보 리턴
+    @GetMapping("/userinfo/{id}")
+    public GetUserInfoResponseDto getUserInfo(@PathVariable Long id){
+        return memberService.getUserInfo(id);
     }
 
 
