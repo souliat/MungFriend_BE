@@ -8,10 +8,7 @@ import com.project.mungfriend.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,6 +33,7 @@ public class MemberController {
 
     // 로그인한 사용자의 정보 리턴 (id, nickname, username)
     @GetMapping("/myinfo")
+    @ResponseBody
     public GetMyInfoResponseDto getMyInfo(){
         String username = SecurityUtil.getCurrentMemberUsername();
         return memberService.getMyInfo(username);
@@ -43,6 +41,7 @@ public class MemberController {
 
     // 상세페이지에서 닉네임 클릭 시 해당 회원의 정보 리턴
     @GetMapping("/userinfo/{id}")
+    @ResponseBody
     public GetUserInfoResponseDto getUserInfo(@PathVariable Long id){
         return memberService.getUserInfo(id);
     }
