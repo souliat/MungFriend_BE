@@ -100,6 +100,8 @@ public class PostService {
 
         GetPostDetailResponseDto responseDto = new GetPostDetailResponseDto(post);
 
+        responseDto.setDogProfileImgUrl(member.getDogProfileImgUrl());
+
         // 신청자 수, 내가 신청했는지 아닌지 여부 판단 추가. 2022-06-28 인기천.
         Long applyCount = applyRepository.countByPostId(post.getId());
         Boolean applyByMe = applyRepository.existsByApplicantIdAndPostId(member.getId(), post.getId());
