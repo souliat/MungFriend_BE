@@ -29,6 +29,8 @@ public class Review extends Timestamped{
 
     private String giverNickname;
 
+    private String giverDogProfileImgUrl = "";
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name="TAKER_ID")
@@ -45,6 +47,7 @@ public class Review extends Timestamped{
     public Review(Member giver, Member taker, PostReviewRequestDto requestDto) {
         this.giver = giver;
         this.giverNickname = giver.getNickname();
+        this.giverDogProfileImgUrl = giver.getDogProfileImgUrl();
 
         this.taker = taker;
 
