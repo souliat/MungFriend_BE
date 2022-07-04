@@ -68,20 +68,6 @@ public class DogService {
         Member member = memberRepository.findByUsername(username).orElseThrow(
                 () -> new IllegalArgumentException("해당하는 ID의 회원이 존재하지 않습니다."));
 
-        // 대표 멍멍이가 삭제되었을 경우 첫번째 멍멍이를 대표멍멍이로 설정.
-        List<Dog> dogList = member.getDogList();
-        Boolean flag = false;
-        for (Dog dog : dogList) {
-            if (dog.isRepresentative() == true) {
-                flag = true;
-            }
-        }
-
-        if(!flag) {
-            dogList.get(0).setRepresentative(true);
-            dogRepository.save(dogList.get(0));
-        }
-
         return member.getDogList();
     }
 
@@ -94,11 +80,20 @@ public class DogService {
         Member member = memberRepository.findByUsername(username).orElseThrow(
                 () -> new IllegalArgumentException("해당하는 ID의 회원이 존재하지 않습니다."));
 
+        dogRepository.deleteById(dog.getId());
+
         // 만약 삭제하는 멍멍이가 대표 멍멍이라면 사용자의 대표 멍멍이 사진도 빈 값으로 set
         if (dog.isRepresentative()) {
-            setDogProfileImgUrl(member, "");
+
+            // 대표 멍멍이가 삭제되었을 경우 첫번째 멍멍이를 대표멍멍이로 설정.
+            List<Dog> dogList = member.getDogList();
+            Dog representativeDog = dogList.get(0);
+            representativeDog.setRepresentative(true);
+            dogRepository.save(representativeDog);
+
+            setDogProfileImgUrl(member, representativeDog.getDogImageFiles().get(0).getImageUrl());
         }
-        dogRepository.deleteById(dog.getId());
+
         return new DogProfileResponseDto("true", "멍 프로필이 삭제 되었습니다.");
     }
 
