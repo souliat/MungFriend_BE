@@ -22,7 +22,7 @@ public class MailSender {
     }
 
     // 해당 메서드의 파라미터에는 받는 사람의 이메일 주소, 메일 제목, 메일 본문을 넣어준다.
-    public static void sendMail(String recieverMailAddr, String subject, String Text){
+    public static void sendMail(String recieverMailAddr, String subject, String text){
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "smtp.naver.com");
         prop.put("mail.smtp.port", 587);
@@ -46,7 +46,7 @@ public class MailSender {
             //제목
             message.setSubject(subject);
             //본문
-            message.setText(Text);
+            message.setText(text);
             //메일 보내기
             Transport.send(message);
             System.out.println("메일 전송 완료!");
