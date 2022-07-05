@@ -1,5 +1,6 @@
 package com.project.mungfriend.controller;
 
+import com.project.mungfriend.dto.DeleteImgRequestDto;
 import com.project.mungfriend.dto.review.PostReviewRequestDto;
 import com.project.mungfriend.dto.review.PostReviewResponseDto;
 import com.project.mungfriend.security.SecurityUtil;
@@ -31,7 +32,7 @@ public class ReviewController {
 
     // s3 이미지 삭제 테스트
     @DeleteMapping("/api/reviews")
-    public void deleteImg(){
-        reviewService.deleteTest();
+    public void deleteImg(DeleteImgRequestDto requestDto){
+        reviewService.deleteTest(requestDto.getKey());
     }
 }

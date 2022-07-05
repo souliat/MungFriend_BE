@@ -60,7 +60,7 @@ public class ReviewService {
 
     //S3 버킷 객체 삭제
     //key 형식: "static/uuid.jpg"
-    public void deleteTest() {
-        s3Uploader.deleteS3("static/12e43bb8-3545-4bb1-88b0-41031.jpg");
+    public void deleteTest(String key) {
+        s3Uploader.deleteS3("static/" + key);
     }
 }
