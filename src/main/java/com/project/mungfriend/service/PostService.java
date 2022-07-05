@@ -33,6 +33,11 @@ public class PostService {
         Member member = memberRepository.findByUsername(username).orElseThrow(
                 () -> new IllegalArgumentException("게시글 작성은 로그인 후 가능합니다.")
         );
+
+        if (!requestDto.getRequestStartDate().isBefore(requestDto.getRequestEndDate())) {
+            throw new IllegalArgumentException("종료 날짜가 시작 날짜보다 빠를 수 없습니다.");
+        }
+
         Post post = new Post(requestDto);
         post.setMember(member);
         postRepository.save(post);
