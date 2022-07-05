@@ -72,8 +72,11 @@ public class PostService {
             GetPostResponseDto getPostResponseDto = new GetPostResponseDto(post);
 
             // 로그인한 유저의 위치와 게시글 작성자의 거리를 계산하여 같이 저장한다.
-            getPostResponseDto.setDistance(DistanceCalculator.calcDistance(Double.parseDouble(member.getLatitude()), Double.parseDouble(member.getLongitude()),
-                    Double.parseDouble(post.getMember().getLatitude()), Double.parseDouble(post.getMember().getLongitude()), "kilometer"));
+            getPostResponseDto.setDistance(DistanceCalculator.calcDistance(
+                    Double.parseDouble(member.getLatitude()),
+                    Double.parseDouble(member.getLongitude()),
+                    Double.parseDouble(post.getMember().getLatitude()),
+                    Double.parseDouble(post.getMember().getLongitude()), "kilometer"));
 
             // 신청자 수 세팅. 2022-06-28 인기천 추가.
             setApplyCntAndImgPath(post, getPostResponseDto);
@@ -94,13 +97,19 @@ public class PostService {
         );
 
         Member member = memberRepository.findByUsername(username).orElseThrow(
-                () -> new IllegalArgumentException("게시글 작성은 로그인 후 가능합니다.")
+                () -> new IllegalArgumentException("게시글 상세 조회는 로그인 후 가능합니다.")
         );
-
 
         GetPostDetailResponseDto responseDto = new GetPostDetailResponseDto(post);
 
-        responseDto.setDogProfileImgUrl(member.getDogProfileImgUrl());
+        responseDto.setDogProfileImgUrl(post.getMember().getDogProfileImgUrl());
+
+        // 로그인한 사용자와 게시글 작성자 간 거리 (단위: km)
+//        responseDto.setDistance(DistanceCalculator.calcDistance(
+//                Double.parseDouble(member.getLatitude()),
+//                Double.parseDouble(member.getLongitude()),
+//                Double.parseDouble(post.getMember().getLatitude()),
+//                Double.parseDouble(post.getMember().getLongitude()), "kilometer"));
 
         // 신청자 수, 내가 신청했는지 아닌지 여부 판단 추가. 2022-06-28 인기천.
         Long applyCount = applyRepository.countByPostId(post.getId());
