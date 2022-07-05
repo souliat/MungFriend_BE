@@ -12,6 +12,8 @@ import com.project.mungfriend.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 @RequiredArgsConstructor
 public class ApplyService {
@@ -28,6 +30,11 @@ public class ApplyService {
 
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new NullPointerException("해당 하는 id의 게시글이 없습니다."));
+
+        //나의 게시글에 신청하지 못하게 하기
+        if(Objects.equals(post.getMember().getId(), member.getId())){
+            throw new IllegalArgumentException("나의 게시글에는 신청할 수 없습니다.");
+        }
 
         // 이미 신청했다면 또 신청되지 않게 하기
         Boolean applyByMe = applyRepository.existsByApplicantIdAndPostId(member.getId(), post.getId());

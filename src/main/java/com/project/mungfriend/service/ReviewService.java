@@ -57,4 +57,8 @@ public class ReviewService {
         responseDto.ok();
         return responseDto;
     }
+
+    public void deleteTest() {
+        s3Uploader.deleteS3("static/4906e9c1-cb52-4e89-a450-40e9553b5dddimg_con03030100_01");
+    }
 }
