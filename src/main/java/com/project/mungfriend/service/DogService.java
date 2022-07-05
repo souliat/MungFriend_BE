@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -80,18 +81,22 @@ public class DogService {
         Member member = memberRepository.findByUsername(username).orElseThrow(
                 () -> new IllegalArgumentException("해당하는 ID의 회원이 존재하지 않습니다."));
 
+        // S3 버킷에서 등록했던 이미지 삭제
+        String imageUrl = dog.getDogImageFiles().get(0).getImageUrl();
+        String[] splitArray = imageUrl.split("com/");
+        String key = splitArray[1];
+        s3Uploader.deleteS3(key);
+
         dogRepository.deleteById(dog.getId());
 
-        // 만약 삭제하는 멍멍이가 대표 멍멍이라면 사용자의 대표 멍멍이 사진도 빈 값으로 set
-        if (dog.isRepresentative()) {
-
-            // 대표 멍멍이가 삭제되었을 경우 첫번째 멍멍이를 대표멍멍이로 설정.
+        if(dog.isRepresentative()) {
             List<Dog> dogList = member.getDogList();
-            Dog representativeDog = dogList.get(0);
-            representativeDog.setRepresentative(true);
-            dogRepository.save(representativeDog);
-
-            setDogProfileImgUrl(member, representativeDog.getDogImageFiles().get(0).getImageUrl());
+            if(dogList.size() > 0) {
+                Dog representativeDog = dogList.get(0);
+                representativeDog.setRepresentative(true);
+                dogRepository.save(representativeDog);
+                setDogProfileImgUrl(member, representativeDog.getDogImageFiles().get(0).getImageUrl());
+            }
         }
 
         return new DogProfileResponseDto("true", "멍 프로필이 삭제 되었습니다.");
@@ -123,6 +128,7 @@ public class DogService {
     // 사용자의 대표 멍멍이 프로필 사진 등록 모듈화
     private void setDogProfileImgUrl(Member member, String imageUrl) {
         member.setDogProfileImgUrl(imageUrl);
+        memberRepository.save(member);
         List<Apply> applyList = member.getApplyList();
         List<Review> giverReviews = member.getGiverReviews();
         for (Apply apply : applyList) {
