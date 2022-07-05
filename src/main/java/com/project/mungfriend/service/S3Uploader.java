@@ -33,7 +33,10 @@ public class S3Uploader {
 
     // S3로 파일 업로드하기
     private String upload(File uploadFile, String dirName) {
-        String fileName = dirName + "/" + UUID.randomUUID() + uploadFile.getName();   // S3에 저장된 파일 이름
+        String[] extractExtensionArr = uploadFile.getName().split("\\.");
+        String extension = extractExtensionArr[1];
+        System.out.println("extension = " + extension);
+        String fileName = dirName + "/" + UUID.randomUUID() + "." + extension;   // S3에 저장된 파일 이름 -> 한글 저장 시 삭제 안되는 오류
         String uploadImageUrl = putS3(uploadFile, fileName); // s3로 업로드
         removeNewFile(uploadFile);
         return uploadImageUrl;
@@ -43,6 +46,13 @@ public class S3Uploader {
     private String putS3(File uploadFile, String fileName) {
         amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, uploadFile).withCannedAcl(CannedAccessControlList.PublicRead));
         return amazonS3Client.getUrl(bucket, fileName).toString();
+    }
+
+    //S3 버킷 객체 삭제
+    //key 형식: "static/uuid.jpg"
+    public void deleteS3(String key){
+        amazonS3Client.deleteObject(bucket, key);
+        System.out.println("정상적으로 삭제 되었습니다");
     }
 
     // 로컬에 저장된 이미지 지우기

@@ -34,8 +34,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        // 최초 로그인이라면 회원가입 처리를 한다.
-
         TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
 
 //        tokenDto.setUsername(userDetails.getUsername());
@@ -52,16 +50,16 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         response.setCharacterEncoding("utf-8");
 
         //바디에 넣어주기
-        String result = mapper.writeValueAsString(tokenDto);
-        response.getWriter().write(result);
+//        String result = mapper.writeValueAsString(tokenDto);
+//        response.getWriter().write(result);
 
         // 헤더에 넣어주기
-        response.addHeader("Authorization", tokenDto.getAccessToken());
-        response.addHeader("username", userDetails.getUsername());
-        response.addHeader("nickname", userDetails.getNickname());
+//        response.addHeader("Authorization", tokenDto.getAccessToken());
+//        response.addHeader("username", userDetails.getUsername());
+//        response.addHeader("nickname", userDetails.getNickname());
 
 
-        //5. 토큰 발급
+        //5. param에 넣어서 redirect 시키기
         targetUrl = UriComponentsBuilder.fromUriString("http://localhost:3000/oauth") // 프론트 서버 반영 (로컬 / 서버)
                 .encode()
                 .queryParam("Authorization", tokenDto.getAccessToken())

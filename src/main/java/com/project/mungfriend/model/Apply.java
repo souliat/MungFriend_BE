@@ -25,6 +25,8 @@ public class Apply extends Timestamped {
     @Column(nullable = false)
     private String nickname;
 
+    private String dogProfileImgUrl;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name="APPLICANT_ID")
@@ -42,6 +44,7 @@ public class Apply extends Timestamped {
     public void setMember(Member applicant) {
         this.applicant = applicant;
         this.nickname = applicant.getNickname();
+        this.dogProfileImgUrl = applicant.getDogProfileImgUrl();
         applicant.getApplyList().add(this);
     }
 

@@ -57,4 +57,10 @@ public class ReviewService {
         responseDto.ok();
         return responseDto;
     }
+
+    //S3 버킷 객체 삭제
+    //key 형식: "static/uuid.jpg"
+    public void deleteTest(String key) {
+        s3Uploader.deleteS3("static/" + key);
+    }
 }

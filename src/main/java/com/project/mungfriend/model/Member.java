@@ -46,6 +46,9 @@ public class Member {
     @Column(nullable = false)
     private String introduce = "";
 
+    @Column
+    private String dogProfileImgUrl = "";
+
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)

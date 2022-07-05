@@ -1,10 +1,13 @@
 package com.project.mungfriend.controller;
 
+import com.project.mungfriend.dto.DeleteImgRequestDto;
 import com.project.mungfriend.dto.review.PostReviewRequestDto;
 import com.project.mungfriend.dto.review.PostReviewResponseDto;
 import com.project.mungfriend.security.SecurityUtil;
 import com.project.mungfriend.service.ReviewService;
+import com.project.mungfriend.service.S3Uploader;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,5 +28,11 @@ public class ReviewController {
                                                 @RequestPart(value="infos") PostReviewRequestDto requestDto) throws IOException {
         String username = SecurityUtil.getCurrentMemberUsername();
         return reviewService.registerReview(username, multipartFiles, requestDto);
+    }
+
+    // s3 이미지 삭제 테스트
+    @DeleteMapping("/api/reviews")
+    public void deleteImg(DeleteImgRequestDto requestDto){
+        reviewService.deleteTest(requestDto.getKey());
     }
 }
