@@ -28,6 +28,10 @@ public class GetPostDetailResponseDto {
     private Boolean applyByMe;
     private Boolean isComplete;
 
+    private Long matchedApplicantId;
+
+    private double distance;
+
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
@@ -47,5 +51,6 @@ public class GetPostDetailResponseDto {
         this.isComplete = post.getIsComplete();
         this.createdAt = post.getCreatedAt();
         this.modifiedAt = post.getModifiedAt();
+        this.matchedApplicantId = post.getMatchedApplicantId();
     }
 }

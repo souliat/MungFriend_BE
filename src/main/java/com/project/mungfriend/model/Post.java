@@ -46,6 +46,9 @@ public class Post extends Timestamped {
     @Column(nullable = false)
     private Boolean isComplete = false;
 
+    @Column
+    private Long matchedApplicantId;
+
     @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime requestStartDate;

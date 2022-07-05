@@ -105,11 +105,11 @@ public class PostService {
         responseDto.setDogProfileImgUrl(post.getMember().getDogProfileImgUrl());
 
         // 로그인한 사용자와 게시글 작성자 간 거리 (단위: km)
-//        responseDto.setDistance(DistanceCalculator.calcDistance(
-//                Double.parseDouble(member.getLatitude()),
-//                Double.parseDouble(member.getLongitude()),
-//                Double.parseDouble(post.getMember().getLatitude()),
-//                Double.parseDouble(post.getMember().getLongitude()), "kilometer"));
+        responseDto.setDistance(DistanceCalculator.calcDistance(
+                Double.parseDouble(member.getLatitude()),
+                Double.parseDouble(member.getLongitude()),
+                Double.parseDouble(post.getMember().getLatitude()),
+                Double.parseDouble(post.getMember().getLongitude()), "kilometer"));
 
         // 신청자 수, 내가 신청했는지 아닌지 여부 판단 추가. 2022-06-28 인기천.
         Long applyCount = applyRepository.countByPostId(post.getId());
