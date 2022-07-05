@@ -8,8 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-
-public class PhoneNumRequestDto {
-
-    private String phoneNum;
+public class AddressRequestDto  {
+    private String address;
+    private String latitude;
+    private String longitude;
 }

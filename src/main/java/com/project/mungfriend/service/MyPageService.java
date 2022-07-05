@@ -49,26 +49,42 @@ public class MyPageService {
         member.setIntroduce(requestDto.getIntroduce());
         // 위에서 설정한 것을 맴버 DB에 저장한다.(memberRepository를 통해서 member의 db와 연결하고 save를 통해 저장)
         memberRepository.save(member);
-        //위 과정을 통해 새로운 IntroduceResponseDto를 IntroduceResponseDto responseDto에 넣어준다 (기존 객체에?)
+        //위 과정을 통해 새로운 IntroduceResponseDto를 IntroduceResponseDto클래스의 responseDto에 넣어준다
         IntroduceResponseDto responseDto = new IntroduceResponseDto();
 
         responseDto.ok();
         return responseDto;
     }
 
-    public PhoneNumResponseDto updatePhoneNum(PhoneNumRequestDto requestDto) {
+        public AddressResponseDto addAddress(AddressRequestDto requestDto) {
 
         String username = SecurityUtil.getCurrentMemberUsername();
         Member member = memberRepository.findByUsername(username).orElseThrow(
                 () -> new IllegalArgumentException("해당하는 ID의 회원이 존재하지 않습니다."));
 
-
-        member.setPhoneNum(requestDto.getPhoneNum());
+        member.setAddress(requestDto.getAddress());
+        member.setLatitude(requestDto.getLatitude());
+        member.setLongitude(requestDto.getLongitude());
         memberRepository.save(member);
 
-        PhoneNumResponseDto responseDto = new PhoneNumResponseDto();
+        AddressResponseDto responseDto = new AddressResponseDto();
         responseDto.ok();
         return responseDto;
     }
 
 }
+
+//    public PhoneNumResponseDto updatePhoneNum(PhoneNumRequestDto requestDto) {
+//
+//        String username = SecurityUtil.getCurrentMemberUsername();
+//        Member member = memberRepository.findByUsername(username).orElseThrow(
+//                () -> new IllegalArgumentException("해당하는 ID의 회원이 존재하지 않습니다."));
+//
+//
+//        member.setPhoneNum(requestDto.getPhoneNum());
+//        memberRepository.save(member);
+//
+//        PhoneNumResponseDto responseDto = new PhoneNumResponseDto();
+//        responseDto.ok();
+//        return responseDto;
+//    }
