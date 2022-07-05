@@ -31,6 +31,12 @@ public class MyPageController {
         return myPageService.updateIntroduce(requestDto);
     }
 
+    @PostMapping("/mypage/address")
+    public  AddressResponseDto addAddress(@RequestBody AddressRequestDto requestDto){
+
+        return myPageService.addAddress(requestDto);
+    }
+
 
 
 
