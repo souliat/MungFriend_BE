@@ -11,11 +11,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class MyPageService {
-    
+
     private final MemberRepository memberRepository;
     private final PostRepository postRepository;
 
@@ -25,7 +26,7 @@ public class MyPageService {
     public MyPageGetResponse getAllMyInfo(Long id) {
         Member member = memberRepository.findById(id).orElseThrow(
                 () -> new NullPointerException("해당하는 id를 찾을 수 없습니다")
-        
+
         );
         MyPageGetResponse myPageGetResponseDto = new MyPageGetResponse(member);
         List<Apply> applyList = applyRepository.findAllByApplicantId(id);
@@ -37,54 +38,43 @@ public class MyPageService {
 
         return myPageGetResponseDto;
     }
-
-    public IntroduceResponseDto updateIntroduce(IntroduceRequestDto requestDto) {
-        //SecurityUtil에 등록된 방식으로 현재의 유저네임을 가져온 후에 memberRepository에 있는 유저네임에 넣어서 해당 유저네일을 찾는다.
-        //없다면 에러 메세지를 가져오고 찾았다면 그 유저네임을 가진 member 클래스를 가져온다 (Member member = 객체 인스턴스)
+    
+    //마이페이지 수정
+    public MyPagePostResponseDto updateMyPage(MyPagePostRequestDto mypageRequestDto) {
         String username = SecurityUtil.getCurrentMemberUsername();
         Member member = memberRepository.findByUsername(username).orElseThrow(
                 () -> new IllegalArgumentException("해당하는 ID의 회원이 존재하지 않습니다."));
 
-        // requestDto를 통해 받아온 Introduce를 가져온다 (get) 그 후 member의 Introduce에 설정한다.(set)
-        member.setIntroduce(requestDto.getIntroduce());
-        // 위에서 설정한 것을 맴버 DB에 저장한다.(memberRepository를 통해서 member의 db와 연결하고 save를 통해 저장)
-        memberRepository.save(member);
-        //위 과정을 통해 새로운 IntroduceResponseDto를 IntroduceResponseDto클래스의 responseDto에 넣어준다
-        IntroduceResponseDto responseDto = new IntroduceResponseDto();
+        if (memberRepository.existsByNickname(mypageRequestDto.getNickname()) && !Objects.equals(member.getNickname(), mypageRequestDto.getNickname())) {
+            String status = "false";
+            String message = "중복된 닉네임이 존재합니다.";
+            return MyPagePostResponseDto.of(status, message);
+        }
+        if (memberRepository.existsByEmail(mypageRequestDto.getEmail()) && !Objects.equals(member.getEmail(),mypageRequestDto.getEmail())) {
+            String status = "false";
+            String message = "중복된 이메일이 존재합니다.";
+            return MyPagePostResponseDto.of(status, message);
+        }
+        if (memberRepository.existsByPhoneNum(mypageRequestDto.getPhoneNum()) && !Objects.equals(member.getPhoneNum(),mypageRequestDto.getPhoneNum())) {
+            String status = "false";
+            String message = "중복된 번호가 존재합니다.";
+            return MyPagePostResponseDto.of(status, message);
+        }
 
-        responseDto.ok();
-        return responseDto;
-    }
+        String status = "true";
+        String message = "정보 수정 성공 ! !";
 
-        public AddressResponseDto addAddress(AddressRequestDto requestDto) {
+        member.setNickname(mypageRequestDto.getNickname());
+        member.setEmail(mypageRequestDto.getEmail());
+        member.setAddress(mypageRequestDto.getAddress());
+        member.setLatitude(mypageRequestDto.getLatitude());
+        member.setLongitude(mypageRequestDto.getLongitude());
+        member.setIntroduce(mypageRequestDto.getIntroduce());
+        member.setPhoneNum(mypageRequestDto.getPhoneNum());
+        member.setIsAgree(mypageRequestDto.getIsAgree());
 
-        String username = SecurityUtil.getCurrentMemberUsername();
-        Member member = memberRepository.findByUsername(username).orElseThrow(
-                () -> new IllegalArgumentException("해당하는 ID의 회원이 존재하지 않습니다."));
-
-        member.setAddress(requestDto.getAddress());
-        member.setLatitude(requestDto.getLatitude());
-        member.setLongitude(requestDto.getLongitude());
-        memberRepository.save(member);
-
-        AddressResponseDto responseDto = new AddressResponseDto();
-        responseDto.ok();
-        return responseDto;
+        return MyPagePostResponseDto.of(memberRepository.save(member), status, message);
     }
 
 }
 
-//    public PhoneNumResponseDto updatePhoneNum(PhoneNumRequestDto requestDto) {
-//
-//        String username = SecurityUtil.getCurrentMemberUsername();
-//        Member member = memberRepository.findByUsername(username).orElseThrow(
-//                () -> new IllegalArgumentException("해당하는 ID의 회원이 존재하지 않습니다."));
-//
-//
-//        member.setPhoneNum(requestDto.getPhoneNum());
-//        memberRepository.save(member);
-//
-//        PhoneNumResponseDto responseDto = new PhoneNumResponseDto();
-//        responseDto.ok();
-//        return responseDto;
-//    }
