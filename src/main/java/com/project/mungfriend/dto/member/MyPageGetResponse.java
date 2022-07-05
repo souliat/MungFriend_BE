@@ -22,6 +22,7 @@ public class MyPageGetResponse {
     private String address;
     private String introduce;
     private String phoneNum;
+    private Boolean isAgree;
     private List<Dog> dogList = new ArrayList<>();
     private List<Post> myPostList = new ArrayList<>();
     private List<Post> applyPostList = new ArrayList<>();
@@ -36,6 +37,7 @@ public class MyPageGetResponse {
         this.address = member.getAddress();
         this.introduce = member.getIntroduce();
         this.phoneNum = member.getPhoneNum();
+        this.isAgree = member.getIsAgree();
         this.dogList = member.getDogList();
         this.myPostList = member.getMyPostList();
 //      통합 후 getter이름 변경

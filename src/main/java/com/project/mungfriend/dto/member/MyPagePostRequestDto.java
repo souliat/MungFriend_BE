@@ -5,11 +5,27 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
-public class AddressRequestDto  {
+public class MyPagePostRequestDto {
+
+
+    private String nickname;
+
+    private String email;
+
+    private String introduce;
+
     private String address;
+
     private String latitude;
+
     private String longitude;
+
+    private String phoneNum;
+
+    private Boolean isAgree;
+
 }
