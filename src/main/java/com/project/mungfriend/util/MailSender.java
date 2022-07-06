@@ -25,7 +25,7 @@ public class MailSender {
     public static void sendMail(String recieverMailAddr, String subject, String text){
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "smtp.naver.com");
-        prop.put("mail.smtp.port", 587);
+        prop.put("mail.smtp.port", 465);
         prop.put("mail.smtp.auth", "true");
 
         prop.put("mail.smtp.ssl.enable", "true");
