@@ -85,8 +85,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
-        configuration.addAllowedOriginPattern("http://localhost:3000"); // 배포 전 모두 허용
-        // 프론트 서버 : http://code10.shop.s3-website.ap-northeast-2.amazonaws.com
+        configuration.addAllowedOriginPattern("https://d3n0oswt21uayp.cloudfront.net"); // 배포 전 모두 허용
+        // 프론트 서버 : https://d3n0oswt21uayp.cloudfront.net
         // 프론트 로컬 : http://localhost:3000
         configuration.setAllowCredentials(true);
 
