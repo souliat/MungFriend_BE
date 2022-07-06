@@ -9,6 +9,7 @@ import com.project.mungfriend.model.Review;
 import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.repository.RefreshTokenRepository;
 import com.project.mungfriend.security.jwt.TokenProvider;
+import com.project.mungfriend.util.MailSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -54,7 +55,7 @@ public class MemberService {
         Member member = memberRequestDto.toMember(passwordEncoder);
 
         //회원 가입 축하 메일 보내기 (일단 주석 처리 해둠)
-        //MailSender.sendMail(member.getEmail(), "회원가입을 축하드립니다!", "환영합니다. 우리의 멍친구!");
+        MailSender.sendMail(member.getEmail(), "회원가입을 축하드립니다!", "환영합니다. 우리의 멍친구!");
 
         return MemberSignUpResponseDto.of(memberRepository.save(member), status, message);
     }
