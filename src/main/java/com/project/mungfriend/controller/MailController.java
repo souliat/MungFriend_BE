@@ -16,4 +16,8 @@ public class MailController {
     public MailResponseDto sendMail(){
         return mailService.sendMail();
     }
+    @PostMapping("/api/mails/apache")
+    public MailResponseDto sendMailApache(){
+        return mailService.sendMailApache();
+    }
 }
