@@ -42,6 +42,10 @@ public class MailSender {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(user));
             //수신자 메일 주소
+
+            System.out.println("user = " + user);
+            System.out.println("password = " + password);
+
             System.out.println("recieverMailAddr = " + recieverMailAddr);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recieverMailAddr));
             //제목
