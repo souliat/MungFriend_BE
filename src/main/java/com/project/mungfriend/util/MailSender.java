@@ -25,11 +25,11 @@ public class MailSender {
     public static void sendMail(String recieverMailAddr, String subject, String text){
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "smtp.naver.com");
-        prop.put("mail.smtp.port", 465);
+        prop.put("mail.smtp.port", 587);
         prop.put("mail.smtp.auth", "true");
 
-        prop.put("mail.smtp.ssl.enable", "true");
-        prop.put("mail.smtp.ssl.trust", "smtp.naver.com");
+//        prop.put("mail.smtp.ssl.enable", "true");
+//        prop.put("mail.smtp.ssl.trust", "smtp.naver.com");
 
         Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -41,11 +41,8 @@ public class MailSender {
 
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(user));
+
             //수신자 메일 주소
-
-            System.out.println("user = " + user);
-            System.out.println("password = " + password);
-
             System.out.println("recieverMailAddr = " + recieverMailAddr);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recieverMailAddr));
             //제목
