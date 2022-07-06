@@ -25,7 +25,7 @@ public class MailSenderApache {
         email.setSmtpPort(465);
         email.setAuthentication("mungfriend_official", password);
 
-        email.setSSLOnConnect(true);
+//        email.setSSLOnConnect(true);
         email.setStartTLSEnabled(true);
 
         try {
