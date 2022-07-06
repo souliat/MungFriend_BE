@@ -27,6 +27,8 @@ public class MailSender {
         prop.put("mail.smtp.host", "smtp.naver.com");
         prop.put("mail.smtp.port", 587);
         prop.put("mail.smtp.auth", "true");
+        // ssl protocols 설정 해줘야함
+        prop.put("mail.smtp.ssl.protocols", "TLSv1.2");
         prop.put("mail.smtp.tls.enable", "true");
 
 //        prop.put("mail.smtp.ssl.enable", "true");

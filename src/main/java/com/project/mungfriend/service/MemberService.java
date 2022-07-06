@@ -10,7 +10,6 @@ import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.repository.RefreshTokenRepository;
 import com.project.mungfriend.security.jwt.TokenProvider;
 import com.project.mungfriend.util.MailSender;
-import com.project.mungfriend.util.MailSenderApache;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -57,7 +55,7 @@ public class MemberService {
 
         //회원 가입 축하 메일 보내기 (일단 주석 처리 해둠) ssl
         // No appropriate protocol (protocol is disabled or cipher suites are inappropriate) 에러메세지
-//        MailSenderApache.sendMail(member.getEmail(), "회원가입을 축하드립니다!", "환영합니다. 우리의 멍친구!");
+        MailSender.sendMail(member.getEmail(), "회원가입을 축하드립니다!", "환영합니다. 우리의 멍친구!");
 
         return MemberSignUpResponseDto.of(memberRepository.save(member), status, message);
     }
