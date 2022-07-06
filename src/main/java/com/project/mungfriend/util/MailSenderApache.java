@@ -22,7 +22,7 @@ public class MailSenderApache {
 
         SimpleEmail email = new SimpleEmail();
         email.setHostName("smtp.naver.com");
-        email.setSmtpPort(465);
+        email.setSmtpPort(587);
         email.setAuthentication("mungfriend_official", password);
 
 //        email.setSSLOnConnect(true);
