@@ -11,6 +11,8 @@ public class TokenDto {
     private String status;
     private String message;
 
+    private String nickname;
+
     private String grantType;
     private String accessToken;
     private String refreshToken;

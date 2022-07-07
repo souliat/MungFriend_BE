@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -79,10 +80,15 @@ public class MemberService {
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
 
+        // tokenDto 값 set
         String status = "true";
         String message = "로그인 성공! !";
         tokenDto.setStatus(status);
         tokenDto.setMessage(message);
+
+        Member user = memberRepository.findByUsername(authentication.getName()).orElse(null);
+        assert user != null;
+        tokenDto.setNickname(user.getNickname());
 
         // 4. RefreshToken 저장
         RefreshToken refreshToken = RefreshToken.builder()
