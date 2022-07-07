@@ -48,9 +48,6 @@ dependencies {
     // java mail API
     implementation group: 'javax.mail', name: 'mail', version: '1.4.7'
 
-    // https://mvnrepository.com/artifact/org.apache.commons/commons-email
-    implementation 'org.apache.commons:commons-email:1.5'
-
 
     // Json 라이브러리 추가(Message 발송)
     implementation group: 'org.json', name: 'json', version: '20160810'
