@@ -1,5 +1,6 @@
 package com.project.mungfriend.model;
 
+import com.project.mungfriend.dto.chat.ChatRoomRequestDto;
 import com.project.mungfriend.util.Timestamped;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,9 +29,9 @@ public class ChatRoom extends Timestamped {
 
 
 
-//    public ChatRoom(ChatRoomRequestDto requestDto, AuthService authService, Member member){
-//        this.channel = requestDto.getChannel();
-//        this.memberList.add(authService.getMemberInfo());
-//        this.memberList.add(member);
-//    }
+    public ChatRoom(ChatRoomRequestDto requestDto, Member writer, Member applicant){
+        this.roomName = requestDto.getChannel();
+        this.memberList.add(writer);
+        this.memberList.add(applicant);
+    }
 }

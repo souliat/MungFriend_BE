@@ -1,9 +1,13 @@
 package com.project.mungfriend.service;
 
+import com.project.mungfriend.dto.chat.ChatRoomListDto;
+import com.project.mungfriend.dto.chat.ChatRoomRequestDto;
+import com.project.mungfriend.dto.chat.ChatRoomResponseDto;
 import com.project.mungfriend.model.ChatRoom;
 import com.project.mungfriend.model.Member;
 import com.project.mungfriend.repository.ChatRoomRepository;
 import com.project.mungfriend.repository.MemberRepository;
+import com.project.mungfriend.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.stereotype.Service;
@@ -11,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -48,15 +53,17 @@ public class ChatRoomService {
 
     // 채팅방 생성
     public ChatRoomResponseDto createChatRoom(ChatRoomRequestDto requestDto) {
-        Member member = memberRepository.findById(requestDto.getMemberId()).orElseThrow(
+        String username = SecurityUtil.getCurrentMemberUsername();
+        Member writer = memberRepository.findByUsername(username).orElse(null);
+
+        Member applicant = memberRepository.findById(requestDto.getMemberId()).orElseThrow(
                 () -> new NullPointerException("해당하는 ID를 찾을 수 없습니다.")
         );
 
-        ChatRoom chatRoom = new ChatRoom(requestDto, this.member, member);
+        ChatRoom chatRoom = new ChatRoom(requestDto, writer, applicant);
         chatRoomRepository.save(chatRoom);
-        ChatRoomResponseDto chatRoomResponseDto = new ChatRoomResponseDto(chatRoom, this.member.getMemberInfo());
 
-        return chatRoomResponseDto;
+        return new ChatRoomResponseDto(chatRoom, writer);
     }
 
     // 전체 채팅방 조회
@@ -77,18 +84,22 @@ public class ChatRoomService {
                 () -> new IllegalArgumentException("찾는 채팅방이 존재하지 않습니다.")
         );
 
-        ChatRoomResponseDto chatRoomResponseDto = new ChatRoomResponseDto(chatRoom, member);
-        return chatRoomResponseDto;
+        return new ChatRoomResponseDto(chatRoom, member);
     }
 
     // 특정 채팅방 삭제
+    // 삭제한 사람만 삭제되고, 남은 사람에겐 ~님이 나갔습니다. 띄우기
     public boolean deleteChatRoom(Long channelId){
+        String username = SecurityUtil.getCurrentMemberUsername();
+        Member loginMember = memberRepository.findByUsername(username).orElse(null);
+
         ChatRoom chatRoom = chatRoomRepository.findById(channelId).orElseThrow(
                 () -> new NullPointerException("해당하는 채팅방이 없습니다."));
 
         Long memberId = chatRoom.getMemberList().get(0).getId();
 
-        if(!memberId.equals(member.getMemberInfo().getId())) {
+        assert loginMember != null;
+        if(!memberId.equals(loginMember.getId())) {
             throw new IllegalArgumentException("글쓴이만 삭제가 가능합니다.");
         }
 

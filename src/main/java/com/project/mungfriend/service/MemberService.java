@@ -139,6 +139,13 @@ public class MemberService {
         return new GetMyInfoResponseDto(member);
     }
 
+    // 로그인한 사용자 객체 리턴
+    public Member getMemberObject(String username){
+        return memberRepository.findByUsername(username).orElseThrow(
+                () -> new IllegalArgumentException("일치하는 회원 정보가 없습니다.")
+        );
+    }
+
     // 상세페이지에서 닉네임 클릭 시 해당 회원의 정보 리턴
     public GetUserInfoResponseDto getUserInfo(Long id) {
         Member member = memberRepository.findById(id).orElseThrow(

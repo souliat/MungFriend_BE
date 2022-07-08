@@ -1,5 +1,7 @@
 package com.project.mungfriend.model;
 
+import com.project.mungfriend.dto.chat.ChatMessageRequestDto;
+import com.project.mungfriend.service.MemberService;
 import lombok.*;
 
 import javax.persistence.*;
@@ -47,16 +49,13 @@ public class ChatMessage {
         this.createdAt = createdAt;
     }
 
-//    @Builder
-//    public ChatMessage(ChatMessageRequestDto chatMessageRequestDto, AuthService authService) {
-//        this.type = chatMessageRequestDto.getType();
-//        this.roomId = chatMessageRequestDto.getRoomId();
-////        this.user = authService.getMyInfo(chatMessageRequestDto.getMemberId());
-////        this.member = authService.getMemberInfo();
-//        // authservice 확인좀....해봐야겠다... 편도랑 이야기함.
-//        this.memberId = chatMessageRequestDto.getMemberId();
-//        this.sender = chatMessageRequestDto.getSender();
-//        this.message = chatMessageRequestDto.getMessage();
-//        this.createdAt = chatMessageRequestDto.getCreatedAt();
-//    }
+    @Builder
+    public ChatMessage(ChatMessageRequestDto chatMessageRequestDto, Member member) {
+        this.type = chatMessageRequestDto.getType();
+        this.roomId = chatMessageRequestDto.getRoomId();
+        this.member = member;
+        this.sender = chatMessageRequestDto.getSender();
+        this.message = chatMessageRequestDto.getMessage();
+        this.createdAt = chatMessageRequestDto.getCreatedAt();
+    }
 }

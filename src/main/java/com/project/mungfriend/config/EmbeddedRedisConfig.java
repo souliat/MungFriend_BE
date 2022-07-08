@@ -8,7 +8,8 @@ import redis.embedded.RedisServer;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-@Profile("alpha")
+//로컬 환경은 local, 배포 환경은 alpha
+@Profile("local")
 @Configuration
 public class EmbeddedRedisConfig {
     @Value("${spring.redis.port}")

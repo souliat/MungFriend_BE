@@ -2,6 +2,7 @@ package com.project.mungfriend.config;
 
 import com.project.mungfriend.model.ChatMessage;
 import com.project.mungfriend.security.jwt.TokenProvider;
+import com.project.mungfriend.service.ChatMessageService;
 import com.project.mungfriend.service.ChatRoomService;
 import com.project.mungfriend.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -71,10 +72,8 @@ public class StompHandler implements ChannelInterceptor {
             // 클라이언트 입장 메시지를 채팅방에 발송한다.(redis publish)
             String token = Optional.ofNullable(accessor.getFirstNativeHeader("token")).orElse("UnknownUser");
             log.info("token={} [StompHandler_SUBSCRIBE]", token);
-    //            String name = tokenProvider.getAuthenticationUsername(token);
-            String useremail = tokenProvider.getUserPk(token);
-            String nickname = memberService.getMemberInfoInStomp(useremail).getNickname();
-    //            String name = tokenProvider.getAuthentication(token).getDetails()
+            String username = tokenProvider.getUserPk(token);
+            String nickname = memberService.getMemberObject(username).getNickname();
             chatService.sendChatMessage(ChatMessage.builder().type(ChatMessage.MessageType.ENTER).roomId(roomId).sender(nickname).build());
 
             log.info("SUBSCRIBED nickname {}, roomId {}", nickname, roomId);
@@ -95,9 +94,8 @@ public class StompHandler implements ChannelInterceptor {
             String token = Optional.ofNullable(accessor.getFirstNativeHeader("token")).orElse("UnknownUser");
 
             if(accessor.getFirstNativeHeader("token") != null) {
-    //                String name = tokenProvider.getAuthenticationUsername(token);
-                String useremail = tokenProvider.getUserPk(token);
-                String nickname = memberService.getMemberInfoInStomp(useremail).getNickname();
+                String username = tokenProvider.getUserPk(token);
+                String nickname = memberService.getMemberObject(username).getNickname();
                 chatService.sendChatMessage(ChatMessage.builder().type(ChatMessage.MessageType.QUIT).roomId(roomId).sender(nickname).build());
             }
 
