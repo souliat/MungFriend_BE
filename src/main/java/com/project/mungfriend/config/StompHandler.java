@@ -109,7 +109,13 @@ public class StompHandler implements ChannelInterceptor {
             if (accessor.getFirstNativeHeader("token") != null) {
                 String username = tokenProvider.getUserPk(token);
                 String nickname = memberService.getMemberObject(username).getNickname();
-                chatService.sendChatMessage(ChatMessage.builder().type(ChatMessage.MessageType.QUIT).roomId(roomId).sender(nickname).build());
+                chatService.sendChatMessage(
+                        ChatMessage.builder()
+                                .type(ChatMessage.MessageType.QUIT)
+                                .roomId(roomId)
+                                .sender(nickname)
+                                .build()
+                );
             }
 
             // 퇴장한 클라이언트의 roomId 맵핑 정보를 삭제한다.
