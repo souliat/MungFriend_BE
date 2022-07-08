@@ -61,18 +61,23 @@ public class Member {
     private String provider;
 
     @OneToMany(mappedBy = "member")
+    @JsonIgnore
     private List<Post> myPostList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
+    @JsonIgnore
     private List<Dog> dogList = new ArrayList<>();
 
     @OneToMany(mappedBy = "taker")
+    @JsonIgnore
     private List<Review> takerReviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "giver")
+    @JsonIgnore
     private List<Review> giverReviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "applicant")
+    @JsonIgnore
     private List<Apply> applyList = new ArrayList<>();
 
     @Builder
