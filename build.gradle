@@ -52,6 +52,16 @@ dependencies {
     // Json 라이브러리 추가(Message 발송)
     implementation group: 'org.json', name: 'json', version: '20160810'
 
+    //websocket
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.webjars:sockjs-client:1.1.2'
+    implementation 'org.webjars:stomp-websocket:2.3.3-1'
+
+    //redis 관련 추가
+    implementation 'it.ozimov:embedded-redis:0.7.2'
+    implementation 'javax.xml.bind:jaxb-api'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
 }
 
 tasks.named('test') {

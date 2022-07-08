@@ -116,4 +116,9 @@ public class TokenProvider {
             return e.getClaims();
         }
     }
+
+    // 토큰에서 회원 정보 추출
+    public String getUserPk(String token) {
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
+    }
 }
