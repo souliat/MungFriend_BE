@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PostReviewRequestDto {
     private Long postId;
-    private Long applicantId;
+    private String applicantNickname;
     private String comment;
 
 }

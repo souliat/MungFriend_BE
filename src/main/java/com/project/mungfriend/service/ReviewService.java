@@ -36,7 +36,7 @@ public class ReviewService {
                 () -> new IllegalArgumentException("해당 ID의 회원이 존재하지 않습니다.")
         );
 
-        Member taker = memberRepository.findById(requestDto.getApplicantId()).orElseThrow(
+        Member taker = memberRepository.findByNickname(requestDto.getApplicantNickname()).orElseThrow(
                 () -> new IllegalArgumentException("해당 ID의 회원이 존재하지 않습니다.")
         );
 
