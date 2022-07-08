@@ -88,6 +88,7 @@ public class MemberService {
 
         Member user = memberRepository.findByUsername(authentication.getName()).orElse(null);
         assert user != null;
+        tokenDto.setMemberId(user.getId());
         tokenDto.setNickname(user.getNickname());
 
         // 4. RefreshToken 저장
