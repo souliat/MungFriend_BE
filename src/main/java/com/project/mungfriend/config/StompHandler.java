@@ -37,6 +37,10 @@ public class StompHandler implements ChannelInterceptor {
         // accessor를 이용하면 내용에 패킷에 접근할 수 있게된다.
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
 
+        if(StompCommand.SEND == accessor.getCommand()){
+            System.out.println("SEND Command 인터셉트!");
+        }
+
         // 접근했을때 COMMAND HEADER의 값을 확인 한다.
         // 만약 CONNECT라면 -> 초기 연결임
         if (StompCommand.CONNECT == accessor.getCommand()) { // websocket 연결요청
@@ -93,8 +97,7 @@ public class StompHandler implements ChannelInterceptor {
         }
 
 
-        //룸을 이동하게 된다면 -> DISCONNET 시킨다 ->
-        //채팅방을 나가는경우
+        //룸을 이동하게 된다면 -> DISCONNET 시킨다 -> 채팅방을 나가는 것과 다름
         else if (StompCommand.DISCONNECT == accessor.getCommand()) { // Websocket 연결 종료
 
             // 연결이 종료된 클라이언트 sesssionId로 채팅방 id를 얻는다.
@@ -102,21 +105,6 @@ public class StompHandler implements ChannelInterceptor {
             //나갈떄 redis 맵에서 roomId와 sessionId의 매핑을 끊어줘야 하기때문에 roomId 찾고
             Long roomId = chatRoomService.getUserEnterRoomId(sessionId);
             log.info("HashOps에서 SessionId 기준으로 찾아온 roomId는={} [StompHandler_DISCONNECT]", roomId);
-
-            // 클라이언트 퇴장 메시지를 채팅방에 발송한다.(redis publish)
-            String token = Optional.ofNullable(accessor.getFirstNativeHeader("token")).orElse("UnknownUser");
-
-            if (accessor.getFirstNativeHeader("token") != null) {
-                String username = tokenProvider.getUserPk(token);
-                String nickname = memberService.getMemberObject(username).getNickname();
-                chatService.sendChatMessage(
-                        ChatMessage.builder()
-                                .type(ChatMessage.MessageType.QUIT)
-                                .roomId(roomId)
-                                .sender(nickname)
-                                .build()
-                );
-            }
 
             // 퇴장한 클라이언트의 roomId 맵핑 정보를 삭제한다.
             chatRoomService.removeUserEnterInfo(sessionId);
