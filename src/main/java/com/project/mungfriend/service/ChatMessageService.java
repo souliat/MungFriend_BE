@@ -47,15 +47,15 @@ public class ChatMessageService {
     public void sendChatMessage(ChatMessage chatMessage) {
         if (ChatMessage.MessageType.ENTER.equals(chatMessage.getType())) {
             log.info("ENTER 데이터 날라갑니다~!");
-            chatMessage.setSender("[알림]");
             chatMessage.setMessage(chatMessage.getSender() + "님이 방에 입장했습니다.");
+            chatMessage.setSender("[알림]");
 
             saveNotification(chatMessage);
 
         } else if (ChatMessage.MessageType.QUIT.equals(chatMessage.getType())) {
             log.info("QUIT 데이터 날라갑니다~!");
-            chatMessage.setSender("[알림]");
             chatMessage.setMessage(chatMessage.getSender() + "님이 방에서 나갔습니다.");
+            chatMessage.setSender("[알림]");
 
             saveNotification(chatMessage);
         }

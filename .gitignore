@@ -37,6 +37,7 @@ out/
 .vscode/
 
 application.properties
+application-alpha.properties
 application-configuration.properties
 src/main/resources/application-oauth.properties
 mung-friend
