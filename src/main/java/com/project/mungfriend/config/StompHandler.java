@@ -37,10 +37,6 @@ public class StompHandler implements ChannelInterceptor {
         // accessor를 이용하면 내용에 패킷에 접근할 수 있게된다.
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
 
-        if(StompCommand.SEND == accessor.getCommand()){
-            System.out.println("SEND Command 인터셉트!");
-        }
-
         // 접근했을때 COMMAND HEADER의 값을 확인 한다.
         // 만약 CONNECT라면 -> 초기 연결임
         if (StompCommand.CONNECT == accessor.getCommand()) { // websocket 연결요청
