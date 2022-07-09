@@ -40,10 +40,10 @@ public class MemberController {
     }
 
     // 상세페이지에서 닉네임 클릭 시 해당 회원의 정보 리턴
-    @GetMapping("/userinfo/{id}")
+    @GetMapping("/userinfo")
     @ResponseBody
-    public GetUserInfoResponseDto getUserInfo(@PathVariable Long id){
-        return memberService.getUserInfo(id);
+    public GetUserInfoResponseDto getUserInfo(@RequestBody GetUserInfoRequestDto requestDto){
+        return memberService.getUserInfo(requestDto);
     }
 
 

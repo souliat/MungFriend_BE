@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -148,8 +147,8 @@ public class MemberService {
     }
 
     // 상세페이지에서 닉네임 클릭 시 해당 회원의 정보 리턴
-    public GetUserInfoResponseDto getUserInfo(Long id) {
-        Member member = memberRepository.findById(id).orElseThrow(
+    public GetUserInfoResponseDto getUserInfo(GetUserInfoRequestDto requestDto) {
+        Member member = memberRepository.findByNickname(requestDto.getNickname()).orElseThrow(
                 () -> new IllegalArgumentException("일치하는 회원 정보가 없습니다.")
         );
 
