@@ -1,9 +1,7 @@
 package com.project.mungfriend.service;
 
 import com.project.mungfriend.model.ChatMessage;
-import com.project.mungfriend.model.Member;
 import com.project.mungfriend.repository.ChatMessageRepository;
-import com.project.mungfriend.security.SecurityUtil;
 import com.project.mungfriend.security.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
