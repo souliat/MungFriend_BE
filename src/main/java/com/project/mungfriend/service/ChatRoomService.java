@@ -3,6 +3,7 @@ package com.project.mungfriend.service;
 import com.project.mungfriend.dto.chat.ChatRoomListDto;
 import com.project.mungfriend.dto.chat.ChatRoomRequestDto;
 import com.project.mungfriend.dto.chat.ChatRoomResponseDto;
+import com.project.mungfriend.model.ChatMessage;
 import com.project.mungfriend.model.ChatRoom;
 import com.project.mungfriend.model.Member;
 import com.project.mungfriend.repository.ChatRoomRepository;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +29,8 @@ public class ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
 
     private final MemberService memberService;
+
+    private final ChatMessageService chatMessageService;
     private final MemberRepository memberRepository;
     public static final String ENTER_INFO = "ENTER_INFO"; // 채팅룸에 입장한 클라이언트의 sessionId 와 채팅룸 id 를 맵핑한 정보 저장
 
@@ -96,15 +98,23 @@ public class ChatRoomService {
         ChatRoom chatRoom = chatRoomRepository.findById(channelId).orElseThrow(
                 () -> new NullPointerException("해당하는 채팅방이 없습니다."));
 
-        Long memberId = chatRoom.getMemberList().get(0).getId();
+        // 나가기 누른 사람은 채팅룸의 멤버리스트에서 제거
+        chatRoom.getMemberList().remove(loginMember);
 
-        assert loginMember != null;
-        if(!memberId.equals(loginMember.getId())) {
-            throw new IllegalArgumentException("글쓴이만 삭제가 가능합니다.");
+        // 현재 채팅룸에 남은 사람이 아무도 없다면 채팅룸 객체를 아예 삭제
+        if(chatRoom.getMemberList().size() == 0){
+            chatRoomRepository.deleteById(channelId);
+        }else{
+            // 한명이라도 남아있다면 현재 나가기 누른 사람의 퇴장 메세지를 보내줌
+            assert loginMember != null;
+            chatMessageService.sendChatMessage(
+                    ChatMessage.builder()
+                            .type(ChatMessage.MessageType.QUIT)
+                            .roomId(channelId)
+                            .sender(loginMember.getNickname())
+                            .build()
+            );
         }
-
-        chatRoomRepository.deleteById(channelId);
-
         return true;
     }
 }

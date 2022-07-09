@@ -3,14 +3,12 @@ package com.project.mungfriend.controller;
 import com.project.mungfriend.dto.chat.ChatMessageRequestDto;
 import com.project.mungfriend.model.ChatMessage;
 import com.project.mungfriend.model.Member;
-import com.project.mungfriend.repository.ChatMessageRepository;
 import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.security.SecurityUtil;
-import com.project.mungfriend.security.jwt.TokenProvider;
 import com.project.mungfriend.service.ChatMessageService;
 import com.project.mungfriend.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,18 +34,13 @@ public class ChatMessageController {
     // 메시지 보내고 DB에 채팅 메시지 저장하기.
     @MessageMapping("/api/chat/message")
     @SendTo("/sub/api/chat/rooms/")
-    public void message(@RequestBody ChatMessageRequestDto requestDto) {
+    public void message(@RequestBody ChatMessageRequestDto requestDto, Message<?> message) {
 
-//        String username = SecurityUtil.getCurrentMemberUsername();
-//        Member member = memberRepository.findByUsername(username).orElse(null);
+        // ws 통신에 담겨온 토큰 값으로 인증 정보 저장하기.
+        chatMessageService.saveAuthentication(message);
 
-        // 현재 로그인한 member 찾아옴
-//        Member member = authService.getMemberInfo();
-//        requestDto.setMemberId(member.getId());
-//        requestDto.setSender(member.getNickname());
-        // 여기가 뭔가 문제가있음.. 편도랑 이야기.
-//        requestDto.setMemberId(1L);
-//        requestDto.setSender("기천");
+        String username = SecurityUtil.getCurrentMemberUsername();
+        Member member = memberRepository.findByUsername(username).orElse(null);
 
         // 메시지 생성 시간 삽입
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm");
