@@ -51,11 +51,6 @@ public class StompHandler implements ChannelInterceptor {
             // Header의 jwt token 검증
             Boolean tokenValid = tokenProvider.validateToken(jwtToken);
 
-            // ws 통신으로 올바른 토큰이 왔을 경우 SecurityContextHolder에 저장하는 작업 추가
-//            if(tokenValid) {
-//                Authentication authentication = tokenProvider.getAuthentication(jwtToken);
-//                SecurityContextHolder.getContext().setAuthentication(authentication);
-//            }
             log.info("jwtToken validation 결과값={}", tokenProvider.validateToken(jwtToken));
         }
 
