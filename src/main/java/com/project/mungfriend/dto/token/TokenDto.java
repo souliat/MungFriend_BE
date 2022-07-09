@@ -11,6 +11,8 @@ public class TokenDto {
     private String status;
     private String message;
 
+    private Long memberId;
+
     private String nickname;
 
     private String grantType;

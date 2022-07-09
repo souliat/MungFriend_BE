@@ -4,6 +4,7 @@ import com.project.mungfriend.dto.chat.ChatMessageRequestDto;
 import com.project.mungfriend.model.ChatMessage;
 import com.project.mungfriend.model.Member;
 import com.project.mungfriend.repository.ChatMessageRepository;
+import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.security.SecurityUtil;
 import com.project.mungfriend.security.jwt.TokenProvider;
 import com.project.mungfriend.service.ChatMessageService;
@@ -28,6 +29,7 @@ public class ChatMessageController {
 
     private final ChatMessageService chatMessageService;
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
     // 채팅 메시지를 @MessageMapping 형태로 받는다
     // 웹소켓으로 publish 된 메시지를 받는 곳이다
@@ -36,8 +38,8 @@ public class ChatMessageController {
     @SendTo("/sub/api/chat/rooms/")
     public void message(@RequestBody ChatMessageRequestDto requestDto) {
 
-        String username = SecurityUtil.getCurrentMemberUsername();
-        Member member = memberService.getMemberObject(username);
+//        String username = SecurityUtil.getCurrentMemberUsername();
+//        Member member = memberRepository.findByUsername(username).orElse(null);
 
         // 현재 로그인한 member 찾아옴
 //        Member member = authService.getMemberInfo();
@@ -56,7 +58,8 @@ public class ChatMessageController {
         requestDto.setCreatedAt(dateResult);
 
         // DTO 로 채팅 메시지 객체 생성
-        ChatMessage chatMessage = new ChatMessage(requestDto, member);
+//        assert member != null;
+        ChatMessage chatMessage = new ChatMessage(requestDto);
 
         // 웹소켓 통신으로 채팅방 토픽 구독자들에게 메시지 보내기
         chatMessageService.sendChatMessage(chatMessage);

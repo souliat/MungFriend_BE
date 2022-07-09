@@ -33,26 +33,42 @@ public class ChatMessageService {
             log.info("ENTER 데이터 날라갑니다~!");
             chatMessage.setMessage(chatMessage.getSender() + "님이 방에 입장했습니다.");
             chatMessage.setSender("[알림]");
+
+            saveNotification(chatMessage);
+
         } else if (ChatMessage.MessageType.QUIT.equals(chatMessage.getType())) {
 //            chatMessage.setMessage("");
 //            chatMessage.setSender("");
             log.info("QUIT 데이터 날라갑니다~!");
             chatMessage.setMessage(chatMessage.getSender() + "님이 방에서 나갔습니다.");
             chatMessage.setSender("[알림]");
+
+            saveNotification(chatMessage);
         }
         //topic은 chatroom 이다.
         redisTemplate.convertAndSend(channelTopic.getTopic(), chatMessage);
     }
 
+    //알림 저장
+    private void saveNotification(ChatMessage chatMessage) {
+        ChatMessage message = new ChatMessage();
+        message.setType(chatMessage.getType());
+        message.setRoomId(chatMessage.getRoomId());
+        message.setSender(chatMessage.getSender());
+        message.setMessage(chatMessage.getMessage());
+        message.setCreatedAt(chatMessage.getCreatedAt());
+        chatMessageRepository.save(message);
+    }
+
     // 메시지 저장
     public void save(ChatMessage chatMessage) {
-        String username = SecurityUtil.getCurrentMemberUsername();
-        Member member = memberService.getMemberObject(username);
+//        String username = SecurityUtil.getCurrentMemberUsername();
+//        Member member = memberService.getMemberObject(username);
 
         ChatMessage message = new ChatMessage();
         message.setType(chatMessage.getType());
         message.setRoomId(chatMessage.getRoomId());
-        message.setMember(member);
+        message.setMemberId(chatMessage.getMemberId());
         message.setSender(chatMessage.getSender());
         message.setMessage(chatMessage.getMessage());
         message.setCreatedAt(chatMessage.getCreatedAt());
