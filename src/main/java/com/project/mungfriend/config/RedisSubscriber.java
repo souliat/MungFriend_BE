@@ -28,6 +28,7 @@ public class RedisSubscriber {
     // convetAndSend로 데이터를 보내면 여기서 잡아서 보낸다.
     // Redis 에서 메시지가 발행(publish)되면 대기하고 있던 Redis Subscriber 가 해당 메시지를 받아 처리한다.
     public void sendMessage(String publishMessage) {
+        log.info("Redis Subscriber에서 잡았습니다! 잡히나요!!");
         log.info("데이터 publishMessage={}", publishMessage);
         try {
             // ChatMessage 객채로 맵핑
