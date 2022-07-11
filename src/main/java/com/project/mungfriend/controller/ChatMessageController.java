@@ -37,10 +37,10 @@ public class ChatMessageController {
     public void message(@RequestBody ChatMessageRequestDto requestDto, Message<?> message) {
 
         // ws 통신에 담겨온 토큰 값으로 인증 정보 저장하기.
-        chatMessageService.saveAuthentication(message);
+//        chatMessageService.saveAuthentication(message);
 
-        String username = SecurityUtil.getCurrentMemberUsername();
-        Member member = memberRepository.findByUsername(username).orElse(null);
+//        String username = SecurityUtil.getCurrentMemberUsername();
+//        Member member = memberRepository.findByUsername(username).orElse(null);
 
         // 메시지 생성 시간 삽입
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm");
@@ -54,11 +54,13 @@ public class ChatMessageController {
 //        assert member != null;
         ChatMessage chatMessage = new ChatMessage(requestDto);
 
+        // MySql DB에 채팅 메시지 저장
+        chatMessageService.save(chatMessage);
+
         // 웹소켓 통신으로 채팅방 토픽 구독자들에게 메시지 보내기
         chatMessageService.sendChatMessage(chatMessage);
 
-        // MySql DB에 채팅 메시지 저장
-        chatMessageService.save(chatMessage);
+
     }
 
 }
