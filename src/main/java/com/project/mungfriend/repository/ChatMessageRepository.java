@@ -12,4 +12,6 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
     Page<ChatMessage> findByRoomId(Long roomId, Pageable pageable);
 
     List<ChatMessage> findByRoomId(Long roomId);
+
+    void deleteAllByRoomId(Long channelId);
 }

@@ -6,12 +6,14 @@ import com.project.mungfriend.dto.chat.ChatRoomResponseDto;
 import com.project.mungfriend.model.ChatMessage;
 import com.project.mungfriend.model.ChatRoom;
 import com.project.mungfriend.model.Member;
+import com.project.mungfriend.repository.ChatMessageRepository;
 import com.project.mungfriend.repository.ChatRoomRepository;
 import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ public class ChatRoomService {
     private HashOperations<String, String, Long> hashOpsEnterInfo;
 
     private final ChatRoomRepository chatRoomRepository;
+
+    private final ChatMessageRepository chatMessageRepository;
 
     private final MemberService memberService;
 
@@ -91,6 +95,7 @@ public class ChatRoomService {
 
     // 특정 채팅방 삭제
     // 삭제한 사람만 삭제되고, 남은 사람에겐 ~님이 나갔습니다. 띄우기
+    @Transactional
     public boolean deleteChatRoom(Long channelId){
         String username = SecurityUtil.getCurrentMemberUsername();
         Member loginMember = memberRepository.findByUsername(username).orElse(null);
@@ -103,6 +108,9 @@ public class ChatRoomService {
 
         // 현재 채팅룸에 남은 사람이 아무도 없다면 채팅룸 객체를 아예 삭제
         if(chatRoom.getMemberList().size() == 0){
+            // 채팅방 삭제 전 채팅 메세지 삭제
+            chatMessageRepository.deleteAllByRoomId(channelId);
+            // 채팅방 삭제
             chatRoomRepository.deleteById(channelId);
         }else{
             // 한명이라도 남아있다면 현재 나가기 누른 사람의 퇴장 메세지를 보내줌
