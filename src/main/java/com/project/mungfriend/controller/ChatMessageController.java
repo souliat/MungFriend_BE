@@ -33,7 +33,7 @@ public class ChatMessageController {
     // 웹소켓으로 publish 된 메시지를 받는 곳이다
     // 메시지 보내고 DB에 채팅 메시지 저장하기.
     @MessageMapping("/api/chat/message")
-    @SendTo("/sub/api/chat/rooms/")
+//    @SendTo("/sub/api/chat/rooms/")
     public void message(@RequestBody ChatMessageRequestDto requestDto, Message<?> message) {
 
         // ws 통신에 담겨온 토큰 값으로 인증 정보 저장하기.
