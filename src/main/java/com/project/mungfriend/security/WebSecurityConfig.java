@@ -86,7 +86,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
-        configuration.addAllowedOriginPattern("http://localhost:3000"); // 배포 전 모두 허용
+        configuration.addAllowedOriginPattern("http://mung-friend-fe.s3-website.ap-northeast-2.amazonaws.com"); // 배포 전 모두 허용
         // 프론트 서버 (백엔드 테스트 용) : http://mung-friend-fe.s3-website.ap-northeast-2.amazonaws.com
         // 프론트 서버 : https://d3n0oswt21uayp.cloudfront.net
         // 프론트 서버 : http://mungfriend.s3-website.ap-northeast-2.amazonaws.com
