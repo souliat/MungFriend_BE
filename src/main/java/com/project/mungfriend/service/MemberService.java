@@ -8,6 +8,7 @@ import com.project.mungfriend.model.RefreshToken;
 import com.project.mungfriend.model.Review;
 import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.repository.RefreshTokenRepository;
+import com.project.mungfriend.security.UserDetailsImpl;
 import com.project.mungfriend.security.jwt.TokenProvider;
 import com.project.mungfriend.util.MailSender;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.util.Collections;
 import java.util.List;
 
@@ -67,39 +69,41 @@ public class MemberService {
         // authenticate 메서드가 실행이 될 때 UserDetailsServiceImpl 에서 만들었던 loadUserByUsername 메서드가 실행됨
 
         try {
-            authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+            Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
+            // 3. 인증 정보를 기반으로 JWT 토큰 생성
+            TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
+
+            // tokenDto 값 set
+            String status = "true";
+            String message = "로그인 성공! !";
+            tokenDto.setStatus(status);
+            tokenDto.setMessage(message);
+
+            // 여기에선 인증 정보가 UserDetailsImpl로 저장되어 Member 객체를 바로 사용 가능 (쿼리 감소)
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            Member member = userDetails.getMember();
+
+            tokenDto.setMemberId(member.getId());
+            tokenDto.setNickname(member.getNickname());
+
+            // 4. RefreshToken 저장
+            RefreshToken refreshToken = RefreshToken.builder()
+                    .key(authentication.getName())
+                    .value(tokenDto.getRefreshToken())
+                    .build();
+
+            refreshTokenRepository.save(refreshToken);
+
+            // 5. 토큰 발급
+            return tokenDto;
+
         }catch (Exception e){
             e.printStackTrace();
             String status = "false";
             String message = "잘못된 아이디 혹은 패스워드입니다.";
             return new TokenDto(status, message);
         }
-
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        // 3. 인증 정보를 기반으로 JWT 토큰 생성
-        TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
-
-        // tokenDto 값 set
-        String status = "true";
-        String message = "로그인 성공! !";
-        tokenDto.setStatus(status);
-        tokenDto.setMessage(message);
-
-        Member user = memberRepository.findByUsername(authentication.getName()).orElse(null);
-        assert user != null;
-        tokenDto.setMemberId(user.getId());
-        tokenDto.setNickname(user.getNickname());
-
-        // 4. RefreshToken 저장
-        RefreshToken refreshToken = RefreshToken.builder()
-                .key(authentication.getName())
-                .value(tokenDto.getRefreshToken())
-                .build();
-
-        refreshTokenRepository.save(refreshToken);
-
-        // 5. 토큰 발급
-        return tokenDto;
     }
 
     public TokenDto reissue(TokenRequestDto tokenRequestDto) {

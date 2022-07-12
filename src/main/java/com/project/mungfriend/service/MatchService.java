@@ -28,7 +28,7 @@ public class MatchService {
         );
         // 신청 글의 id로 해당 신청글 찾기
         Apply apply = applyRepository.findById(id).orElseThrow(
-                () -> new NullPointerException()
+                () -> new NullPointerException("해당하는 신청글을 찾을 수 없습니다.")
         );
 
         // 신청글을 작성한 applicant 객체 가져오기

@@ -10,6 +10,7 @@ import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -96,6 +97,9 @@ public class DogService {
                 representativeDog.setRepresentative(true);
                 dogRepository.save(representativeDog);
                 setDogProfileImgUrl(member, representativeDog.getDogImageFiles().get(0).getImageUrl());
+            }else{
+                member.setDogProfileImgUrl("");
+                memberRepository.save(member);
             }
         }
 

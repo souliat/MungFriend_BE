@@ -1,6 +1,8 @@
 package com.project.mungfriend.security.jwt;
 
 import com.project.mungfriend.dto.token.TokenDto;
+import com.project.mungfriend.model.Member;
+import com.project.mungfriend.security.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -14,6 +16,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
@@ -83,9 +87,7 @@ public class TokenProvider {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        // UserDetails 객체를 만들어서 Authentication 리턴
-        // UserDetailsImpl userDetails = new UserDetailsImpl()
-
+        // UserDetails 객체를 만들어서 Authentication 리턴 스프링 시큐리티가 제공하는 User 객체 사용
         UserDetails principal = new User(claims.getSubject(), "", authorities);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }

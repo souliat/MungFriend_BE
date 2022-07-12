@@ -2,8 +2,6 @@ package com.project.mungfriend.security;
 
 import com.project.mungfriend.enumeration.UserRole;
 import com.project.mungfriend.model.Member;
-import com.project.mungfriend.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,7 +30,8 @@ public class UserDetailsImpl implements UserDetails, OAuth2User {
         this.attributes = attributes;
     }
 
-    public Member getUser() {
+
+    public Member getMember() {
         return member;
     }
 
