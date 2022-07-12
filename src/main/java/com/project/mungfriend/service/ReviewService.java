@@ -42,6 +42,8 @@ public class ReviewService {
 
         Review review = new Review(giver, taker, requestDto);
         reviewRepository.save(review);
+        memberRepository.save(giver);
+        memberRepository.save(taker);
 
         for (MultipartFile multipartFile : multipartFiles) {
             // DogImageFile 엔티티에 받은 image 저장
