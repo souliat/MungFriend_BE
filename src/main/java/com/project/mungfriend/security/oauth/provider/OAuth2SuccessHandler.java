@@ -60,7 +60,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
 
         //5. param에 넣어서 redirect 시키기
-        targetUrl = UriComponentsBuilder.fromUriString("http://mungfriend.s3-website.ap-northeast-2.amazonaws.com/oauth") // 프론트 서버 반영 (로컬 / 서버)
+        targetUrl = UriComponentsBuilder.fromUriString("http://localhost:3000/oauth") // 프론트 서버 반영 (로컬 / 서버)
+                //프론트 서버 : http://mungfriend.s3-website.ap-northeast-2.amazonaws.com/oauth
                 .encode()
                 .queryParam("Authorization", tokenDto.getAccessToken())
                 .queryParam("username", userDetails.getUsername())
