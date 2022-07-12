@@ -32,7 +32,7 @@ public class MemberController {
     }
 
     // 로그인한 사용자의 정보 리턴 (id, nickname, username)
-    @PostMapping("/myinfo")
+    @GetMapping("/myinfo")
     @ResponseBody
     public GetMyInfoResponseDto getMyInfo(){
         String username = SecurityUtil.getCurrentMemberUsername();
@@ -40,7 +40,7 @@ public class MemberController {
     }
 
     // 상세페이지에서 닉네임 클릭 시 해당 회원의 정보 리턴
-    @GetMapping("/userinfo")
+    @PostMapping("/userinfo")
     @ResponseBody
     public GetUserInfoResponseDto getUserInfo(@RequestBody GetUserInfoRequestDto requestDto){
         return memberService.getUserInfo(requestDto);
