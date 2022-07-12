@@ -33,8 +33,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/chatting") // url/chatting 웹 소켓 연결 주소
-                .setAllowedOrigins("http://mung-friend-fe.s3-website.ap-northeast-2.amazonaws.com") // 프론트엔드 서버 주소
-//                .setAllowedOriginPatterns("*")
+//                .setAllowedOrigins("http://mung-friend-fe.s3-website.ap-northeast-2.amazonaws.com") // 프론트엔드 서버 주소
+                .setAllowedOriginPatterns("*")
                 .withSockJS(); // sock.js를 통하여 낮은 버전의 브라우저에서도 websocket 이 동작할수 있게 한다
     }
 
