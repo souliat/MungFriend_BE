@@ -80,7 +80,7 @@ public class DogService {
 
         String username = SecurityUtil.getCurrentMemberUsername();
         Member member = memberRepository.findByUsername(username).orElseThrow(
-                () -> new IllegalArgumentException("해당하는 ID의 회원이 존재하지 않습니다."));
+                () -> new NullPointerException("해당하는 ID의 회원이 존재하지 않습니다."));
 
         // S3 버킷에서 등록했던 이미지 삭제
         String imageUrl = dog.getDogImageFiles().get(0).getImageUrl();
