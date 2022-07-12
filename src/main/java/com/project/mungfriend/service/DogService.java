@@ -10,6 +10,7 @@ import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -91,14 +92,14 @@ public class DogService {
 
         if(dog.isRepresentative()) {
             List<Dog> dogList = member.getDogList();
-            // 원래 0이었는데, 한마리 남았을 때 지울 경우 로직이 위에서 지운 후 다시 저장하게됨 (> 1 이 적절하다고 판단)
-            if(dogList.size() > 1) {
+            if(dogList.size() > 0) {
                 Dog representativeDog = dogList.get(0);
                 representativeDog.setRepresentative(true);
                 dogRepository.save(representativeDog);
                 setDogProfileImgUrl(member, representativeDog.getDogImageFiles().get(0).getImageUrl());
             }else{
                 member.setDogProfileImgUrl("");
+                memberRepository.save(member);
             }
         }
 
