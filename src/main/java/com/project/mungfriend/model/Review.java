@@ -42,6 +42,7 @@ public class Review extends Timestamped{
     private Member giver;
 
     @OneToMany(mappedBy = "review", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @JsonIgnore
     private List<ReviewImageFile> reviewImageFile = new ArrayList<>();
 
     public Review(Member giver, Member taker, PostReviewRequestDto requestDto) {
