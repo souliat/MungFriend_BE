@@ -88,6 +88,9 @@ public class DogService {
         String key = splitArray[1];
         s3Uploader.deleteS3(key);
 
+        // cascade = CascadeType.PERSIST, orphanRemoval = true 인 상황에서 @Transactional을 붙이고 테스트 완료
+        // dog.getDogImageFiles().remove(0);
+
         dogRepository.deleteById(dog.getId());
 
         if(dog.isRepresentative()) {

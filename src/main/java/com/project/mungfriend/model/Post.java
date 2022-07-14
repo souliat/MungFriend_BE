@@ -62,7 +62,7 @@ public class Post extends Timestamped {
     @JoinColumn(name="MEMBER_ID")
     private Member member;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Apply> applyList = new ArrayList<>();
 
 
