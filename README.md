@@ -21,6 +21,10 @@ README
  + 이영주 : 
 
  + 정예빈 :
+ 
+# 🛠 서비스 아키텍처
+![멍프렌드 통합 아키텍처](https://user-images.githubusercontent.com/82041804/178923080-3297f289-a65c-4a77-91c9-7a18403d9f6d.JPG)
+
 
 # :dizzy: 핵심기능
 > 1) 회원가입 / 로그인
