@@ -31,11 +31,17 @@ public class PostService {
     public RegisterPostResponseDto registerPost(String username,
                                                 RegisterPostRequestDto requestDto) {
         Member member = memberRepository.findByUsername(username).orElseThrow(
-                () -> new IllegalArgumentException("게시글 작성은 로그인 후 가능합니다.")
+                () -> new NullPointerException("게시글 작성은 로그인 후 가능합니다.")
         );
 
         if (!requestDto.getRequestStartDate().isBefore(requestDto.getRequestEndDate())) {
             throw new IllegalArgumentException("종료 날짜가 시작 날짜보다 빠를 수 없습니다.");
+        }
+
+        for (Long dogId : requestDto.getDogIdList()) {
+            if(!dogRepository.existsById(dogId)){
+                throw new NullPointerException("선택한 ID의 멍멍이가 존재하지 않습니다.");
+            }
         }
 
         Post post = new Post(requestDto);
