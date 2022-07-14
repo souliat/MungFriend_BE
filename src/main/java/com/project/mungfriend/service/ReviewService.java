@@ -1,5 +1,6 @@
 package com.project.mungfriend.service;
 
+import com.project.mungfriend.dto.review.GetReviewDetailResponseDto;
 import com.project.mungfriend.dto.review.PostReviewRequestDto;
 import com.project.mungfriend.dto.review.PostReviewResponseDto;
 import com.project.mungfriend.model.Member;
@@ -8,6 +9,7 @@ import com.project.mungfriend.model.ReviewImageFile;
 import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.repository.ReviewImageFileRepository;
 import com.project.mungfriend.repository.ReviewRepository;
+import com.project.mungfriend.util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +31,7 @@ public class ReviewService {
     private final S3Uploader s3Uploader;
 
 
+    // 리뷰 등록
     @Transactional
     public PostReviewResponseDto registerReview(String username, List<MultipartFile> multipartFiles,
                                                 PostReviewRequestDto requestDto) throws IOException {
@@ -58,9 +61,19 @@ public class ReviewService {
         return responseDto;
     }
 
-    //S3 버킷 객체 삭제
-    //key 형식: "static/uuid.jpg"
-    public void deleteTest(String key) {
-        s3Uploader.deleteS3("static/" + key);
+    //리뷰 상세 조회
+    public GetReviewDetailResponseDto getReviewDetail(Long id) {
+        Review review = reviewRepository.findById(id).orElseThrow(
+                () -> new NullPointerException("해당 ID의 리뷰가 존재하지 않습니다.")
+        );
+
+        GetReviewDetailResponseDto responseDto = new GetReviewDetailResponseDto(review);
+        List<ReviewImageFile> reviewImgList = reviewImageFileRepository.findAllByReviewId(id);
+
+        for (ReviewImageFile reviewImg : reviewImgList) {
+            responseDto.getReviewImgList().add(reviewImg.getImageUrl());
+        }
+
+        return responseDto;
     }
 }

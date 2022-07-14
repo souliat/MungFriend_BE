@@ -1,11 +1,10 @@
 package com.project.mungfriend.controller;
 
-import com.project.mungfriend.dto.DeleteImgRequestDto;
+import com.project.mungfriend.dto.review.GetReviewDetailResponseDto;
 import com.project.mungfriend.dto.review.PostReviewRequestDto;
 import com.project.mungfriend.dto.review.PostReviewResponseDto;
 import com.project.mungfriend.security.SecurityUtil;
 import com.project.mungfriend.service.ReviewService;
-import com.project.mungfriend.service.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,9 +26,9 @@ public class ReviewController {
         return reviewService.registerReview(username, multipartFiles, requestDto);
     }
 
-    // s3 이미지 삭제 테스트
-    @DeleteMapping("/api/reviews")
-    public void deleteImg(@RequestBody DeleteImgRequestDto requestDto){
-        reviewService.deleteTest(requestDto.getKey());
+    //리뷰 상세 조회
+    @GetMapping("/api/reviews/{id}")
+    public GetReviewDetailResponseDto getReviewDetail(@PathVariable Long id){
+        return reviewService.getReviewDetail(id);
     }
 }
