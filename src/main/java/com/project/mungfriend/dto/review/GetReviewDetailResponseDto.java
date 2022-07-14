@@ -19,7 +19,7 @@ public class GetReviewDetailResponseDto {
     private String comment;
     private String giverDogProfileImgUrl;
     private LocalDateTime createdAt;
-    List<String> reviewImgList;
+    private List<String> reviewImgList;
 
     public GetReviewDetailResponseDto(Review review){
         this.id = review.getId();
