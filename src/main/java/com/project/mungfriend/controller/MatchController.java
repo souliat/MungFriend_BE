@@ -1,7 +1,7 @@
 package com.project.mungfriend.controller;
 
-import com.project.mungfriend.dto.MatchRequestDto;
-import com.project.mungfriend.dto.MatchResponseDto;
+import com.project.mungfriend.dto.match.MatchRequestDto;
+import com.project.mungfriend.dto.match.MatchResponseDto;
 import com.project.mungfriend.security.SecurityUtil;
 import com.project.mungfriend.service.MatchService;
 import lombok.RequiredArgsConstructor;

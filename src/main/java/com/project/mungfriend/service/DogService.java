@@ -8,13 +8,12 @@ import com.project.mungfriend.repository.DogImageFileRepository;
 import com.project.mungfriend.repository.DogRepository;
 import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.security.SecurityUtil;
+import com.project.mungfriend.util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 @Service

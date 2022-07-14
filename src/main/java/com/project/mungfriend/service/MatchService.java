@@ -1,7 +1,7 @@
 package com.project.mungfriend.service;
 
-import com.project.mungfriend.dto.MatchRequestDto;
-import com.project.mungfriend.dto.MatchResponseDto;
+import com.project.mungfriend.dto.match.MatchRequestDto;
+import com.project.mungfriend.dto.match.MatchResponseDto;
 import com.project.mungfriend.model.Apply;
 import com.project.mungfriend.model.Member;
 import com.project.mungfriend.model.Post;

@@ -1,4 +1,4 @@
-package com.project.mungfriend.dto;
+package com.project.mungfriend.dto.match;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
