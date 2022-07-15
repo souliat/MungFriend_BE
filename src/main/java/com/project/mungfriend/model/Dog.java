@@ -36,7 +36,7 @@ public class Dog {
     private String size;
 
     @Column(nullable = false)
-    private boolean isRepresentative;
+    private Boolean isRepresentative;
 
     @ManyToOne
     @JsonIgnore

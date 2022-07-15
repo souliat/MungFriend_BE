@@ -50,13 +50,13 @@ public class MatchService {
         // 신청자에게 문자 알림 보내기
         String phoneNum = applicant.getPhoneNum();
         String content = "[멍친구] \n" + member.getNickname() + "님과의 매칭이 완료되었습니다!";
-//        MessageSender.sendSMS(phoneNum, content);
+        MessageSender.sendSMS(phoneNum, content);
 
         // 신청자에게 메일 알림 보내기
         String email = applicant.getEmail();
         String title = "[멍친구] " + member.getNickname() + "님과의 매칭이 완료되었습니다!";
         String text = "[멍친구] \n" + member.getNickname() + "님과의 매칭이 완료되었습니다.";
-//        MailSender.sendMail(email, title, text);
+        MailSender.sendMail(email, title, text);
 
         return new MatchResponseDto("true,", "매칭이 완료 되었습니다.");
     }
