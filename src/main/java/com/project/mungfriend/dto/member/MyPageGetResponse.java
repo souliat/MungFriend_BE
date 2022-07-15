@@ -22,6 +22,7 @@ public class MyPageGetResponse {
     private String address;
     private String latitude;
     private String longitude;
+    private String dogProfileImgUrl;
     private String introduce;
     private String phoneNum;
     private Boolean isAgree;
@@ -39,6 +40,7 @@ public class MyPageGetResponse {
         this.address = member.getAddress();
         this.latitude = member.getLatitude();
         this.longitude = member.getLongitude();
+        this.dogProfileImgUrl = member.getDogProfileImgUrl();
         this.introduce = member.getIntroduce();
         this.phoneNum = member.getPhoneNum();
         this.isAgree = member.getIsAgree();
