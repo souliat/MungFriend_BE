@@ -23,13 +23,13 @@ public class MyPageService {
     private final ApplyRepository applyRepository;
 
     // 마이페이지에 있는 유저 정보들 보내주기 및 게시물들 중 내가 지원한 게시물이 True인 것을 찾아서 리스트로 뽑아준 것.
-    public MyPageGetResponse getAllMyInfo(Long id) {
-        Member member = memberRepository.findById(id).orElseThrow(
+    public MyPageGetResponse getAllMyInfo(String username) {
+        Member member = memberRepository.findByUsername(username).orElseThrow(
                 () -> new NullPointerException("해당하는 id를 찾을 수 없습니다")
 
         );
         MyPageGetResponse myPageGetResponseDto = new MyPageGetResponse(member);
-        List<Apply> applyList = applyRepository.findAllByApplicantId(id);
+        List<Apply> applyList = applyRepository.findAllByApplicantId(member.getId());
         for (Apply apply : applyList) {
             postRepository.findById(apply.getPost().getId()).ifPresent(
                     post -> myPageGetResponseDto.getApplyPostList().add(post));
