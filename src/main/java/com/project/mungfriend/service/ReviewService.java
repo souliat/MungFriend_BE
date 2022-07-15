@@ -62,6 +62,7 @@ public class ReviewService {
     }
 
     //리뷰 상세 조회
+    @Transactional
     public GetReviewDetailResponseDto getReviewDetail(Long id) {
         Review review = reviewRepository.findById(id).orElseThrow(
                 () -> new NullPointerException("해당 ID의 리뷰가 존재하지 않습니다.")

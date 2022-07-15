@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -19,7 +20,7 @@ public class GetReviewDetailResponseDto {
     private String comment;
     private String giverDogProfileImgUrl;
     private LocalDateTime createdAt;
-    private List<String> reviewImgList;
+    private List<String> reviewImgList = new ArrayList<>();
 
     public GetReviewDetailResponseDto(Review review){
         this.id = review.getId();
