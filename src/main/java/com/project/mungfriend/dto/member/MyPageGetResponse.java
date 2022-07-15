@@ -17,7 +17,7 @@ import java.util.List;
 
 public class MyPageGetResponse {
 
-    private String nickName;
+    private String nickname;
     private String email;
     private String address;
     private String introduce;
@@ -32,7 +32,7 @@ public class MyPageGetResponse {
 //
 //    }
     public MyPageGetResponse(Member member){
-        this.nickName = member.getNickname();
+        this.nickname = member.getNickname();
         this.email = member.getEmail();
         this.address = member.getAddress();
         this.introduce = member.getIntroduce();
