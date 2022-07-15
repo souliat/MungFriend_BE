@@ -113,6 +113,15 @@ public class PostService {
 
         GetPostDetailResponseDto responseDto = new GetPostDetailResponseDto(post);
 
+        // 220715 추가. 매칭된 사람의 프로필 전달하기 위한 로직.
+        if(post.getMatchedApplicantId() != null) {
+            Member matchedApplicant = memberRepository.findById(post.getMatchedApplicantId()).orElseThrow(
+                    () -> new NullPointerException("해당하는 ID가 없습니다.")
+            );
+            responseDto.setMatchedNickname(matchedApplicant.getNickname());
+            responseDto.setMatchedDogProfileImgUrl(matchedApplicant.getDogProfileImgUrl());
+        }
+
         responseDto.setDogProfileImgUrl(post.getMember().getDogProfileImgUrl());
 
         // 로그인한 사용자와 게시글 작성자 간 거리 (단위: km)

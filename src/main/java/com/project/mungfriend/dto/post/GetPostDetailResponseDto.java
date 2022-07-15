@@ -18,7 +18,11 @@ public class GetPostDetailResponseDto {
     private Long id;
     private String nickname;
 
+    private String matchedNickname;
+
     private String dogProfileImgUrl;
+
+    private String matchedDogProfileImgUrl;
     private String title;
     private String content;
     private String address;
