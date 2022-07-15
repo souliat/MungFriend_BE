@@ -22,7 +22,7 @@ public class ApplyController {
     }
 
     // 신청 취소
-    @DeleteMapping("/api/applies/{id}") // 여기서 아이디는 applyId.
+    @DeleteMapping("/api/applies/{id}") // 여기서 아이디는 postId.
     public DeleteApplyResponseDto cancelApply(@PathVariable Long id) {
         String username = SecurityUtil.getCurrentMemberUsername();
         return applyService.cancelApply(id, username);

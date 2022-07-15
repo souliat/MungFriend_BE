@@ -52,19 +52,20 @@ public class ApplyService {
     }
 
     // 신청 취소
-    public DeleteApplyResponseDto cancelApply(Long id, String username) {
+    public DeleteApplyResponseDto cancelApply(Long postId, String username) {
 
         Member member = memberRepository.findByUsername(username).orElseThrow(
                 () -> new NullPointerException("해당하는 아이디의 회원을 찾을 수 없습니다."));
 
-        Apply apply = applyRepository.findById(id).orElseThrow(
-                () -> new NullPointerException("해당하는 아이디의 신청을 찾을 수 없습니다."));
+        Apply apply = applyRepository.findByApplicantIdAndPostId(member.getId(), postId).orElseThrow(
+                () -> new NullPointerException("해당하는 아이디의 신청을 찾을 수 없습니다.")
+        );
 
         if(!member.getUsername().equals(apply.getApplicant().getUsername())) {
             throw new IllegalArgumentException("본인의 신청 내역만 삭제할 수 있습니다.");
         }
 
-        applyRepository.deleteById(id);
+        applyRepository.delete(apply);
 
         return new DeleteApplyResponseDto("true", "신청이 취소 되었습니다.");
     }
