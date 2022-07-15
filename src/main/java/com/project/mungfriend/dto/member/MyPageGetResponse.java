@@ -20,6 +20,8 @@ public class MyPageGetResponse {
     private String nickname;
     private String email;
     private String address;
+    private String latitude;
+    private String longitude;
     private String introduce;
     private String phoneNum;
     private Boolean isAgree;
@@ -35,6 +37,8 @@ public class MyPageGetResponse {
         this.nickname = member.getNickname();
         this.email = member.getEmail();
         this.address = member.getAddress();
+        this.latitude = member.getLatitude();
+        this.longitude = member.getLongitude();
         this.introduce = member.getIntroduce();
         this.phoneNum = member.getPhoneNum();
         this.isAgree = member.getIsAgree();
