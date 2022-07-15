@@ -56,7 +56,7 @@ public class DogService {
         dogImageFileRepository.save(dogImageFile);
 
         // 로그인한 사용자의 대표 멍멍이 프로필 사진 url set해주기
-        if (dog.isRepresentative()){
+        if (dog.getIsRepresentative()){
             setDogProfileImgUrl(member, imageUrl);
         }
         return new DogProfileResponseDto("true", "멍멍이 등록 성공!");
@@ -92,11 +92,11 @@ public class DogService {
 
         dogRepository.deleteById(dog.getId());
 
-        if(dog.isRepresentative()) {
+        if(dog.getIsRepresentative()) {
             List<Dog> dogList = member.getDogList();
             if(dogList.size() > 0) {
                 Dog representativeDog = dogList.get(0);
-                representativeDog.setRepresentative(true);
+                representativeDog.setIsRepresentative(true);
                 dogRepository.save(representativeDog);
                 setDogProfileImgUrl(member, representativeDog.getDogImageFiles().get(0).getImageUrl());
             }else{
@@ -118,12 +118,12 @@ public class DogService {
 
         for (Dog dog : dogList) {
             if(dog.getId().equals(id)) {
-                dog.setRepresentative(true);
+                dog.setIsRepresentative(true);
                 dogRepository.save(dog);
                 //대표 멍멍이 사진 변경
                 setDogProfileImgUrl(member, dog.getDogImageFiles().get(0).getImageUrl());
             }else {
-                dog.setRepresentative(false);
+                dog.setIsRepresentative(false);
                 dogRepository.save(dog);
             }
         }
