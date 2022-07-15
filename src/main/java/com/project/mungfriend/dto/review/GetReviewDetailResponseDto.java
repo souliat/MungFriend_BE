@@ -25,6 +25,7 @@ public class GetReviewDetailResponseDto {
     public GetReviewDetailResponseDto(Review review){
         this.id = review.getId();
         this.giverNickname = review.getGiverNickname();
+        this.postId = review.getPostId();
         this.comment = review.getComment();
         this.giverDogProfileImgUrl = review.getGiverDogProfileImgUrl();
         this.createdAt = review.getCreatedAt();
