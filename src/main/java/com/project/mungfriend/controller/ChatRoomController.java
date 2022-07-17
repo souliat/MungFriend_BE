@@ -37,9 +37,7 @@ public class ChatRoomController {
         String username = SecurityUtil.getCurrentMemberUsername();
         log.info("현재 유저의 아이디 = {}", username);
 
-        ChatRoomResponseDto chatRoom = chatRoomService.createChatRoom(requestDto);
-
-        return chatRoom;
+        return chatRoomService.createChatRoom(requestDto);
     }
 
 

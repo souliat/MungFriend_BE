@@ -9,7 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 //로컬 환경은 local, 배포 환경은 alpha
-@Profile("local")
+@Profile("alpha")
 @Configuration
 public class EmbeddedRedisConfig {
     @Value("${spring.redis.port}")

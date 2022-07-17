@@ -62,11 +62,12 @@ public class ChatRoomService {
         String username = SecurityUtil.getCurrentMemberUsername();
         Member writer = memberRepository.findByUsername(username).orElse(null);
 
-        Member applicant = memberRepository.findById(requestDto.getMemberId()).orElseThrow(
-                () -> new NullPointerException("해당하는 ID를 찾을 수 없습니다.")
+        Member applicant = memberRepository.findByNickname(requestDto.getNickname()).orElseThrow(
+                () -> new NullPointerException("해당하는 신청자를 찾을 수 없습니다.")
         );
 
-        ChatRoom chatRoom = new ChatRoom(requestDto, writer, applicant);
+        assert writer != null;
+        ChatRoom chatRoom = new ChatRoom(writer, applicant);
         chatRoomRepository.save(chatRoom);
 
         return new ChatRoomResponseDto(chatRoom, writer);
