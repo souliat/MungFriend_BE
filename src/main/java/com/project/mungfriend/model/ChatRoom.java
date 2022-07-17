@@ -30,7 +30,7 @@ public class ChatRoom extends Timestamped {
 
 
     public ChatRoom(Member writer, Member applicant){
-        this.roomName = writer.getNickname() + "과 " + applicant.getNickname() + "의 채팅방";
+        this.roomName = writer.getNickname() + "님과 " + applicant.getNickname() + "님의 채팅방";
         this.memberList.add(writer);
         this.memberList.add(applicant);
     }
