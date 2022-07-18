@@ -34,6 +34,7 @@ public class ChatMessageRepository  {
     public ChatMessage save(ChatMessage chatMessage) {
         log.info("chatMessage : {}", chatMessage.getMessage());
         log.info("type: {}", chatMessage.getType());
+        redisTemplate.setKeySerializer(new Jackson2JsonRedisSerializer<>(Long.class));
         redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(ChatMessage.class));
 
         Long roomId = chatMessage.getRoomId();
