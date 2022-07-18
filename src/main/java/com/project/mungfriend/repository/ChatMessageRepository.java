@@ -36,7 +36,7 @@ public class ChatMessageRepository  {
         log.info("type: {}", chatMessage.getType());
         redisTemplate.setHashKeySerializer(new Jackson2JsonRedisSerializer<>(Long.class));
         redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(ChatMessage.class));
-        redisTemplate.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(ChatMessage.class));
+//        redisTemplate.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(ChatMessage.class));
 
         Long roomId = chatMessage.getRoomId();
         List<ChatMessage> chatMessageList = opsHashChatMessage.get(CHAT_MESSAGE, roomId);
