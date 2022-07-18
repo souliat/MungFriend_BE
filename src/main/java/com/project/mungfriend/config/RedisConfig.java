@@ -16,14 +16,14 @@ import redis.clients.jedis.JedisPoolConfig;
 public class RedisConfig {
 
     //어플리케이션에서 사용할 redisTemplate 설정
-    @Bean
-    public JedisPoolConfig jedisPoolConfig(){
-        return new JedisPoolConfig();
-    }
-    @Bean
-    public JedisConnectionFactory jedisConnectionFactory(JedisPoolConfig jedisPoolConfig){
-        return new JedisConnectionFactory(jedisPoolConfig);
-    }
+//    @Bean
+//    public JedisPoolConfig jedisPoolConfig(){
+//        return new JedisPoolConfig();
+//    }
+//    @Bean
+//    public JedisConnectionFactory jedisConnectionFactory(JedisPoolConfig jedisPoolConfig){
+//        return new JedisConnectionFactory(jedisPoolConfig);
+//    }
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
