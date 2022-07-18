@@ -48,6 +48,7 @@ public class ChatRoomService {
     public void setUserEnterInfo(String sessionId, Long roomId) {
         redisTemplate.setHashKeySerializer(new Jackson2JsonRedisSerializer<>(String.class));
         redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(Long.class));
+        redisTemplate.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(Long.class));
         hashOpsEnterInfo.put(ENTER_INFO, sessionId, roomId);
     }
 
