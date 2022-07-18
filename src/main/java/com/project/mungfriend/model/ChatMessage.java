@@ -4,38 +4,25 @@ import com.project.mungfriend.dto.chat.ChatMessageRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class ChatMessage {
+public class ChatMessage implements Serializable {
+
+    private static final long serialVersionUID = 6494678977089006639L;
 
     public enum MessageType {
         ENTER, TALK, QUIT
     }
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private Long id;
-
-    @Column
     private MessageType type;
-
-    @Column
     private Long roomId;
-
-    @Column
     private Long memberId;
-
-    @Column
     private String sender;
-
-    @Column
     private String message;
-
-    @Column
     private String createdAt;
 
 //    @ManyToOne(fetch = FetchType.EAGER)
