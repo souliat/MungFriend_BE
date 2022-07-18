@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,6 +46,8 @@ public class ChatRoomService {
     // 유저가 입장한 채팅방 ID 와 유저 세션 ID 맵핑 정보 저장
     // Enter라는 곳에 sessionId와 roomId를 맵핑시켜놓음
     public void setUserEnterInfo(String sessionId, Long roomId) {
+        redisTemplate.setHashKeySerializer(new Jackson2JsonRedisSerializer<>(String.class));
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(Long.class));
         hashOpsEnterInfo.put(ENTER_INFO, sessionId, roomId);
     }
 
