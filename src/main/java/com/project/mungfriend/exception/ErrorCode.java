@@ -7,7 +7,13 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
     // 400 Bad Request
     ILLEGAL_ARGUMENT_EXCEPTION(HttpStatus.BAD_REQUEST, "400_1"),
-    NULL_POINER_EXCEPTION(HttpStatus.BAD_REQUEST, "400_2");
+    NULL_POINER_EXCEPTION(HttpStatus.BAD_REQUEST, "400_2"),
+
+    // 401 Unauthorized
+    UNAUTHORIZED_EXCEPTION(HttpStatus.UNAUTHORIZED, "401"),
+
+    // 403 Forbidden
+    FORBIDDEN_EXCEPTION(HttpStatus.FORBIDDEN,"403");
 
     private final HttpStatus httpStatus;
     private final String errorCode;
