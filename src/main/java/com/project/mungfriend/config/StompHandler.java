@@ -45,7 +45,7 @@ public class StompHandler implements ChannelInterceptor {
             String jwtToken = accessor.getFirstNativeHeader("token");
             log.info("CONNECT {}", jwtToken);
             // Header의 jwt token 검증
-            Boolean tokenValid = tokenProvider.validateToken(jwtToken);
+            tokenProvider.validateToken(jwtToken);
 
             log.info("jwtToken validation 결과값={}", tokenProvider.validateToken(jwtToken));
         }
@@ -59,9 +59,7 @@ public class StompHandler implements ChannelInterceptor {
             String destination = Optional.ofNullable((String) message.getHeaders().get("simpDestination")).orElse("InvalidRoomId");
             log.info("message header 정보들={}", message.getHeaders());
             log.info("message destination은={}", destination);
-            String destination2 = (String) accessor.getHeader("simpDestination");
-            //            String roomId = chatService.getRoomId(destination);
-            Long roomId = Long.parseLong(chatService.getRoomId(destination));
+            Long roomId = Long.parseLong(chatRoomService.getRoomId(destination));
             log.info("Long으로 Parsing된 roomId는={} [StompHandler_SUBSCRIBE]", roomId);
 
             // 채팅방에 들어온 클라이언트 sessionId를 roomId와 맵핑해 놓는다.(나중에 특정 세션이 어떤 채팅방에 들어가 있는지 알기 위함)
