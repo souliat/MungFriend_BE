@@ -110,11 +110,11 @@ public class ChatRoomService {
     // 특정 채팅방 삭제
     // 삭제한 사람만 삭제되고, 남은 사람에겐 ~님이 나갔습니다. 띄우기
     @Transactional
-    public boolean deleteChatRoom(Long channelId){
+    public boolean deleteChatRoom(Long roomId){
         String username = SecurityUtil.getCurrentMemberUsername();
         Member loginMember = memberRepository.findByUsername(username).orElse(null);
 
-        ChatRoom chatRoom = chatRoomRepository.findById(channelId).orElseThrow(
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId).orElseThrow(
                 () -> new NullPointerException("해당하는 채팅방이 없습니다."));
 
         // 나가기 누른 사람은 채팅룸의 멤버리스트에서 제거
@@ -123,16 +123,16 @@ public class ChatRoomService {
         // 현재 채팅룸에 남은 사람이 아무도 없다면 채팅룸 객체를 아예 삭제
         if(chatRoom.getMemberList().size() == 0){
             // 채팅방 삭제 전 채팅 메세지 삭제
-            chatMessageRepository.delete(channelId);
+            chatMessageRepository.delete(roomId);
             // 채팅방 삭제
-            chatRoomRepository.deleteById(channelId);
+            chatRoomRepository.deleteById(roomId);
         }else{
             // 한명이라도 남아있다면 현재 나가기 누른 사람의 퇴장 메세지를 보내줌
             assert loginMember != null;
             chatMessageService.sendChatMessage(
                     ChatMessage.builder()
                             .type(ChatMessage.MessageType.QUIT)
-                            .roomId(channelId)
+                            .roomId(roomId)
                             .sender(loginMember.getNickname())
                             .build()
             );
