@@ -3,27 +3,17 @@ package com.project.mungfriend.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
 public class RedisConfig {
 
     //어플리케이션에서 사용할 redisTemplate 설정
-//    @Bean
-//    public JedisPoolConfig jedisPoolConfig(){
-//        return new JedisPoolConfig();
-//    }
-//    @Bean
-//    public JedisConnectionFactory jedisConnectionFactory(JedisPoolConfig jedisPoolConfig){
-//        return new JedisConnectionFactory(jedisPoolConfig);
-//    }
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
