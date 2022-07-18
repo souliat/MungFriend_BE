@@ -26,8 +26,7 @@ public class ChatMessageService {
     private final ChannelTopic channelTopic;
     private final RedisTemplate redisTemplate;
     private final TokenProvider tokenProvider;
-    private final ChatMessageRepository chatMessageRepository;
-    private final MemberService memberService;
+    private final ChatMessageRepository chatMessageRepository; //Redis 저장소
 
     // ws 통신 인증 정보 저장
     public void saveAuthentication(Message<?> message){
@@ -89,25 +88,16 @@ public class ChatMessageService {
         chatMessageRepository.save(message);
     }
 
-    // destination 정보에서 roomId 추출(String형)
-    public String getRoomId(String destination) {
-        int lastIndex = destination.lastIndexOf('/');
-        if (lastIndex != -1)
-            return destination.substring(lastIndex + 1);
-        else
-            return "";
-    }
-
 
     // 채팅방 내 메시지 전체 조회
-    public List<ChatMessage> getMessages(Long channelId) {
-        return chatMessageRepository.findByRoomId(channelId);
+    public List<ChatMessage> getMessages(Long roomId) {
+        return chatMessageRepository.findAllMessage(roomId);
     }
 
     // 채팅방 내 메시지 전체 조회(페이지. 무한스크롤 적용)
-    public Page<ChatMessage> getChatMessageByRoomId(Long roomId, Pageable pageable) {
-        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() -1);
-        pageable = PageRequest.of(page, 150);
-        return chatMessageRepository.findByRoomId(roomId, pageable);
-    }
+//    public Page<ChatMessage> getChatMessageByRoomId(Long roomId, Pageable pageable) {
+//        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() -1);
+//        pageable = PageRequest.of(page, 150);
+//        return chatMessageRepository.findAllMessage(roomId, pageable);
+//    }
 }

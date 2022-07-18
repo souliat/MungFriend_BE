@@ -53,26 +53,26 @@ public class ChatRoomController {
 
 
     // 특정 채팅방 조회
-    @GetMapping("/channel/{channelId}")
+    @GetMapping("/channel/{roomId}")
     @ResponseBody
-    public ChatRoomResponseDto showChatRoom(@PathVariable Long channelId) {
+    public ChatRoomResponseDto showChatRoom(@PathVariable Long roomId) {
         String username = SecurityUtil.getCurrentMemberUsername();
         Member member = memberService.getMemberObject(username);
-        return chatRoomService.showChatRoom(channelId, member);
+        return chatRoomService.showChatRoom(roomId, member);
     }
 
     //특정 채팅방 삭제
-    @DeleteMapping("/channel/{channelId}")
+    @DeleteMapping("/channel/{roomId}")
     @ResponseBody
-    public boolean deleteChatRoom(@PathVariable Long channelId){
-        return chatRoomService.deleteChatRoom(channelId);
+    public boolean deleteChatRoom(@PathVariable Long roomId){
+        return chatRoomService.deleteChatRoom(roomId);
     }
 
 
     //채팅방 내 메시지 전체 조회
-    @GetMapping("/channel/{channelId}/messages")
+    @GetMapping("/channel/{roomId}/messages")
     @ResponseBody
-    public List<ChatMessage> getRoomMessages(@PathVariable Long channelId) {
-        return chatMessageService.getMessages(channelId);
+    public List<ChatMessage> getRoomMessages(@PathVariable Long roomId) {
+        return chatMessageService.getMessages(roomId);
     }
 }

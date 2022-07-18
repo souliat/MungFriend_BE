@@ -11,10 +11,13 @@ import com.project.mungfriend.repository.ChatRoomRepository;
 import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,18 +28,19 @@ public class ChatRoomService {
 
     //레디스 저장소 사용
     //key hashKey value 구조
-    @Resource(name = "redisTemplate")
+    private final RedisTemplate<String, Object> redisTemplate;
+//    @Resource(name = "redisTemplate")
     private HashOperations<String, String, Long> hashOpsEnterInfo;
-
     private final ChatRoomRepository chatRoomRepository;
-
     private final ChatMessageRepository chatMessageRepository;
-
-    private final MemberService memberService;
-
     private final ChatMessageService chatMessageService;
     private final MemberRepository memberRepository;
     public static final String ENTER_INFO = "ENTER_INFO"; // 채팅룸에 입장한 클라이언트의 sessionId 와 채팅룸 id 를 맵핑한 정보 저장
+
+    @PostConstruct
+    private void init() {
+        hashOpsEnterInfo = redisTemplate.opsForHash();
+    }
 
     // 유저가 입장한 채팅방 ID 와 유저 세션 ID 맵핑 정보 저장
     // Enter라는 곳에 sessionId와 roomId를 맵핑시켜놓음
@@ -54,6 +58,15 @@ public class ChatRoomService {
     // 실시간으로 보는 방은 하나이기 떄문이다.
     public void removeUserEnterInfo(String sessionId) {
         hashOpsEnterInfo.delete(ENTER_INFO, sessionId);
+    }
+
+    // destination 정보에서 roomId 추출(String형)
+    public String getRoomId(String destination) {
+        int lastIndex = destination.lastIndexOf('/');
+        if (lastIndex != -1)
+            return destination.substring(lastIndex + 1);
+        else
+            return "";
     }
 
 
@@ -86,8 +99,8 @@ public class ChatRoomService {
     }
 
     // 특정 채팅방 조회
-    public ChatRoomResponseDto showChatRoom(Long channelId, Member member) {
-        ChatRoom chatRoom = chatRoomRepository.findById(channelId).orElseThrow(
+    public ChatRoomResponseDto showChatRoom(Long roomId, Member member) {
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId).orElseThrow(
                 () -> new IllegalArgumentException("찾는 채팅방이 존재하지 않습니다.")
         );
 
@@ -110,7 +123,7 @@ public class ChatRoomService {
         // 현재 채팅룸에 남은 사람이 아무도 없다면 채팅룸 객체를 아예 삭제
         if(chatRoom.getMemberList().size() == 0){
             // 채팅방 삭제 전 채팅 메세지 삭제
-            chatMessageRepository.deleteAllByRoomId(channelId);
+            chatMessageRepository.delete(channelId);
             // 채팅방 삭제
             chatRoomRepository.deleteById(channelId);
         }else{
