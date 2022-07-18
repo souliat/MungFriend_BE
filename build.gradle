@@ -61,6 +61,7 @@ dependencies {
     implementation 'it.ozimov:embedded-redis:0.7.2'
     implementation 'javax.xml.bind:jaxb-api'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'redis.clients:jedis'
 
 }
 
