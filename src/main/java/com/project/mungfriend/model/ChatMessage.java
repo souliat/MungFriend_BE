@@ -25,7 +25,19 @@ public class ChatMessage implements Serializable {
     private String message;
     private String createdAt;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
+    @Override
+    public String toString() {
+        return "ChatMessage{" +
+                "type=" + type +
+                ", roomId=" + roomId +
+                ", memberId=" + memberId +
+                ", sender='" + sender + '\'' +
+                ", message='" + message + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                '}';
+    }
+
+    //    @ManyToOne(fetch = FetchType.EAGER)
 //    @JoinColumn(name = "member_id_joined")
 //    private Member member;
 
