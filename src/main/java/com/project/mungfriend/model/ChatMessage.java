@@ -1,7 +1,9 @@
 package com.project.mungfriend.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.project.mungfriend.dto.chat.ChatMessageRequestDto;
 import lombok.*;
+import org.springframework.boot.jackson.JsonObjectDeserializer;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +12,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonDeserialize(using = JsonObjectDeserializer.class)
 public class ChatMessage implements Serializable {
 
     private static final long serialVersionUID = 6494678977089006639L;
