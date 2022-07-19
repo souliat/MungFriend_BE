@@ -202,12 +202,13 @@ public class PostService {
         String dogProfileIds = post.getDogProfileIds();
         String[] dogProfileIdsArr = dogProfileIds.split(",");
         for (String s : dogProfileIdsArr) {
-            Dog dog = dogRepository.findById(Long.parseLong(s)).orElseThrow(
-                    () -> new IllegalArgumentException("해당 ID의 멍멍이 프로필이 존재하지 않습니다.")
-            );
-            DogImageFile dogImageFile = dog.getDogImageFiles().get(0);
-            String imageUrl = dogImageFile.getImageUrl();
-            imagePath.add(imageUrl);
+            Dog dog = dogRepository.findById(Long.parseLong(s)).orElse(null);
+            // 강아지가 없을 경우 Exception 발생시키는 로직 수정 -> 없으면 그냥 넘어가기
+            if(dog != null){
+                DogImageFile dogImageFile = dog.getDogImageFiles().get(0);
+                String imageUrl = dogImageFile.getImageUrl();
+                imagePath.add(imageUrl);
+            }
         }
     }
 }
