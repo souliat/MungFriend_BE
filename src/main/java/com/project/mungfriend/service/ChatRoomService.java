@@ -47,8 +47,8 @@ public class ChatRoomService {
     // Enter라는 곳에 sessionId와 roomId를 맵핑시켜놓음
     public void setUserEnterInfo(String sessionId, Long roomId) {
         redisTemplate.setHashKeySerializer(new Jackson2JsonRedisSerializer<>(String.class));
-//        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(Long.class));
-//        redisTemplate.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(Long.class));
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(Long.class));
+        redisTemplate.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(Long.class));
         hashOpsEnterInfo.put(ENTER_INFO, sessionId, roomId);
     }
 
