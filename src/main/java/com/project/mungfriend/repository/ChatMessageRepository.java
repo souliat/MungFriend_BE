@@ -14,6 +14,9 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +38,7 @@ public class ChatMessageRepository  {
         log.info("chatMessage : {}", chatMessage.getMessage());
         log.info("type: {}", chatMessage.getType());
         redisTemplate.setHashKeySerializer(new Jackson2JsonRedisSerializer<>(Long.class));
-        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(ChatMessage.class));
+//        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(ChatMessage.class));
 //        redisTemplate.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(ChatMessage.class));
 
         Long roomId = chatMessage.getRoomId();
@@ -51,7 +54,11 @@ public class ChatMessageRepository  {
     }
 
     public List<ChatMessage> findAllMessage(Long roomId) {
+        // 역직렬화 !!
         log.info("findAllMessage");
+//        byte[] chatMessageList = (byte[]) opsHashChatMessage.get(CHAT_MESSAGE, roomId);
+
+//        redisTemplate.getHashValueSerializer().deserialize();
         return opsHashChatMessage.get(CHAT_MESSAGE, roomId);
     }
 
