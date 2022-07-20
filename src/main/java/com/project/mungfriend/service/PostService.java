@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -60,6 +61,13 @@ public class PostService {
 
         for (Post post : postList) {
             GetPostResponseDto getPostResponseDto = new GetPostResponseDto(post);
+            // 게시글 전체 조회, 거리순 조회 시 현재 시간을 기준으로 요청 시간이 지났으면 모집 종료로 바꿔주기
+            if ( post.getRequestStartDate().isBefore(LocalDateTime.now()) ){
+                post.setIsComplete(true);
+                postRepository.save(post);
+            }
+            getPostResponseDto.setIsComplete(post.getIsComplete());
+
 
             // 신청자 수 세팅. 2022-06-28 인기천 추가.
             setApplyCntAndImgPath(post, getPostResponseDto);
