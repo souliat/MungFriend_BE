@@ -11,6 +11,7 @@ import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.repository.PostRepository;
 import com.project.mungfriend.util.DistanceCalculator;
 import com.project.mungfriend.util.DistanceComparator;
+import com.project.mungfriend.util.TimeValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,9 +35,8 @@ public class PostService {
                 () -> new NullPointerException("게시글 작성은 로그인 후 가능합니다.")
         );
 
-        if (!requestDto.getRequestStartDate().isBefore(requestDto.getRequestEndDate())) {
-            throw new IllegalArgumentException("종료 날짜가 시작 날짜보다 빠를 수 없습니다.");
-        }
+        // 게시글 등록 시 요청 시작 및 종료 일자 유효성 체크
+        TimeValidator.validateTime(requestDto.getRequestStartDate(), requestDto.getRequestEndDate());
 
         for (Long dogId : requestDto.getDogIdList()) {
             if(!dogRepository.existsById(dogId)){
