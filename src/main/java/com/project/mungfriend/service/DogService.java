@@ -4,9 +4,7 @@ import com.project.mungfriend.dto.dog.DogCaptainResponseDto;
 import com.project.mungfriend.dto.dog.DogProfileRequestDto;
 import com.project.mungfriend.dto.dog.DogProfileResponseDto;
 import com.project.mungfriend.model.*;
-import com.project.mungfriend.repository.DogImageFileRepository;
-import com.project.mungfriend.repository.DogRepository;
-import com.project.mungfriend.repository.MemberRepository;
+import com.project.mungfriend.repository.*;
 import com.project.mungfriend.security.SecurityUtil;
 import com.project.mungfriend.util.S3Uploader;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +21,9 @@ public class DogService {
     private final DogRepository dogRepository;
     private final DogImageFileRepository dogImageFileRepository;
     private final MemberRepository memberRepository;
+
+    private final ApplyRepository applyRepository;
+    private final ReviewRepository reviewRepository;
     private final S3Uploader s3Uploader;
 
     // 멍 프로필 등록
@@ -139,9 +140,13 @@ public class DogService {
         List<Review> giverReviews = member.getGiverReviews();
         for (Apply apply : applyList) {
             apply.setDogProfileImgUrl(imageUrl);
+            // 바뀐 프로필 이미지 저장!!
+            applyRepository.save(apply);
         }
         for(Review review : giverReviews){
             review.setGiverDogProfileImgUrl(imageUrl);
+            // 바뀐 프로필 이미지 저장!!
+            reviewRepository.save(review);
         }
     }
 }
