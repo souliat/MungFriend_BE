@@ -2,15 +2,12 @@ package com.project.mungfriend.controller;
 
 import com.project.mungfriend.dto.chat.ChatMessageRequestDto;
 import com.project.mungfriend.model.ChatMessage;
-import com.project.mungfriend.model.Member;
 import com.project.mungfriend.repository.MemberRepository;
-import com.project.mungfriend.security.SecurityUtil;
 import com.project.mungfriend.service.ChatMessageService;
 import com.project.mungfriend.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
