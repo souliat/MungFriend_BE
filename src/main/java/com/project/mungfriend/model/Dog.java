@@ -29,7 +29,7 @@ public class Dog {
     @Column(nullable = false)
     private String gender;
 
-    @Column(nullable = false)
+    @Column(nullable = false)//멍멍이 정보, 유의사항 글자 수 생각해보기!!
     private String info = "";
 
     @Column(nullable = false)
