@@ -1,5 +1,6 @@
 package com.project.mungfriend.util;
 
+import com.project.mungfriend.enumeration.MailType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +23,7 @@ public class MailSender {
     }
 
     // 해당 메서드의 파라미터에는 받는 사람의 이메일 주소, 메일 제목, 메일 본문을 넣어준다.
-    public static void sendMail(String recieverMailAddr, String subject, String text){
+    public static void sendMail(String receiverMailAddr, String subject, String receiverNickname, MailType type){
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "smtp.naver.com");
         prop.put("mail.smtp.port", 587);
@@ -30,9 +31,6 @@ public class MailSender {
         // ssl protocols 설정 해줘야함
         prop.put("mail.smtp.ssl.protocols", "TLSv1.2");
         prop.put("mail.smtp.tls.enable", "true");
-
-//        prop.put("mail.smtp.ssl.enable", "true");
-//        prop.put("mail.smtp.ssl.trust", "smtp.naver.com");
 
         Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -46,19 +44,12 @@ public class MailSender {
             message.setFrom(new InternetAddress(user));
 
             //수신자 메일 주소
-            System.out.println("recieverMailAddr = " + recieverMailAddr);
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(recieverMailAddr));
+            System.out.println("receiverMailAddr = " + receiverMailAddr);
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(receiverMailAddr));
             //제목
             message.setSubject(subject);
 
-            // 메일 HTML 로 전송하기 -> 테스트 필요!!!
-            // 메일에 출력할 HTML 추가 -> 미리 만들어둬야함!!!
-            StringBuffer sb = new StringBuffer();
-            sb.append("<h3>[멍친구]</h3>\n");
-            sb.append("<a href='https://mungfriend.com'>멍친구로 바로가기</a>\n");
-            sb.append("<img src='https://ifh.cc/g/sPZmVL.png'></img>\n");
-            sb.append("<h4>").append(text).append("</h4>\n");
-            String html = sb.toString();
+            String html = setContent(receiverNickname, type);
 
             //본문 HTML, TEXT
             Multipart mParts = new MimeMultipart();
@@ -88,5 +79,50 @@ public class MailSender {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+    }
+    public static String setContent(String receiverNickname, MailType type){
+
+        StringBuffer sb = new StringBuffer();
+
+        // 타입에 따라 메일에 출력할 HTML 추가
+        if (type == MailType.NORMAL_SIGNUP){
+            sb.append("<img src='https://ifh.cc/g/46C0XH.jpg'>\n");
+            sb.append("<h4>")
+                    .append("마이페이지 > 프로필수정 > 휴대폰번호 인증 진행 후, 반려견 산책 매칭 서비스 이용이 가능합니다.")
+                    .append("</h4>\n");
+            sb.append("<h5>")
+                    .append("반려견 산책 매칭 서비스 멍친구와 함께 즐거운 추억을 만들어보세요😊!")
+                    .append("</h5>\n");
+            sb.append("<a href='https://mungfriend.com' style=\"text-decoration-line:none\">🐶 멍친구로 바로가기</a>\n");
+        } else if (type == MailType.SOCIAL_SIGNUP){
+            sb.append("<img src='https://ifh.cc/g/46C0XH.jpg'>\n");
+            sb.append("<h4>")
+                    .append("마이페이지 > 프로필수정 > 휴대폰번호, 주소, 전체 약관 동의 체크 진행 후, 반려견 산책 매칭 서비스 이용이 가능합니다.")
+                    .append("</h4>\n");
+            sb.append("<h5>")
+                    .append("반려견 산책 매칭 서비스 멍친구와 함께 즐거운 추억을 만들어보세요😊!")
+                    .append("</h5>\n");
+            sb.append("<a href='https://mungfriend.com' style=\"text-decoration-line:none\">🐶 멍친구로 바로가기</a>\n");
+        } else if (type == MailType.MATCH_COMPLETED){
+            sb.append("<img src='https://ifh.cc/g/063rFs.jpg'>\n");
+            sb.append("<h4>")
+                    .append("메인 페이지 우측 상단의 말풍선을 클릭하여 매칭된 상대방과의 채팅을 시작해보세요.😉")
+                    .append("</h4>\n");
+            sb.append("<h5>")
+                    .append("매칭 후 이용 안내 -> 추후 작성 예정")
+                    .append("</h5>\n");
+            sb.append("<h5>")
+                    .append("산책 시 유의 사항 -> 추후 작성 예정")
+                    .append("</h5>\n");
+            sb.append("<a href='https://mungfriend.com' style=\"text-decoration-line:none\">🐶 멍친구로 바로가기</a>\n");
+        } else if (type == MailType.MATCH_CANCELED){
+            sb.append("<img src='https://ifh.cc/g/063rFs.jpg'>\n");
+            sb.append("<h4>")
+                    .append("아쉽군요!")
+                    .append("</h4>\n");
+            sb.append("<a href='https://mungfriend.com' style=\"text-decoration-line:none\">🐶 멍친구로 바로가기</a>\n");
+        }
+
+        return sb.toString();
     }
 }
