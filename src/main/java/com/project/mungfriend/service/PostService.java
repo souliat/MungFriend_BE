@@ -97,6 +97,8 @@ public class PostService {
                     Double.parseDouble(post.getMember().getLatitude()),
                     Double.parseDouble(post.getMember().getLongitude()), "kilometer"));
 
+            getPostResponseDto.setIsComplete(post.getIsComplete());
+
             // 신청자 수 세팅. 2022-06-28 인기천 추가.
             setApplyCntAndImgPath(post, getPostResponseDto);
             postResponseDtoList.add(getPostResponseDto);
