@@ -27,7 +27,7 @@ public class PhoneCheckController {
     public Boolean phoneAuth(@RequestBody PhoneCheckRequestDto requestDto, HttpServletRequest request) {
 
         if (memberRepository.existsByPhoneNum(requestDto.getPhoneNum())) {
-            return false;
+            throw new IllegalArgumentException("이미 등록된 휴대폰 번호입니다.");
         }
 
         String code = PhoneCheckService.sendRandomMessage(requestDto.getPhoneNum());
