@@ -21,7 +21,7 @@ public class PhoneCheckController {
     private final MemberRepository memberRepository;
     private final PhoneCheckService phoneCheckService;
 
-    @PostMapping("/phoneAuth")
+    @PostMapping("/phone/auth")
     @ResponseBody
 
     public Boolean phoneAuth(@RequestBody PhoneCheckRequestDto requestDto, HttpServletRequest request) {
@@ -35,7 +35,7 @@ public class PhoneCheckController {
         return true;
     }
 
-    @PostMapping("/phoneAuthOk")
+    @PostMapping("/phone/auth/ok")
     @ResponseBody
     public Boolean phoneAuthOk(HttpServletRequest request, @RequestBody PhoneCheckOkRequestDto requestDto) {
 
