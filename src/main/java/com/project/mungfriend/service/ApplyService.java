@@ -31,6 +31,11 @@ public class ApplyService {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new NullPointerException("해당 하는 id의 게시글이 없습니다."));
 
+        //모집 종료된 게시글에는 신청하지 못하게 막기
+        if(post.getIsComplete()){
+            throw new IllegalArgumentException("모집 종료된 게시글에는 신청할 수 없습니다.");
+        }
+
         //나의 게시글에 신청하지 못하게 하기
         if(Objects.equals(post.getMember().getId(), member.getId())){
             throw new IllegalArgumentException("나의 게시글에는 신청할 수 없습니다.");
