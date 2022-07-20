@@ -3,10 +3,10 @@ package com.project.mungfriend.util;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.activation.CommandMap;
+import javax.activation.MailcapCommandMap;
 import javax.mail.*;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import javax.mail.internet.*;
 import java.util.Properties;
 
 // 회원 가입 시 signup 로직에 해당 static 메서드 호출 필요! (회원가입 축하 메일)
@@ -50,8 +50,33 @@ public class MailSender {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recieverMailAddr));
             //제목
             message.setSubject(subject);
-            //본문
-            message.setText(text);
+
+            // 메일 HTML 로 전송하기 -> 테스트 필요!!!
+            // 메일에 출력할 HTML 추가 -> 미리 만들어둬야함!!!
+            StringBuffer sb = new StringBuffer();
+            sb.append("<h3>[멍친구]</h3>\n");
+            sb.append("<h4>").append(text).append("</h4>\n");
+            String html = sb.toString();
+
+            //본문 HTML, TEXT
+            Multipart mParts = new MimeMultipart();
+            MimeBodyPart mTextPart = new MimeBodyPart();
+            MimeBodyPart mFilePart = null;
+
+            mTextPart.setText(html, "UTF-8", "html");
+            mParts.addBodyPart(mTextPart);
+            message.setContent(mParts);
+//            message.setText(text);
+
+            // MIME 타입 설정
+            MailcapCommandMap mailCapCmdMap = (MailcapCommandMap) CommandMap.getDefaultCommandMap();
+            mailCapCmdMap.addMailcap("text/html;; x-java-content-handler=com.sun.mail.handlers.text_html");
+            mailCapCmdMap.addMailcap("text/xml;; x-java-content-handler=com.sun.mail.handlers.text_xml");
+            mailCapCmdMap.addMailcap("text/plain;; x-java-content-handler=com.sun.mail.handlers.text_plain");
+            mailCapCmdMap.addMailcap("multipart/*;; x-java-content-handler=com.sun.mail.handlers.multipart_mixed");
+            mailCapCmdMap.addMailcap("message/rfc822;; x-java-content-handler=com.sun.mail.handlers.message_rfc822");
+            CommandMap.setDefaultCommandMap(mailCapCmdMap);
+
             //메일 보내기
             Transport.send(message);
             System.out.println("메일 전송 완료!");
