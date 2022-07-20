@@ -55,6 +55,8 @@ public class MailSender {
             // 메일에 출력할 HTML 추가 -> 미리 만들어둬야함!!!
             StringBuffer sb = new StringBuffer();
             sb.append("<h3>[멍친구]</h3>\n");
+            sb.append("<a href='https://mungfriend.com'>멍친구로 바로가기</a>\n");
+            sb.append("<img src='https://ifh.cc/g/sPZmVL.png'></img>\n");
             sb.append("<h4>").append(text).append("</h4>\n");
             String html = sb.toString();
 
