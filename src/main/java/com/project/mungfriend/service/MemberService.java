@@ -3,6 +3,7 @@ package com.project.mungfriend.service;
 import com.project.mungfriend.dto.member.*;
 import com.project.mungfriend.dto.token.TokenDto;
 import com.project.mungfriend.dto.token.TokenRequestDto;
+import com.project.mungfriend.enumeration.MailType;
 import com.project.mungfriend.model.Member;
 import com.project.mungfriend.model.RefreshToken;
 import com.project.mungfriend.model.Review;
@@ -57,7 +58,8 @@ public class MemberService {
 
         //회원 가입 축하 메일 보내기 (일단 주석 처리 해둠) ssl
         // No appropriate protocol (protocol is disabled or cipher suites are inappropriate) 에러메세지
-        MailSender.sendMail(member.getEmail(), "회원가입을 축하드립니다!", "환영합니다. 우리의 멍친구!");
+        MailSender.sendMail(member.getEmail(), member.getNickname() + "님, 회원가입을 축하드립니다!",
+                member.getNickname(), MailType.NORMAL_SIGNUP);
 
         return MemberSignUpResponseDto.of(memberRepository.save(member), status, message);
     }

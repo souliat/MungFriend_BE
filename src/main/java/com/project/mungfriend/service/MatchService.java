@@ -2,6 +2,7 @@ package com.project.mungfriend.service;
 
 import com.project.mungfriend.dto.match.MatchRequestDto;
 import com.project.mungfriend.dto.match.MatchResponseDto;
+import com.project.mungfriend.enumeration.MailType;
 import com.project.mungfriend.model.Apply;
 import com.project.mungfriend.model.Member;
 import com.project.mungfriend.model.Post;
@@ -55,8 +56,7 @@ public class MatchService {
         // 신청자에게 메일 알림 보내기
         String email = applicant.getEmail();
         String title = "[멍친구] " + member.getNickname() + "님과의 매칭이 완료되었습니다!";
-        String text = "[멍친구] \n" + member.getNickname() + "님과의 매칭이 완료되었습니다.";
-        MailSender.sendMail(email, title, text);
+        MailSender.sendMail(email, title, applicant.getNickname(), MailType.MATCH_COMPLETED);
 
         return new MatchResponseDto("true,", "매칭이 완료 되었습니다.");
     }
@@ -90,8 +90,7 @@ public class MatchService {
         // 신청자에게 취소 메일 알림 보내기
         String email = applicant.getEmail();
         String title = "[멍친구] " + member.getNickname() + "님과의 매칭이 취소되었습니다!";
-        String text = "[멍친구] \n" + member.getNickname() + "님과의 매칭이 취소되었습니다.";
-        MailSender.sendMail(email, title, text);
+        MailSender.sendMail(email, title, applicant.getNickname(), MailType.MATCH_CANCELED);
 
         return new MatchResponseDto("true", "매칭이 취소 되었습니다.");
     }

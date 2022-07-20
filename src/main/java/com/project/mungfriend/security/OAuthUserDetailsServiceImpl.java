@@ -1,11 +1,13 @@
 package com.project.mungfriend.security;
 
+import com.project.mungfriend.enumeration.MailType;
 import com.project.mungfriend.enumeration.UserRole;
 import com.project.mungfriend.model.Member;
 import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.security.oauth.provider.GoogleUserInfo;
 import com.project.mungfriend.security.oauth.provider.KakaoUserInfo;
 import com.project.mungfriend.security.oauth.provider.OAuth2UserInfo;
+import com.project.mungfriend.util.MailSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -55,8 +57,14 @@ public class OAuthUserDetailsServiceImpl extends DefaultOAuth2UserService {
 
 //        String profileImg = oAuth2UserInfo.getProfileImg();
 
-        Member member = memberRepository.findByEmail(email)
-                .orElse(new Member(username, email, password, nickname, userRole, provider));
+        Member member = memberRepository.findByEmail(email).orElse(null);
+        if(member == null){
+            // 첫번 째 로그인 -> 소셜 회원가입 상황
+            member = new Member(username, email, password, nickname, userRole, provider);
+            MailSender.sendMail(member.getEmail(), member.getNickname() + "님, 회원가입을 축하드립니다!",
+                    member.getNickname(), MailType.SOCIAL_SIGNUP);
+        }
+
         memberRepository.save(member);
 
 //        Authentication auth = new UsernamePasswordAuthenticationToken(member, null);
