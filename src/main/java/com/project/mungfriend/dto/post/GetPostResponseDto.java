@@ -37,6 +37,11 @@ public class GetPostResponseDto {
         this.requestEndDate = post.getRequestEndDate();
         this.applyCount = post.getApplyCount();
         this.applyByMe = post.getApplyByMe();
+
+        // 게시글 전체 조회, 거리순 조회 시 현재 시간을 기준으로 요청 시간이 지났으면 모집 종료로 바꿔주기
+        if ( post.getRequestStartDate().isAfter(LocalDateTime.now()) ){
+            post.setIsComplete(true);
+        }
         this.isComplete = post.getIsComplete();
 
     }
