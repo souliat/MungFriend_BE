@@ -117,17 +117,21 @@ public class DogService {
 
         List<Dog> dogList = member.getDogList();
 
+        Dog representativeDog = null;
         for (Dog dog : dogList) {
             if(dog.getId().equals(id)) {
                 dog.setIsRepresentative(true);
                 dogRepository.save(dog);
-                //대표 멍멍이 사진 변경
-                setDogProfileImgUrl(member, dog.getDogImageFiles().get(0).getImageUrl());
+                representativeDog = dog;
             }else {
                 dog.setIsRepresentative(false);
                 dogRepository.save(dog);
             }
         }
+
+        //대표 멍멍이 사진 변경
+        assert representativeDog != null;
+        setDogProfileImgUrl(member, representativeDog.getDogImageFiles().get(0).getImageUrl());
 
         return new DogCaptainResponseDto("true", "대표 멍멍이가 바뀌었습니다.");
     }
