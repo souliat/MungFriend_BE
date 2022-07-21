@@ -43,6 +43,11 @@ public class ReviewService {
                 () -> new IllegalArgumentException("해당 ID의 회원이 존재하지 않습니다.")
         );
 
+        Boolean reviewByMe = reviewRepository.existsByPostIdAndGiverId(requestDto.getPostId(), giver.getId());
+        if (reviewByMe) {
+            throw new IllegalArgumentException("이미 후기를 작성하였으므로 또 작성할 수 없습니다.");
+        }
+
         Review review = new Review(giver, taker, requestDto);
         reviewRepository.save(review);
 
