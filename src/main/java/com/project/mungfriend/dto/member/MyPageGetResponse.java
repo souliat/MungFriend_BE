@@ -29,7 +29,8 @@ public class MyPageGetResponse {
     private List<Dog> dogList = new ArrayList<>();
     private List<Post> myPostList = new ArrayList<>();
     private List<Post> applyPostList = new ArrayList<>();
-    private List<Review> reviewList = new ArrayList<>();
+    private List<Review> giverReviewList = new ArrayList<>();
+    private List<Review> takerReviewList = new ArrayList<>();
 
 //    public MyPageGetResponseDto(){
 //
@@ -47,7 +48,8 @@ public class MyPageGetResponse {
         this.dogList = member.getDogList();
         this.myPostList = member.getMyPostList();
 //      통합 후 getter이름 변경
-        this.reviewList = member.getTakerReviews();
+        this.giverReviewList = member.getTakerReviews();
+        this.takerReviewList = member.getGiverReviews();
 
     }
 }
