@@ -1,6 +1,7 @@
 package com.project.mungfriend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.mungfriend.dto.member.MyPagePostRequestDto;
 import com.project.mungfriend.enumeration.UserRole;
 import lombok.*;
 
@@ -104,5 +105,17 @@ public class Member {
         this.email = email;
         this.provider = provider;
 
+    }
+
+    // 회원 정보 업데이트
+    public void update(MyPagePostRequestDto requestDto) {
+        this.nickname = requestDto.getNickname();
+        this.email = requestDto.getEmail();
+        this.address = requestDto.getAddress();
+        this.latitude = requestDto.getLatitude();
+        this.longitude = requestDto.getLongitude();
+        this.introduce = requestDto.getIntroduce();
+        this.phoneNum = requestDto.getPhoneNum();
+        this.isAgree = requestDto.getIsAgree();
     }
 }

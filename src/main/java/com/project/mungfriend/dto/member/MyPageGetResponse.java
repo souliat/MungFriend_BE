@@ -48,8 +48,8 @@ public class MyPageGetResponse {
         this.dogList = member.getDogList();
         this.myPostList = member.getMyPostList();
 //      통합 후 getter이름 변경
-        this.giverReviewList = member.getTakerReviews();
-        this.takerReviewList = member.getGiverReviews();
+        this.giverReviewList = member.getGiverReviews();
+        this.takerReviewList = member.getTakerReviews();
 
     }
 }

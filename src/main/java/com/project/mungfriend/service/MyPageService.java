@@ -3,9 +3,11 @@ package com.project.mungfriend.service;
 import com.project.mungfriend.dto.member.*;
 import com.project.mungfriend.model.Apply;
 import com.project.mungfriend.model.Member;
+import com.project.mungfriend.model.Review;
 import com.project.mungfriend.repository.ApplyRepository;
 import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.repository.PostRepository;
+import com.project.mungfriend.repository.ReviewRepository;
 import com.project.mungfriend.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ public class MyPageService {
 
     private final MemberRepository memberRepository;
     private final PostRepository postRepository;
-
+    private final ReviewRepository reviewRepository;
     private final ApplyRepository applyRepository;
 
     // 마이페이지에 있는 유저 정보들 보내주기 및 게시물들 중 내가 지원한 게시물이 True인 것을 찾아서 리스트로 뽑아준 것.
@@ -64,16 +66,23 @@ public class MyPageService {
         String status = "true";
         String message = "정보 수정 성공 ! !";
 
-        member.setNickname(mypageRequestDto.getNickname());
-        member.setEmail(mypageRequestDto.getEmail());
-        member.setAddress(mypageRequestDto.getAddress());
-        member.setLatitude(mypageRequestDto.getLatitude());
-        member.setLongitude(mypageRequestDto.getLongitude());
-        member.setIntroduce(mypageRequestDto.getIntroduce());
-        member.setPhoneNum(mypageRequestDto.getPhoneNum());
-        member.setIsAgree(mypageRequestDto.getIsAgree());
+        member.update(mypageRequestDto);
+        memberRepository.save(member);
 
-        return MyPagePostResponseDto.of(memberRepository.save(member), status, message);
+        // 닉네임 수정 시 내가 작성한 후기에도 수정된 닉네임으로 반영
+        List<Review> giverReviews = member.getGiverReviews();
+        for (Review review : giverReviews) {
+            review.setGiverNickname(member.getNickname());
+            reviewRepository.save(review);
+        }
+        // 닉네임 수정 시 내 신청에도 수정된 닉네임으로 반영
+        List<Apply> applyList = member.getApplyList();
+        for (Apply apply : applyList) {
+            apply.setNickname(member.getNickname());
+            applyRepository.save(apply);
+        }
+
+        return MyPagePostResponseDto.of(member, status, message);
     }
 
 }
