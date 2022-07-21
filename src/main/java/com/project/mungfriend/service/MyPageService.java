@@ -63,6 +63,12 @@ public class MyPageService {
             return MyPagePostResponseDto.of(status, message);
         }
 
+        if (!mypageRequestDto.getIsAgree()){
+            String status = "false";
+            String message = "약관 동의 후 정보 수정이 가능합니다.";
+            return MyPagePostResponseDto.of(status, message);
+        }
+
         String status = "true";
         String message = "정보 수정 성공 ! !";
 
