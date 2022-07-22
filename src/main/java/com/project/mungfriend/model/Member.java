@@ -48,7 +48,7 @@ public class Member {
     private String introduce = "";
 
     @Column
-    private String dogProfileImgUrl = "https://ifh.cc/g/sPZmVL.png";
+    private String dogProfileImgUrl = "https://ifh.cc/g/rsQtyQ.png";
 
 
     @Enumerated(value = EnumType.STRING)
