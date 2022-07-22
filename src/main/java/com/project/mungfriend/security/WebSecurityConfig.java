@@ -80,7 +80,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
                 .antMatchers("/api/dogs")
                 .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
-                .antMatchers("/api/channel")
+                .antMatchers("/api/channel/**")
                 .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
                 .antMatchers("/api/channels")
                 .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
