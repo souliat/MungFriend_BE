@@ -9,17 +9,16 @@ public class TimeValidator {
 
         LocalDateTime now = LocalDateTime.now();
 
-        if (!reqStartDate.isBefore(reqEndDate)) {
-            throw new IllegalArgumentException("산책 종료 시간이 산책 시작 시간보다 빠를 수 없습니다.");
-        }
-
         if (reqStartDate.isBefore(now)
                 || reqEndDate.isBefore(now)){
             throw new IllegalArgumentException("산책 시작 시간, 산책 종료 시간은 현재 시간보다 빠를 수 없습니다.");
         }
 
-        if (reqStartDate.isEqual(reqEndDate)){
+        if (reqEndDate.isBefore(reqStartDate)) {
+            throw new IllegalArgumentException("산책 종료 시간이 산책 시작 시간보다 빠를 수 없습니다.");
+        }else if (reqStartDate.isEqual(reqEndDate)){
             throw new IllegalArgumentException("산책 시작 시간, 산책 종료 시간은 같을 수 없습니다.");
         }
+
     }
 }
