@@ -101,8 +101,7 @@ public class DogService {
                 dogRepository.save(representativeDog);
                 setDogProfileImgUrl(member, representativeDog.getDogImageFiles().get(0).getImageUrl());
             }else{
-                member.setDogProfileImgUrl("https://ifh.cc/g/sPZmVL.png");
-                memberRepository.save(member);
+                setDogProfileImgUrl(member, "https://ifh.cc/g/sPZmVL.png");
             }
         }
 
