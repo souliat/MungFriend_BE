@@ -71,6 +71,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/api/posts")
                 .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
 
+                // 필수 정보를 입력하지 않은 사용자도 접근 가능한 기능들
+                .antMatchers("/mypage")
+                .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
+                .antMatchers("/phone/**")
+                .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
+                .antMatchers("/myinfo")
+                .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
+                .antMatchers("/api/dogs")
+                .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
+
                 // 그 외 모든 API는 필수 값을 입력해야만 사용 가능하다.
                 .anyRequest().hasAuthority(UserRole.Authority.QUALIFIED_USER)
 
