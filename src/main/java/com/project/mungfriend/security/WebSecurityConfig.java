@@ -85,10 +85,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/channels")
                 .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
 
-                // 프론트 테스트하기 위해 잠깐 열어둠 ( 배포 전 삭제하기 )
-                .antMatchers("/api/posts/**")
-                .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
-
                 // 그 외 모든 API는 필수 값을 입력해야만 사용 가능하다.
                 .anyRequest().hasAuthority(UserRole.Authority.QUALIFIED_USER)
 
@@ -108,7 +104,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
-        configuration.addAllowedOriginPattern("http://localhost:3000"); // 배포 전 모두 허용
+        configuration.addAllowedOriginPattern("https://mungfriend.com"); // 배포 전 모두 허용
         // 프론트 서버 (백엔드 테스트 용) : http://mung-friend-fe.s3-website.ap-northeast-2.amazonaws.com
         // 프론트 서버 : https://d3n0oswt21uayp.cloudfront.net
         // 프론트 HTTPS 서버 : https://mungfriend.com
