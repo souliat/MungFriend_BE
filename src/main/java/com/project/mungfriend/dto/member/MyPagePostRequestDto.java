@@ -11,7 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class MyPagePostRequestDto {
 
-
     private String nickname;
 
     private String email;
