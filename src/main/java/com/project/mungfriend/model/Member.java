@@ -115,7 +115,6 @@ public class Member {
         this.latitude = requestDto.getLatitude();
         this.longitude = requestDto.getLongitude();
         this.introduce = requestDto.getIntroduce();
-        this.phoneNum = requestDto.getPhoneNum();
         this.isAgree = requestDto.getIsAgree();
     }
 }

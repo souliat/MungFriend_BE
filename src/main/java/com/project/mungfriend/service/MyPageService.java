@@ -9,6 +9,7 @@ import com.project.mungfriend.repository.MemberRepository;
 import com.project.mungfriend.repository.PostRepository;
 import com.project.mungfriend.repository.ReviewRepository;
 import com.project.mungfriend.security.SecurityUtil;
+import com.project.mungfriend.util.MemberValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -42,28 +43,23 @@ public class MyPageService {
     }
     
     //마이페이지 수정
-    public MyPagePostResponseDto updateMyPage(MyPagePostRequestDto mypageRequestDto) {
+    public MyPagePostResponseDto updateMyPage(MyPagePostRequestDto myPageRequestDto) {
         String username = SecurityUtil.getCurrentMemberUsername();
         Member member = memberRepository.findByUsername(username).orElseThrow(
                 () -> new IllegalArgumentException("해당하는 ID의 회원이 존재하지 않습니다."));
 
-        if (memberRepository.existsByNickname(mypageRequestDto.getNickname()) && !Objects.equals(member.getNickname(), mypageRequestDto.getNickname())) {
+        if (memberRepository.existsByNickname(myPageRequestDto.getNickname()) && !Objects.equals(member.getNickname(), myPageRequestDto.getNickname())) {
             String status = "false";
             String message = "중복된 닉네임이 존재합니다.";
             return MyPagePostResponseDto.of(status, message);
         }
-        if (memberRepository.existsByEmail(mypageRequestDto.getEmail()) && !Objects.equals(member.getEmail(),mypageRequestDto.getEmail())) {
+        if (memberRepository.existsByEmail(myPageRequestDto.getEmail()) && !Objects.equals(member.getEmail(),myPageRequestDto.getEmail())) {
             String status = "false";
             String message = "중복된 이메일이 존재합니다.";
             return MyPagePostResponseDto.of(status, message);
         }
-        if (memberRepository.existsByPhoneNum(mypageRequestDto.getPhoneNum()) && !Objects.equals(member.getPhoneNum(),mypageRequestDto.getPhoneNum())) {
-            String status = "false";
-            String message = "중복된 번호가 존재합니다.";
-            return MyPagePostResponseDto.of(status, message);
-        }
 
-        if (!mypageRequestDto.getIsAgree()){
+        if (!myPageRequestDto.getIsAgree()){
             String status = "false";
             String message = "약관 동의 후 정보 수정이 가능합니다.";
             return MyPagePostResponseDto.of(status, message);
@@ -72,7 +68,11 @@ public class MyPageService {
         String status = "true";
         String message = "정보 수정 성공 ! !";
 
-        member.update(mypageRequestDto);
+        member.update(myPageRequestDto);
+
+        // 사용자 권한 체크 후 반영
+        MemberValidator.updateUserRole(member);
+
         memberRepository.save(member);
 
         // 닉네임 수정 시 내가 작성한 후기에도 수정된 닉네임으로 반영

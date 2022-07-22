@@ -24,8 +24,6 @@ public class MyPagePostRequestDto {
 
     private String longitude;
 
-    private String phoneNum;
-
     private Boolean isAgree;
 
 }
