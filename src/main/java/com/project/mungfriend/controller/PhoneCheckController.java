@@ -32,6 +32,10 @@ public class PhoneCheckController {
 
         String code = PhoneCheckService.sendRandomMessage(requestDto.getPhoneNum());
         request.getSession().setAttribute("rand", code);
+
+        String rand = (String) request.getSession().getAttribute("rand");
+        request.getCookies();
+        System.out.println("세션에 담은 직 후" + rand);
         return true;
     }
 
@@ -41,6 +45,7 @@ public class PhoneCheckController {
 
         String rand = (String) request.getSession().getAttribute("rand");
 
+        System.out.println(request.getSession().getAttribute("rand"));
         System.out.println(rand + " : " + requestDto.getCode());
 
         if (rand.equals(requestDto.getCode())) {
