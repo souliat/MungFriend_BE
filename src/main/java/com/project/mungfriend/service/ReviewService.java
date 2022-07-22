@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -51,15 +52,18 @@ public class ReviewService {
         Review review = new Review(giver, taker, requestDto);
         reviewRepository.save(review);
 
-        for (MultipartFile multipartFile : multipartFiles) {
-            // DogImageFile 엔티티에 받은 image 저장
-            String imageUrl = s3Uploader.upload(multipartFile, "static");
-            System.out.println("S3 업로드된 이미지 경로 : " + imageUrl);
-            ReviewImageFile reviewImageFile = new ReviewImageFile(imageUrl);
-            reviewImageFile.setReview(review); // 연관관계 편의 메소드
-            reviewImageFileRepository.save(reviewImageFile);
+        System.out.println("getName: " + multipartFiles.get(0).getName());
+        System.out.println("getOriginalFilename: " + multipartFiles.get(0).getOriginalFilename());
+        if(!Objects.equals(multipartFiles.get(0).getOriginalFilename(), "")){
+            for (MultipartFile multipartFile : multipartFiles) {
+                // DogImageFile 엔티티에 받은 image 저장
+                String imageUrl = s3Uploader.upload(multipartFile, "static");
+                System.out.println("S3 업로드된 이미지 경로 : " + imageUrl);
+                ReviewImageFile reviewImageFile = new ReviewImageFile(imageUrl);
+                reviewImageFile.setReview(review); // 연관관계 편의 메소드
+                reviewImageFileRepository.save(reviewImageFile);
+            }
         }
-
 
         PostReviewResponseDto responseDto = new PostReviewResponseDto();
         responseDto.ok();
