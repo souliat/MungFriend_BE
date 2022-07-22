@@ -25,39 +25,23 @@ public class PhoneCheckController {
     @PostMapping("/phone/auth")
     @ResponseBody
 
-    public Boolean phoneAuth(@RequestBody PhoneCheckRequestDto requestDto, HttpServletRequest request,
-                             HttpSession session
-                             ) {
+    public Boolean phoneAuth(@RequestBody PhoneCheckRequestDto requestDto) {
 
         if (memberRepository.existsByPhoneNum(requestDto.getPhoneNum())) {
             throw new IllegalArgumentException("이미 등록된 휴대폰 번호입니다.");
         }
 
-        String code = PhoneCheckService.sendRandomMessage(requestDto.getPhoneNum());
+        // Redis에 핸드폰 인증번호 저장 (만료까지 3분)
+        phoneCheckService.sendRandomMessage(requestDto.getPhoneNum());
 
-//        request.getSession().setAttribute("rand", code);
-        session.setAttribute("rand", code);
-
-        String rand = (String) session.getAttribute("rand");
-        System.out.println("세션에 담은 직 후" + rand);
         return true;
     }
 
     @PostMapping("/phone/auth/ok")
     @ResponseBody
-    public Boolean phoneAuthOk(HttpServletRequest request, @RequestBody PhoneCheckOkRequestDto requestDto,
-                               HttpSession session) {
+    public Boolean phoneAuthOk(@RequestBody PhoneCheckOkRequestDto requestDto) {
 
-//        String rand = (String) request.getSession().getAttribute("rand");
-        String rand = (String) session.getAttribute("rand");
-
-        System.out.println(rand + " : " + requestDto.getCode());
-
-        if (rand.equals(requestDto.getCode())) {
-            request.getSession().removeAttribute("rand");
-            phoneCheckService.updatePhoneNum(requestDto);
-            return true;
-        }
-        return false;
+        phoneCheckService.checkAndUpdatePhoneNum(requestDto);
+        return true;
     }
 }
