@@ -80,6 +80,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
                 .antMatchers("/api/dogs")
                 .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
+                .antMatchers("/api/channel")
+                .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
+                .antMatchers("/api/channels")
+                .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
 
                 // 그 외 모든 API는 필수 값을 입력해야만 사용 가능하다.
                 .anyRequest().hasAuthority(UserRole.Authority.QUALIFIED_USER)
