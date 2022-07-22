@@ -85,6 +85,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/channels")
                 .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
 
+                // 프론트 테스트하기 위해 잠깐 열어둠 ( 배포 전 삭제하기 )
+                .antMatchers("/api/posts/**")
+                .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
+
                 // 그 외 모든 API는 필수 값을 입력해야만 사용 가능하다.
                 .anyRequest().hasAuthority(UserRole.Authority.QUALIFIED_USER)
 
