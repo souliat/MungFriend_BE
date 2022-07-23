@@ -63,6 +63,10 @@ public class MyPageService {
         Member member = memberRepository.findByUsername(username).orElseThrow(
                 () -> new IllegalArgumentException("해당하는 ID의 회원이 존재하지 않습니다."));
 
+        if(myPageRequestDto.getAddress().equals("")){
+            throw new IllegalArgumentException("위치 기반 서비스 이용을 위하여 주소 입력은 필수입니다.");
+        }
+
         if (memberRepository.existsByNickname(myPageRequestDto.getNickname())
                 && !Objects.equals(member.getNickname(), myPageRequestDto.getNickname())) {
             String status = "false";
