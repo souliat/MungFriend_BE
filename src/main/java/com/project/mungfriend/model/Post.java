@@ -33,6 +33,9 @@ public class Post extends Timestamped {
     private String address;
 
     @Column(nullable = false)
+    private Boolean withMe = false;
+
+    @Column(nullable = false)
     private String dogProfileIds;
 
     @Column(nullable = false)
@@ -69,6 +72,7 @@ public class Post extends Timestamped {
     public Post(RegisterPostRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
+        this.withMe = requestDto.getWithMe();
 
         StringBuilder dogIds = new StringBuilder();
         for (Long dogId : requestDto.getDogIdList()){
@@ -90,6 +94,7 @@ public class Post extends Timestamped {
     public void updatePost(PutPostRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
+        this.withMe = requestDto.getWithMe();
 
         StringBuilder dogIds = new StringBuilder();
         for (Long dogId : requestDto.getDogIdList()){
