@@ -13,6 +13,7 @@ import java.util.List;
 public class PutPostRequestDto {
     private String title;
     private String content;
+    private Boolean withMe;
     private List<Long> dogIdList;
     private LocalDateTime requestStartDate;
     private LocalDateTime requestEndDate;

@@ -17,6 +17,7 @@ public class GetPostResponseDto {
     private String nickname;
     private String title;
     private String content;
+    private Boolean withMe;
     private String address;
     private LocalDateTime requestStartDate;
     private LocalDateTime requestEndDate;
@@ -31,6 +32,7 @@ public class GetPostResponseDto {
         this.id = post.getId();
         this.title = post.getTitle();
         this.content = post.getContent();
+        this.withMe = post.getWithMe();
         this.nickname = post.getMember().getNickname();
         this.address = post.getAddress();
         this.requestStartDate = post.getRequestStartDate();

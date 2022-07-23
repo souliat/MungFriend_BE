@@ -25,17 +25,16 @@ public class GetPostDetailResponseDto {
     private String matchedDogProfileImgUrl;
     private String title;
     private String content;
+    private Boolean withMe;
     private String address;
     private LocalDateTime requestStartDate;
     private LocalDateTime requestEndDate;
     private Long applyCount;
     private Boolean applyByMe;
     private Boolean isComplete;
-
     private Long matchedApplicantId;
 
     private double distance;
-
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
@@ -47,6 +46,7 @@ public class GetPostDetailResponseDto {
         this.nickname = post.getMember().getNickname();
         this.title = post.getTitle();
         this.content = post.getContent();
+        this.withMe = post.getWithMe();
         this.address = post.getAddress();
         this.requestStartDate = post.getRequestStartDate();
         this.requestEndDate = post.getRequestEndDate();
