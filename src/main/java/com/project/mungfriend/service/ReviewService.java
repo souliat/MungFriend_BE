@@ -52,9 +52,9 @@ public class ReviewService {
         Review review = new Review(giver, taker, requestDto);
         reviewRepository.save(review);
 
-        System.out.println("getName: " + multipartFiles.get(0).getName());
+
         System.out.println("getOriginalFilename: " + multipartFiles.get(0).getOriginalFilename());
-        if(!Objects.equals(multipartFiles.get(0).getOriginalFilename(), "")){
+        if (!Objects.equals(multipartFiles.get(0).getOriginalFilename(), "mungfriendDefaultImage.png")) {
             for (MultipartFile multipartFile : multipartFiles) {
                 // DogImageFile 엔티티에 받은 image 저장
                 String imageUrl = s3Uploader.upload(multipartFile, "static");
@@ -63,6 +63,10 @@ public class ReviewService {
                 reviewImageFile.setReview(review); // 연관관계 편의 메소드
                 reviewImageFileRepository.save(reviewImageFile);
             }
+        } else {
+            ReviewImageFile reviewImageFile = new ReviewImageFile("https://ifh.cc/g/qBowpH.png");
+            reviewImageFile.setReview(review); // 연관관계 편의 메소드
+            reviewImageFileRepository.save(reviewImageFile);
         }
 
         PostReviewResponseDto responseDto = new PostReviewResponseDto();

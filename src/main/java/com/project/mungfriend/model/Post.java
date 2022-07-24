@@ -33,6 +33,12 @@ public class Post extends Timestamped {
     private String address;
 
     @Column(nullable = false)
+    private String latitude;
+
+    @Column(nullable = false)
+    private String longitude;
+
+    @Column(nullable = false)
     private Boolean withMe = false;
 
     @Column(nullable = false)
@@ -89,6 +95,8 @@ public class Post extends Timestamped {
         this.member = member;
         member.getMyPostList().add(this);
         this.address = member.getAddress();
+        this.latitude = member.getLatitude();
+        this.longitude = member.getLongitude();
     }
 
     public void updatePost(PutPostRequestDto requestDto) {

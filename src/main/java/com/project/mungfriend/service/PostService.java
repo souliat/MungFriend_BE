@@ -94,8 +94,8 @@ public class PostService {
             getPostResponseDto.setDistance(DistanceCalculator.calcDistance(
                     Double.parseDouble(member.getLatitude()),
                     Double.parseDouble(member.getLongitude()),
-                    Double.parseDouble(post.getMember().getLatitude()),
-                    Double.parseDouble(post.getMember().getLongitude()), "kilometer"));
+                    Double.parseDouble(post.getLatitude()),
+                    Double.parseDouble(post.getLongitude()), "kilometer"));
 
             getPostResponseDto.setIsComplete(post.getIsComplete());
 
@@ -138,8 +138,8 @@ public class PostService {
         responseDto.setDistance(DistanceCalculator.calcDistance(
                 Double.parseDouble(member.getLatitude()),
                 Double.parseDouble(member.getLongitude()),
-                Double.parseDouble(post.getMember().getLatitude()),
-                Double.parseDouble(post.getMember().getLongitude()), "kilometer"));
+                Double.parseDouble(post.getLatitude()),
+                Double.parseDouble(post.getLongitude()), "kilometer"));
 
         // 신청자 수, 내가 신청했는지 아닌지 여부 판단 추가. 2022-06-28 인기천.
         Long applyCount = applyRepository.countByPostId(post.getId());
