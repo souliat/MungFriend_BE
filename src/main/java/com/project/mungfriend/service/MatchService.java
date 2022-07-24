@@ -50,7 +50,7 @@ public class MatchService {
 
         // 신청자에게 문자 알림 보내기
         String phoneNum = applicant.getPhoneNum();
-        String content = "[멍친구] \n" + member.getNickname() + "님과의 매칭이 완료되었습니다!";
+        String content = "[멍친구] \n" + member.getNickname() + "님과의 매칭이 완료되었습니다! 사이트에서 상대방과 채팅해보세요!";
         MessageSender.sendSMS(phoneNum, content);
 
         // 신청자에게 메일 알림 보내기
