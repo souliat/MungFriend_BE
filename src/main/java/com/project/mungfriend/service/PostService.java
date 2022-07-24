@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -163,6 +164,9 @@ public class PostService {
     //게시글 수정
     @Transactional
     public PutPostResponseDto updatePost(Long id, PutPostRequestDto requestDto, String username) {
+        // TimeValidator 추가
+        TimeValidator.validateTime(requestDto.getRequestStartDate(), requestDto.getRequestEndDate());
+
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 ID의 게시글이 존재하지 않습니다.")
         );
