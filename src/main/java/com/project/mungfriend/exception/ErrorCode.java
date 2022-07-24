@@ -12,6 +12,8 @@ public enum ErrorCode {
     // request에 사진이 없이 왔을 경우 Required request part 'image' is not present 를 막아줌
     MISSING_SERVLET_REQUEST_PART_EXCEPTION(HttpStatus.BAD_REQUEST, "400_3"),
 
+    CONSTRAINT_VIOLATION_EXCEPTION(HttpStatus.BAD_REQUEST, "400_4"),
+
     PROPERTY_VALUE_EXCEPTION(HttpStatus.BAD_REQUEST, "400_3"),
 
     // 401 Unauthorized

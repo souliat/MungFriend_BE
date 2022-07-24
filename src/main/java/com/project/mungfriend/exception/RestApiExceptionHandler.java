@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
+import javax.validation.ConstraintViolationException;
+
 @RestControllerAdvice // Json형태로 restApiException Body 부분에 태워 보내준다.
 public class RestApiExceptionHandler {
 
@@ -50,6 +52,19 @@ public class RestApiExceptionHandler {
         RestApiException restApiException = new RestApiException();
 
         ErrorCode errorCode = ErrorCode.PROPERTY_VALUE_EXCEPTION;
+
+        restApiException.setHttpStatus(errorCode.getHttpStatus());
+        restApiException.setErrorMessage("필수 정보를 모두 입력해주세요.");
+
+        return new ResponseEntity(restApiException, restApiException.getHttpStatus());
+    }
+
+
+    @ExceptionHandler(value = { ConstraintViolationException.class})
+    public ResponseEntity<Object> handleApiRequestException(ConstraintViolationException ex) {
+        RestApiException restApiException = new RestApiException();
+
+        ErrorCode errorCode = ErrorCode.CONSTRAINT_VIOLATION_EXCEPTION;
 
         restApiException.setHttpStatus(errorCode.getHttpStatus());
         restApiException.setErrorMessage("필수 정보를 모두 입력해주세요.");
