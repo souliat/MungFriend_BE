@@ -27,7 +27,7 @@ public class PhoneCheckService {
             code += ran;
         }
         System.out.println("회원가입 문자 인증 => " + code);
-        MessageSender.sendSMS(phoneNum, code);
+        MessageSender.sendSMS(phoneNum, "[멍친구] 인증번호: "+code);
 
         //Redis 저장소 사용부분
         phoneCheckNumberRepository.savePhoneCheckNum(phoneNum, code);
