@@ -1,5 +1,6 @@
 package com.project.mungfriend.exception;
 
+import org.hibernate.PropertyValueException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -40,6 +41,18 @@ public class RestApiExceptionHandler {
 
         restApiException.setHttpStatus(errorCode.getHttpStatus());
         restApiException.setErrorMessage("사진을 등록해주세요.");
+
+        return new ResponseEntity(restApiException, restApiException.getHttpStatus());
+    }
+
+    @ExceptionHandler(value = { PropertyValueException.class})
+    public ResponseEntity<Object> handleApiRequestException(PropertyValueException ex) {
+        RestApiException restApiException = new RestApiException();
+
+        ErrorCode errorCode = ErrorCode.PROPERTY_VALUE_EXCEPTION;
+
+        restApiException.setHttpStatus(errorCode.getHttpStatus());
+        restApiException.setErrorMessage("필수 정보를 모두 입력해주세요.");
 
         return new ResponseEntity(restApiException, restApiException.getHttpStatus());
     }
