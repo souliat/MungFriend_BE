@@ -7,7 +7,10 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
     // 400 Bad Request
     ILLEGAL_ARGUMENT_EXCEPTION(HttpStatus.BAD_REQUEST, "400_1"),
-    NULL_POINER_EXCEPTION(HttpStatus.BAD_REQUEST, "400_2"),
+    NULL_POINTER_EXCEPTION(HttpStatus.BAD_REQUEST, "400_2"),
+
+    // request에 사진이 없이 왔을 경우 Required request part 'image' is not present 를 막아줌
+    MISSING_SERVLET_REQUEST_PART_EXCEPTION(HttpStatus.BAD_REQUEST, "400_3"),
 
     // 401 Unauthorized
     UNAUTHORIZED_EXCEPTION(HttpStatus.UNAUTHORIZED, "401"),
