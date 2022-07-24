@@ -69,21 +69,24 @@ public class MyPageService {
 
         if (memberRepository.existsByNickname(myPageRequestDto.getNickname())
                 && !Objects.equals(member.getNickname(), myPageRequestDto.getNickname())) {
-            String status = "false";
-            String message = "중복된 닉네임이 존재합니다.";
-            return MyPagePostResponseDto.of(status, message);
+//            String status = "false";
+//            String message = "중복된 닉네임이 존재합니다.";
+//            return MyPagePostResponseDto.of(status, message);
+            throw new IllegalArgumentException("중복된 닉네임이 존재합니다.");
         }
         if (memberRepository.existsByEmail(myPageRequestDto.getEmail())
                 && !Objects.equals(member.getEmail(),myPageRequestDto.getEmail())) {
-            String status = "false";
-            String message = "중복된 이메일이 존재합니다.";
-            return MyPagePostResponseDto.of(status, message);
+//            String status = "false";
+//            String message = "중복된 이메일이 존재합니다.";
+//            return MyPagePostResponseDto.of(status, message);
+            throw new IllegalArgumentException("중복된 이메일이 존재합니다.");
         }
 
         if (!myPageRequestDto.getIsAgree()){
-            String status = "false";
-            String message = "약관 동의 후 정보 수정이 가능합니다.";
-            return MyPagePostResponseDto.of(status, message);
+//            String status = "false";
+//            String message = "약관 동의 후 정보 수정이 가능합니다.";
+//            return MyPagePostResponseDto.of(status, message);
+            throw new IllegalArgumentException("약관 동의 후 정보 수정이 가능합니다.");
         }
 
         String status = "true";
