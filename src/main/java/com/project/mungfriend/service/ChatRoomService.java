@@ -81,6 +81,16 @@ public class ChatRoomService {
                 () -> new NullPointerException("해당하는 신청자를 찾을 수 없습니다.")
         );
 
+        boolean isExist = false;
+        List<ChatRoom> writerChatRoomList = chatRoomRepository.findAllByMemberListIsContaining(writer);
+        for (ChatRoom chatRoom : writerChatRoomList) {
+            isExist = chatRoom.getMemberList().contains(applicant);
+        }
+
+        if (isExist){
+            return null;
+        }
+
         assert writer != null;
         ChatRoom chatRoom = new ChatRoom(writer, applicant);
         chatRoomRepository.save(chatRoom);
