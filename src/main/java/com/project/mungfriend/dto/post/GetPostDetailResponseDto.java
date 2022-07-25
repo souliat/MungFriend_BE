@@ -30,6 +30,7 @@ public class GetPostDetailResponseDto {
     private LocalDateTime requestStartDate;
     private LocalDateTime requestEndDate;
     private Long applyCount;
+    private Long reviewCount;
     private Boolean applyByMe;
     private Boolean isComplete;
     private Long matchedApplicantId;

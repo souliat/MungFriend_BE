@@ -5,10 +5,7 @@ import com.project.mungfriend.model.Dog;
 import com.project.mungfriend.model.DogImageFile;
 import com.project.mungfriend.model.Member;
 import com.project.mungfriend.model.Post;
-import com.project.mungfriend.repository.ApplyRepository;
-import com.project.mungfriend.repository.DogRepository;
-import com.project.mungfriend.repository.MemberRepository;
-import com.project.mungfriend.repository.PostRepository;
+import com.project.mungfriend.repository.*;
 import com.project.mungfriend.util.DistanceCalculator;
 import com.project.mungfriend.util.DistanceComparator;
 import com.project.mungfriend.util.TimeValidator;
@@ -25,7 +22,7 @@ import java.util.*;
 public class PostService {
     private final MemberRepository memberRepository;
     private final PostRepository postRepository;
-
+    private final ReviewRepository reviewRepository;
     private final DogRepository dogRepository;
     private final ApplyRepository applyRepository;
 
@@ -145,9 +142,14 @@ public class PostService {
         // 신청자 수, 내가 신청했는지 아닌지 여부 판단 추가. 2022-06-28 인기천.
         Long applyCount = applyRepository.countByPostId(post.getId());
         Boolean applyByMe = applyRepository.existsByApplicantIdAndPostId(member.getId(), post.getId());
-
         responseDto.setApplyCount(applyCount);
         responseDto.setApplyByMe(applyByMe);
+
+        // 작성자 입장에서 상세 게시글 조회하는 경우에만 유효한 값
+        Boolean reviewByMe = reviewRepository.existsByPostIdAndGiverId(id, member.getId());
+        if (reviewByMe) {
+            responseDto.setReviewCount(1L);
+        }
 
         responseDto.getApplyList().addAll(post.getApplyList());
 
