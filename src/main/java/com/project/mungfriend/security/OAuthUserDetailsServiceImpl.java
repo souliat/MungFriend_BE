@@ -53,6 +53,7 @@ public class OAuthUserDetailsServiceImpl extends DefaultOAuth2UserService {
 
         String provider = oAuth2UserInfo.getProvider(); //google,kakao
         String email = oAuth2UserInfo.getEmail();
+        System.out.println("카카오, 구글에서 가져온 email = " + email);
         String[] emailUsername = email.split("@");
         String username = provider + "_" + emailUsername[0];// google_19146317978241904 / facebook_123142352452
         String password = passwordEncoder.encode(socialPassword);
