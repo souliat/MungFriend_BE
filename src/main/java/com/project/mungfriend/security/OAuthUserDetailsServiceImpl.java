@@ -18,6 +18,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -58,9 +59,16 @@ public class OAuthUserDetailsServiceImpl extends DefaultOAuth2UserService {
         String username = provider + "_" + emailUsername[0];// google_19146317978241904 / facebook_123142352452
         String password = passwordEncoder.encode(socialPassword);
         UserRole userRole = UserRole.USER;
-        
+
+        Random rand = new Random();
+        String code = "";
+        for (int i = 0; i < 4; i++) {
+            String ran = Integer.toString(rand.nextInt(10));
+            code += ran;
+        }
+
         // 카카오, 구글의 닉네임이 같을 경우 unique 속성이 중복된다는 에러 발생 -> suffix로 provider 넣어줌
-        String nickname = oAuth2UserInfo.getNickname() + "_" + provider;
+        String nickname = oAuth2UserInfo.getNickname() + "_" + provider + code;
 
 //        String profileImg = oAuth2UserInfo.getProfileImg();
 
