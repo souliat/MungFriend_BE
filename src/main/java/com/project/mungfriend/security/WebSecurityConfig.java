@@ -78,7 +78,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
                 .antMatchers("/myinfo")
                 .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
-                .antMatchers("/api/dogs")
+                .antMatchers("/api/dogs/**")
                 .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
                 .antMatchers("/api/channel/**")
                 .hasAnyAuthority(UserRole.Authority.USER, UserRole.Authority.QUALIFIED_USER)
