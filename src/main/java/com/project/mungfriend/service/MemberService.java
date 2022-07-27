@@ -111,7 +111,7 @@ public class MemberService {
     public TokenDto reissue(TokenRequestDto tokenRequestDto) {
         // 1. Refresh Token 검증
         if (!tokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {
-            throw new RuntimeException("Refresh Token 이 유효하지 않습니다.");
+            throw new IllegalArgumentException("Refresh Token 이 유효하지 않습니다.");
         }
 
         // 2. Access Token 에서 Member ID 가져오기
@@ -123,7 +123,7 @@ public class MemberService {
 
         // 4. Refresh Token 일치하는지 검사
         if (!refreshToken.getValue().equals(tokenRequestDto.getRefreshToken())) {
-            throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
+            throw new IllegalArgumentException("토큰의 유저 정보가 일치하지 않습니다.");
         }
 
         // 5. 새로운 토큰 생성
