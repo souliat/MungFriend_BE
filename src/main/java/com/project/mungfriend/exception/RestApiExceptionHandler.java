@@ -1,5 +1,6 @@
 package com.project.mungfriend.exception;
 
+import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
 import org.hibernate.PropertyValueException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -68,6 +69,18 @@ public class RestApiExceptionHandler {
 
         restApiException.setHttpStatus(errorCode.getHttpStatus());
         restApiException.setErrorMessage("필수 정보를 모두 입력해주세요.");
+
+        return new ResponseEntity(restApiException, restApiException.getHttpStatus());
+    }
+
+    @ExceptionHandler(value = { SizeLimitExceededException.class})
+    public ResponseEntity<Object> handleApiRequestException(SizeLimitExceededException ex) {
+        RestApiException restApiException = new RestApiException();
+
+        ErrorCode errorCode = ErrorCode.SIZE_LIMIT_EXCEEDED_EXCEPTION;
+
+        restApiException.setHttpStatus(errorCode.getHttpStatus());
+        restApiException.setErrorMessage("등록 가능한 사진의 최대 크기는 5MB 입니다.");
 
         return new ResponseEntity(restApiException, restApiException.getHttpStatus());
     }
