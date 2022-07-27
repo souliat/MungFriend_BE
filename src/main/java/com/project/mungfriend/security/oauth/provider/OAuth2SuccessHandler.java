@@ -64,6 +64,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                 //프론트 서버 : http://mungfriend.s3-website.ap-northeast-2.amazonaws.com/oauth
                 .encode()
                 .queryParam("Authorization", tokenDto.getAccessToken())
+                .queryParam("refreshToken", tokenDto.getRefreshToken())
                 .queryParam("username", userDetails.getUsername())
                 .queryParam("nickname", userDetails.getNickname())
                 .queryParam("memberId", userDetails.getMemberId())
