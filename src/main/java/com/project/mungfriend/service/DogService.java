@@ -21,7 +21,7 @@ public class DogService {
     private final DogRepository dogRepository;
     private final DogImageFileRepository dogImageFileRepository;
     private final MemberRepository memberRepository;
-
+    private final PostRepository postRepository;
     private final ApplyRepository applyRepository;
     private final ReviewRepository reviewRepository;
     private final S3Uploader s3Uploader;
@@ -81,6 +81,19 @@ public class DogService {
         String username = SecurityUtil.getCurrentMemberUsername();
         Member member = memberRepository.findByUsername(username).orElseThrow(
                 () -> new NullPointerException("해당하는 ID의 회원이 존재하지 않습니다."));
+
+        // 멍 프로필 삭제 시 관련 게시글도 같이 삭제하기
+        List<Post> myPostList = member.getMyPostList();
+        for (Post post : myPostList) {
+            String dogProfileIds = post.getDogProfileIds();
+            String[] dogIdArr = dogProfileIds.split(",");
+            for (String dogId : dogIdArr) {
+                if (Long.parseLong(dogId) == id){
+                    postRepository.delete(post);
+                    break;
+                }
+            }
+        }
 
         // S3 버킷에서 등록했던 이미지 삭제
         String imageUrl = dog.getDogImageFiles().get(0).getImageUrl();
