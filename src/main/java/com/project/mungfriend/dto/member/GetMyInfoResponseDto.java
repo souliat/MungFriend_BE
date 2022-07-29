@@ -12,13 +12,14 @@ public class GetMyInfoResponseDto {
     private Long id;
     private String nickname;
     private String username;
-
+    private String userRole;
     private String email;
 
     public GetMyInfoResponseDto(Member member){
         this.id = member.getId();
         this.nickname = member.getNickname();
         this.username = member.getUsername();
+        this.userRole = member.getUserRole().toString();
         this.email = member.getEmail();
     }
 }
