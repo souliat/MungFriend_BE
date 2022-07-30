@@ -1,7 +1,6 @@
 package com.project.mungfriend.service;
 
 import com.project.mungfriend.dto.post.*;
-import com.project.mungfriend.model.Dog;
 import com.project.mungfriend.model.DogImageFile;
 import com.project.mungfriend.model.Member;
 import com.project.mungfriend.model.Post;
@@ -13,9 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Time;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +23,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final ReviewRepository reviewRepository;
     private final DogRepository dogRepository;
+    private final DogImageFileRepository dogImageFileRepository;
     private final ApplyRepository applyRepository;
 
     //게시글 등록
@@ -218,12 +218,10 @@ public class PostService {
         String dogProfileIds = post.getDogProfileIds();
         String[] dogProfileIdsArr = dogProfileIds.split(",");
         for (String s : dogProfileIdsArr) {
-            Dog dog = dogRepository.findById(Long.parseLong(s)).orElse(null);
-            // 강아지가 없을 경우 Exception 발생시키는 로직 수정 -> 없으면 그냥 넘어가기
-            if(dog != null){
-                DogImageFile dogImageFile = dog.getDogImageFiles().get(0);
-                String imageUrl = dogImageFile.getImageUrl();
-                imagePath.add(imageUrl);
+            DogImageFile dogImgFile = dogImageFileRepository.findByDogId(Long.parseLong(s)).orElse(null);
+            //이미지가 없을 경우 Exception 발생시키는 로직 수정 -> 없으면 그냥 넘어가기
+            if(dogImgFile != null){
+                imagePath.add(dogImgFile.getImageUrl());
             }
         }
     }

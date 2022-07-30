@@ -22,7 +22,7 @@ public class DogImageFile {
     String imageUrl;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinColumn(name="DOG_ID")
     private Dog dog;
