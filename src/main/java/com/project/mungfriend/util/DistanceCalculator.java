@@ -1,5 +1,8 @@
 package com.project.mungfriend.util;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class DistanceCalculator {
 
     /**
@@ -10,7 +13,7 @@ public class DistanceCalculator {
      * @param lon2 지점 2 경도
      * @param unit 거리 표출단위
      */
-    public static double calcDistance(double lat1, double lon1, double lat2, double lon2, String unit){
+    public double calcDistance(double lat1, double lon1, double lat2, double lon2, String unit){
         double theta = lon1 - lon2;
         double dist = Math.sin(degToRad(lat1)) * Math.sin(degToRad(lat2))
                 + Math.cos(degToRad(lat1)) * Math.cos(degToRad(lat2)) * Math.cos(degToRad(theta));
