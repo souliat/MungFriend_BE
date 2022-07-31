@@ -46,10 +46,4 @@ public class MemberController {
         return memberService.getUserInfo(requestDto);
     }
 
-
-    //로그인 페이지 호출
-    @GetMapping("/member/login")
-    public String showLoginPage(){
-        return "login";
-    }
 }

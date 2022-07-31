@@ -25,6 +25,7 @@ public class PostService {
     private final DogRepository dogRepository;
     private final DogImageFileRepository dogImageFileRepository;
     private final ApplyRepository applyRepository;
+    private final DistanceCalculator distanceCalculator;
 
     //게시글 등록
     @Transactional
@@ -53,19 +54,20 @@ public class PostService {
     }
 
     //게시글 전체 조회
+    @Transactional
     public List<GetPostResponseDto> getAllPosts() {
         List<GetPostResponseDto> postResponseDtoList = new ArrayList<>();
-        List<Post> postList = postRepository.findAllByOrderByRequestStartDate();
+
+        // @ManyToOne으로 mapping된 Member 객체 Fetch Join으로 N+1문제 해결
+        List<Post> postList = postRepository.findAllByOrderByRequestStartDateByFetchJoin();
 
         for (Post post : postList) {
             GetPostResponseDto getPostResponseDto = new GetPostResponseDto(post);
             // 게시글 전체 조회, 거리순 조회 시 현재 시간을 기준으로 요청 시간이 지났으면 모집 종료로 바꿔주기
             if ( post.getRequestStartDate().isBefore(LocalDateTime.now()) ){
                 post.setIsComplete(true);
-                postRepository.save(post);
             }
             getPostResponseDto.setIsComplete(post.getIsComplete());
-
 
             // 신청자 수 세팅. 2022-06-28 인기천 추가.
             setApplyCntAndImgPath(post, getPostResponseDto);
@@ -83,13 +85,14 @@ public class PostService {
         );
 
         List<GetPostResponseDto> postResponseDtoList = new ArrayList<>();
-        List<Post> postList = postRepository.findAll();
+        // @ManyToOne으로 mapping된 Member 객체 Fetch Join으로 N+1문제 해결
+        List<Post> postList = postRepository.findAllByFetchJoin();
 
         for (Post post : postList){
             GetPostResponseDto getPostResponseDto = new GetPostResponseDto(post);
 
             // 로그인한 유저의 위치와 게시글 작성자의 거리를 계산하여 같이 저장한다.
-            getPostResponseDto.setDistance(DistanceCalculator.calcDistance(
+            getPostResponseDto.setDistance(distanceCalculator.calcDistance(
                     Double.parseDouble(member.getLatitude()),
                     Double.parseDouble(member.getLongitude()),
                     Double.parseDouble(post.getLatitude()),
@@ -133,7 +136,7 @@ public class PostService {
         responseDto.setDogProfileImgUrl(post.getMember().getDogProfileImgUrl());
 
         // 로그인한 사용자와 게시글 작성자 간 거리 (단위: km)
-        responseDto.setDistance(DistanceCalculator.calcDistance(
+        responseDto.setDistance(distanceCalculator.calcDistance(
                 Double.parseDouble(member.getLatitude()),
                 Double.parseDouble(member.getLongitude()),
                 Double.parseDouble(post.getLatitude()),
