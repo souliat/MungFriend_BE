@@ -64,7 +64,7 @@ public class ReviewService {
                 reviewImageFileRepository.save(reviewImageFile);
             }
         } else {
-            ReviewImageFile reviewImageFile = new ReviewImageFile("https://ifh.cc/g/qBowpH.png");
+            ReviewImageFile reviewImageFile = new ReviewImageFile("https://s3.ap-northeast-2.amazonaws.com/code10.shop/assets/images/Chatting/img-dog-chat.png");
             reviewImageFile.setReview(review); // 연관관계 편의 메소드
             reviewImageFileRepository.save(reviewImageFile);
         }

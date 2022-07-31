@@ -23,8 +23,6 @@ import java.util.TimeZone;
 public class ChatMessageController {
 
     private final ChatMessageService chatMessageService;
-    private final MemberService memberService;
-    private final MemberRepository memberRepository;
 
     // 채팅 메시지를 @MessageMapping 형태로 받는다
     // 웹소켓으로 publish 된 메시지를 받는 곳이다
