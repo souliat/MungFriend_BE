@@ -184,11 +184,9 @@ README
         
 
 # :tv: 데모영상
-<img src="https://img.shields.io/badge/YouTube-FF0000?style=flat&logo=YouTube&logoColor=white"/> 추후올릴예정
+<a href="https://www.youtube.com/embed/1ap-UItobNo"><img src="https://img.shields.io/badge/YouTube-FF0000?style=flat&logo=YouTube&logoColor=white"/></a>
 
 [![미리보기](https://i.ytimg.com/vi/1ap-UItobNo/maxresdefault.jpg)](https://www.youtube.com/embed/1ap-UItobNo)
-
-<iframe width="900" height="506" src="https://www.youtube.com/embed/1ap-UItobNo" title="멍친구 사이트 소개 영상" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 # :computer: 기술 스택 
 
