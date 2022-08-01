@@ -25,14 +25,14 @@ README
 |이영주|정예빈|
 |:-:|:-:|
 |<img src="https://avatars.githubusercontent.com/u/100979254?v=4" width="200px" />|<img src="https://avatars.githubusercontent.com/u/103884098?v=4" width="200px" />|
-|<span style="color:aqua">`FE`</span>|<span style="color:aqua">FE</span>|
+|<span style="color:aqua">`FE`</span>|<span style="color:aqua">`FE`</span>|
 |https://github.com/jjugwen|https://github.com/yebin76|
 
 
 |인기천|진용희|김형준|
 |:-:|:-:|:-:|
 |<img src="https://velog.velcdn.com/images/rlafbf222/post/221e1cf8-6b85-4c7c-b838-02312ba89f67/image.png" width="200px" />|<img src="https://velog.velcdn.com/images/rlafbf222/post/c71d2572-aaf5-461c-b2bd-eff4515ec950/image.png" width="200px" />|<img src="https://avatars.githubusercontent.com/u/82041804?s=400&u=529dbcac1a7ee3b6270fcaf70f724c67712bfc3a&v=4" width="200px" />|
-|<span style="color:lightgreen">BE</span>|<span style="color:lightgreen">BE</span>|<span style="color:lightgreen">BE</span>|
+|<span style="color:lightgreen">`BE`</span>|<span style="color:lightgreen">`BE`</span>|<span style="color:lightgreen">`BE`</span>|
 |https://github.com/souliat|https://github.com/YongHuiAA|https://github.com/Kim-HJ1986|
  
 # 📏 ERD
