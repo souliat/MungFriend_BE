@@ -9,6 +9,7 @@ import com.project.mungfriend.security.SecurityUtil;
 import com.project.mungfriend.util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -74,6 +75,7 @@ public class DogService {
     }
 
     // 멍 프로필 삭제
+    @Transactional
     public DogProfileResponseDto deleteProfile(Long id) {
         Dog dog = dogRepository.findById(id).orElseThrow(
                 () -> new NullPointerException("해당 되는 멍 프로필 id가 없습니다."));
