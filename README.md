@@ -25,7 +25,7 @@ README
 |이영주|정예빈|
 |:-:|:-:|
 |<img src="https://avatars.githubusercontent.com/u/100979254?v=4" width="200px" />|<img src="https://avatars.githubusercontent.com/u/103884098?v=4" width="200px" />|
-|<span style="color:aqua">FE</span>|<span style="color:aqua">FE</span>|
+|<span style="color:aqua">`FE`</span>|<span style="color:aqua">FE</span>|
 |https://github.com/jjugwen|https://github.com/yebin76|
 
 
