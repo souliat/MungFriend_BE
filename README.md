@@ -39,8 +39,8 @@ README
 ![멍친구 ERD (채팅 추가)](https://user-images.githubusercontent.com/82041804/178925767-b721bcee-3286-4fc9-9290-09025d168629.JPG)
 
 # 🛠 서비스 아키텍처
-![멍프렌드 통합 아키텍처](https://user-images.githubusercontent.com/82041804/178923080-3297f289-a65c-4a77-91c9-7a18403d9f6d.JPG)
 
+<img width="1875" alt="멍친구 최종 아키텍쳐" src="https://user-images.githubusercontent.com/82041804/182296119-9fedd2b1-37d4-4153-8a34-b92a771ab91e.png">
 
 # :dizzy: 핵심기능
 > 1) 사용자 편의를 고려한 인증, 인가 방식 & 본인 인증
