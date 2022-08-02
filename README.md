@@ -184,7 +184,9 @@ README
         
 
 # :tv: 데모영상
-<img src="https://img.shields.io/badge/YouTube-FF0000?style=flat&logo=YouTube&logoColor=white"/> 추후올릴예정
+<a href="https://www.youtube.com/embed/1ap-UItobNo"><img src="https://img.shields.io/badge/YouTube-FF0000?style=flat&logo=YouTube&logoColor=white"/></a>
+
+[![미리보기](https://i.ytimg.com/vi/1ap-UItobNo/maxresdefault.jpg)](https://www.youtube.com/embed/1ap-UItobNo)
 
 # :computer: 기술 스택 
 
