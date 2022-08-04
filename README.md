@@ -99,7 +99,7 @@ README
     
     <원인 추론>
     - Debugging을 통해 Post 객체를 조회할 때, ManyToOne으로 연관관계가 설정되어있는 모든 Member 객체를 조회하는 N+1 문제 발견
-    - ManyToOne으로 연관관계가 설정되면 default로 lazy loading이 되는 것으로 알고 있었지만, 여러 객체를 조회할 경우 N+1 문제가 발생한다는 문제 상황을 파악
+    - ManyToOne으로 연관관계가 설정되면 default로 eager loading이 되는 것으로 알고 있었지만, 여러 객체를 조회할 경우 N+1 문제가 발생한다는 문제 상황을 파악
     
     <br>
     
