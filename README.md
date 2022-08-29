@@ -36,7 +36,7 @@ README
 |https://github.com/souliat|https://github.com/YongHuiAA|https://github.com/Kim-HJ1986|
  
 # 📏 ERD
-![멍친구 ERD (채팅 추가)](https://user-images.githubusercontent.com/82041804/178925767-b721bcee-3286-4fc9-9290-09025d168629.JPG)
+![멍친구 최종 ERD](https://user-images.githubusercontent.com/82041804/187105260-b377d67c-0878-4697-955f-347150ad61ee.JPG)
 
 # 🛠 서비스 아키텍처
 
